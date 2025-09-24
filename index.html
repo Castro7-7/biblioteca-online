@@ -54,6 +54,7 @@
       margin-bottom: 5px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       transition: transform 0.3s;
+      cursor: pointer;
     }
     .carousel-item span {
       display: block;
@@ -92,7 +93,7 @@
       border-radius: 16px;
       padding: 15px;
       width: 100%;
-      min-height: 140px; /* Retângulo mais fino */
+      min-height: 140px;
       align-items: flex-start;
       gap: 15px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
@@ -102,7 +103,7 @@
       transform: translateY(-3px);
     }
     .livro img {
-      width: 100px; /* Miniatura menor */
+      width: 100px;
       height: 140px;
       object-fit: cover;
       border-radius: 8px;
@@ -110,6 +111,9 @@
     }
     .livro-info {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .livro-info h2 {
       margin-top: 0;
@@ -158,13 +162,22 @@
     /* RESPONSIVIDADE */
     @media(max-width:768px){
       .livro {
-        flex-direction: column;
+        flex-direction: row; /* Mantém horizontal no mobile */
         align-items: center;
-        text-align: center;
       }
       .livro img {
-        width: 120px;
-        height: 160px;
+        width: 80px;
+        height: 120px;
+      }
+      .livro-info h2 {
+        font-size: 1.1em;
+      }
+      .livro-info p {
+        font-size: 0.9em;
+      }
+      .carousel-item img {
+        width: 100px;
+        height: 150px;
       }
     }
   </style>
@@ -180,14 +193,14 @@
     <div class="carousel-container">
       <button class="carousel-btn left">&#10094;</button>
       <div class="carousel">
-        <div class="carousel-item">
+        <a href="livros/destravando.html" class="carousel-item">
           <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
           <span>Destravando Seu Potencial</span>
-        </div>
-        <div class="carousel-item">
+        </a>
+        <a href="livros/48-leis-do-poder.html" class="carousel-item">
           <img src="livros/img/48.png" alt="48 Leis do Poder">
           <span>48 Leis do Poder</span>
-        </div>
+        </a>
       </div>
       <button class="carousel-btn right">&#10095;</button>
     </div>
