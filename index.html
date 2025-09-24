@@ -41,29 +41,28 @@
       gap: 20px;
     }
     .carousel-item {
-      min-width: 180px;
+      min-width: 150px;
       text-align: center;
       flex-shrink: 0;
-      background: rgba(255,255,255,0.05);
-      border-radius: 16px;
-      padding: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
+      padding: 5px;
     }
     .carousel-item img {
-      width: 150px;
-      height: 220px;
+      width: 120px;
+      height: 180px;
       object-fit: cover;
       border-radius: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
     }
     .carousel-item span {
       display: block;
       font-weight: bold;
       color: #fff;
+      font-size: 0.9em;
     }
-    .carousel-item:hover {
-      transform: translateY(-5px);
+    .carousel-item:hover img {
+      transform: translateY(-5px) scale(1.05);
     }
     .carousel-btn {
       position: absolute;
@@ -91,22 +90,22 @@
       display: flex;
       background: rgba(255,255,255,0.05);
       border-radius: 16px;
-      padding: 20px;
+      padding: 15px;
       width: 100%;
-      min-height: 200px;
+      min-height: 140px; /* Retângulo mais fino */
       align-items: flex-start;
-      gap: 20px;
+      gap: 15px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       transition: transform 0.3s ease;
     }
     .livro:hover {
-      transform: translateY(-5px);
+      transform: translateY(-3px);
     }
     .livro img {
-      width: 180px;
-      height: 250px;
+      width: 100px; /* Miniatura menor */
+      height: 140px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 8px;
       flex-shrink: 0;
     }
     .livro-info {
@@ -114,17 +113,17 @@
     }
     .livro-info h2 {
       margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 1.4em;
+      margin-bottom: 6px;
+      font-size: 1.3em;
     }
     .livro-info p {
-      margin-bottom: 15px;
-      line-height: 1.5;
+      margin-bottom: 10px;
+      line-height: 1.4;
       opacity: 0.9;
     }
     .botao {
       display: inline-block;
-      padding: 10px 16px;
+      padding: 8px 14px;
       background: #7c3aed;
       color: white;
       text-decoration: none;
@@ -164,8 +163,8 @@
         text-align: center;
       }
       .livro img {
-        width: 150px;
-        height: 220px;
+        width: 120px;
+        height: 160px;
       }
     }
   </style>
@@ -234,12 +233,12 @@
 
     document.querySelector('.carousel-btn.left').addEventListener('click', () => {
       if(index > 0) index--;
-      carousel.style.transform = `translateX(${-index * 200}px)`;
+      carousel.style.transform = `translateX(${-index * 180}px)`;
     });
 
     document.querySelector('.carousel-btn.right').addEventListener('click', () => {
       if(index < items.length - 4) index++;
-      carousel.style.transform = `translateX(${-index * 200}px)`;
+      carousel.style.transform = `translateX(${-index * 180}px)`;
     });
   </script>
 </body>
