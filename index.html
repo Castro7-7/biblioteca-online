@@ -81,24 +81,21 @@
     .carousel-btn.left { left: 10px; }
     .carousel-btn.right { right: 10px; }
 
-    /* ===== LISTA DE LIVROS ===== */
+    /* ===== LIVROS EM RETÂNGULOS HORIZONTAIS ===== */
     .library-list {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 20px;
-      justify-content: center;
     }
     .livro {
+      display: flex;
       background: rgba(255,255,255,0.05);
       border-radius: 16px;
       padding: 20px;
-      width: 220px;
-      min-height: 350px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      text-align: center;
+      width: 100%;
+      min-height: 200px;
+      align-items: flex-start;
+      gap: 20px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       transition: transform 0.3s ease;
     }
@@ -106,18 +103,23 @@
       transform: translateY(-5px);
     }
     .livro img {
-      width: 150px;
-      height: 220px;
+      width: 180px;
+      height: 250px;
       object-fit: cover;
       border-radius: 10px;
+      flex-shrink: 0;
+    }
+    .livro-info {
+      flex: 1;
+    }
+    .livro-info h2 {
+      margin-top: 0;
       margin-bottom: 10px;
+      font-size: 1.4em;
     }
-    .livro h2 {
-      margin: 10px 0;
-      font-size: 1.1em;
-    }
-    .livro p {
-      font-size: 0.95em;
+    .livro-info p {
+      margin-bottom: 15px;
+      line-height: 1.5;
       opacity: 0.9;
     }
     .botao {
@@ -132,6 +134,39 @@
     }
     .botao:hover {
       background: #5b21b6;
+    }
+
+    /* ===== RODAPÉ ===== */
+    footer {
+      background: #1a0f2e;
+      text-align: center;
+      padding: 25px 20px;
+      margin-top: 50px;
+      color: #aaa;
+    }
+    footer p {
+      margin: 5px 0;
+    }
+    footer a {
+      color: #7c3aed;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* RESPONSIVIDADE */
+    @media(max-width:768px){
+      .livro {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .livro img {
+        width: 150px;
+        height: 220px;
+      }
     }
   </style>
 </head>
@@ -162,18 +197,34 @@
     <div class="library-list">
       <div class="livro">
         <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
-        <h2>Destravando Seu Potencial</h2>
-        <p>Um guia prático para desbloquear sua mente e alcançar seus objetivos.</p>
-        <a href="livros/destravando.html" class="botao">Ver detalhes</a>
+        <div class="livro-info">
+          <h2>Destravando Seu Potencial</h2>
+          <p>Um guia prático para desbloquear sua mente e alcançar seus objetivos.</p>
+          <a href="livros/destravando.html" class="botao">Ver detalhes</a>
+        </div>
       </div>
+
       <div class="livro">
-        <img src="livros/img/48.png" alt="48 leis do poder">
-        <h2>48 Leis do Poder</h2>
-        <p>Domine as regras do poder! Um guia essencial para entender e aplicar estratégias de influência no dia a dia.</p>
-        <a href="livros/48-leis-do-poder.html" class="botao">Ver detalhes</a>
+        <img src="livros/img/48.png" alt="48 Leis do Poder">
+        <div class="livro-info">
+          <h2>48 Leis do Poder</h2>
+          <p>Domine as regras do poder! Um guia essencial para entender e aplicar estratégias de influência no dia a dia.</p>
+          <a href="livros/48-leis-do-poder.html" class="botao">Ver detalhes</a>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- RODAPÉ PROFISSIONAL -->
+  <footer>
+    <p>© 2025 Biblioteca Online</p>
+    <p>
+      <a href="#">Política de Privacidade</a> |
+      <a href="#">Termos de Uso</a> |
+      <a href="#">Instagram</a> |
+      <a href="#">Facebook</a>
+    </p>
+  </footer>
 
   <script>
     // CARROSSEL
@@ -187,7 +238,7 @@
     });
 
     document.querySelector('.carousel-btn.right').addEventListener('click', () => {
-      if(index < items.length - 4) index++; // ajusta quantos itens aparecem
+      if(index < items.length - 4) index++;
       carousel.style.transform = `translateX(${-index * 200}px)`;
     });
   </script>
