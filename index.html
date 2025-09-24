@@ -25,17 +25,80 @@
     }
     .container {
       width: 90%;
-      max-width: 900px;
+      max-width: 1000px;
       margin: 30px auto;
+    }
+
+    /* ===== CARROSSEL ===== */
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .carousel {
+      display: flex;
+      transition: transform 0.5s ease;
+      gap: 20px;
+    }
+    .carousel-item {
+      min-width: 180px;
+      text-align: center;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
+    }
+    .carousel-item img {
+      width: 150px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .carousel-item span {
+      display: block;
+      font-weight: bold;
+      color: #fff;
+    }
+    .carousel-item:hover {
+      transform: translateY(-5px);
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(124,58,174,0.8);
+      color: #fff;
+      border: none;
+      font-size: 2em;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      z-index: 10;
+    }
+    .carousel-btn.left { left: 10px; }
+    .carousel-btn.right { right: 10px; }
+
+    /* ===== LISTA DE LIVROS ===== */
+    .library-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
     }
     .livro {
       background: rgba(255,255,255,0.05);
       border-radius: 16px;
       padding: 20px;
-      margin-bottom: 20px;
+      width: 220px;
+      min-height: 350px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 20px;
+      justify-content: space-between;
+      text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       transition: transform 0.3s ease;
     }
@@ -43,17 +106,18 @@
       transform: translateY(-5px);
     }
     .livro img {
-      width: 120px;
+      width: 150px;
+      height: 220px;
+      object-fit: cover;
       border-radius: 10px;
+      margin-bottom: 10px;
     }
-    .livro-info {
-      flex: 1;
+    .livro h2 {
+      margin: 10px 0;
+      font-size: 1.1em;
     }
-    .livro-info h2 {
-      margin: 0 0 10px;
-    }
-    .livro-info p {
-      margin: 0 0 15px;
+    .livro p {
+      font-size: 0.95em;
       opacity: 0.9;
     }
     .botao {
@@ -78,30 +142,54 @@
   </header>
 
   <div class="container">
+    <!-- CARROSSEL -->
+    <div class="carousel-container">
+      <button class="carousel-btn left">&#10094;</button>
+      <div class="carousel">
+        <div class="carousel-item">
+          <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
+          <span>Destravando Seu Potencial</span>
+        </div>
+        <div class="carousel-item">
+          <img src="livros/img/48.png" alt="48 Leis do Poder">
+          <span>48 Leis do Poder</span>
+        </div>
+      </div>
+      <button class="carousel-btn right">&#10095;</button>
+    </div>
 
-    <!-- Livro 1 -->
-    <div class="livro">
-      <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
-      <div class="livro-info">
+    <!-- LISTA DE LIVROS -->
+    <div class="library-list">
+      <div class="livro">
+        <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
         <h2>Destravando Seu Potencial</h2>
         <p>Um guia prático para desbloquear sua mente e alcançar seus objetivos.</p>
         <a href="livros/destravando.html" class="botao">Ver detalhes</a>
       </div>
-    </div>
-
-    <!-- Livro 2 -->
-    <div class="livro">
-      <img src="livros/img/48.png" alt="48 leis do poder">
-      <div class="livro-info">
-        <h2>48 Leis Do Poder</h2>
+      <div class="livro">
+        <img src="livros/img/48.png" alt="48 leis do poder">
+        <h2>48 Leis do Poder</h2>
         <p>Domine as regras do poder! Um guia essencial para entender e aplicar estratégias de influência no dia a dia.</p>
         <a href="livros/48-leis-do-poder.html" class="botao">Ver detalhes</a>
       </div>
     </div>
-
   </div>
+
+  <script>
+    // CARROSSEL
+    const carousel = document.querySelector('.carousel');
+    const items = document.querySelectorAll('.carousel-item');
+    let index = 0;
+
+    document.querySelector('.carousel-btn.left').addEventListener('click', () => {
+      if(index > 0) index--;
+      carousel.style.transform = `translateX(${-index * 200}px)`;
+    });
+
+    document.querySelector('.carousel-btn.right').addEventListener('click', () => {
+      if(index < items.length - 4) index++; // ajusta quantos itens aparecem
+      carousel.style.transform = `translateX(${-index * 200}px)`;
+    });
+  </script>
 </body>
 </html>
-
-
-
