@@ -22,24 +22,27 @@ header p { font-size:1.2rem; opacity:0.8; }
 /* ===== CARROSSEL ===== */
 .carousel-container {
   position:relative;
-  margin: 40px auto;
+  margin:40px auto;
   width:90%;
   max-width:1000px;
   perspective:1000px;
-  overflow:hidden;
   height:220px;
+  overflow:hidden;
 }
 .carousel-track {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  transition: transform 0.6s ease;
+  position:relative;
+  width:100%;
+  height:100%;
 }
 .carousel-item {
-  flex:0 0 auto;
-  margin:0 10px;
-  transition: transform 0.6s, opacity 0.6s;
+  position:absolute;
+  top:10px;
+  left:50%;
+  transform: translateX(-50%);
+  transition: all 0.5s ease;
   cursor:pointer;
+  opacity:0;
+  z-index:0;
 }
 .carousel-item img {
   width:140px;
@@ -50,11 +53,13 @@ header p { font-size:1.2rem; opacity:0.8; }
   display:block;
   margin:auto;
 }
-.carousel-item.active img { transform: scale(1.1); box-shadow:0 8px 20px rgba(124,58,174,0.7); }
-.carousel-item.prev img,
-.carousel-item.next img { transform: scale(0.8); opacity:0.7; }
-.carousel-item.prev2 img,
-.carousel-item.next2 img { transform: scale(0.6); opacity:0.5; }
+
+/* Classes dinâmicas para efeito 3D */
+.carousel-item.active { transform: translateX(-50%) scale(1.1); z-index:5; opacity:1; }
+.carousel-item.prev { transform: translateX(-170%) scale(0.8); z-index:4; opacity:0.7; }
+.carousel-item.next { transform: translateX(70%) scale(0.8); z-index:4; opacity:0.7; }
+.carousel-item.prev2 { transform: translateX(-290%) scale(0.6); z-index:3; opacity:0.5; }
+.carousel-item.next2 { transform: translateX(210%) scale(0.6); z-index:3; opacity:0.5; }
 
 .carousel-btn {
   position:absolute;
@@ -142,21 +147,11 @@ footer a:hover { text-decoration:underline; }
   <div class="carousel-container" id="carousel-container">
     <button class="carousel-btn" id="prev">&#10094;</button>
     <div class="carousel-track" id="carousel-track">
-      <div class="carousel-item active">
-        <a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a>
-      </div>
-      <div class="carousel-item next">
-        <a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a>
-      </div>
-      <div class="carousel-item next2">
-        <a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a>
-      </div>
-      <div class="carousel-item prev">
-        <a href="#"><img src="livros/img/livro4.png" alt="Livro 4"></a>
-      </div>
-      <div class="carousel-item prev2">
-        <a href="#"><img src="livros/img/livro5.png" alt="Livro 5"></a>
-      </div>
+      <div class="carousel-item active"><a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a></div>
+      <div class="carousel-item next"><a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a></div>
+      <div class="carousel-item next2"><a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a></div>
+      <div class="carousel-item prev"><a href="#"><img src="livros/img/livro4.png" alt="Livro 4"></a></div>
+      <div class="carousel-item prev2"><a href="#"><img src="livros/img/livro5.png" alt="Livro 5"></a></div>
     </div>
     <button class="carousel-btn" id="next">&#10095;</button>
   </div>
@@ -212,20 +207,19 @@ const items = Array.from(document.querySelectorAll('.carousel-item'));
 let currentIndex = 0;
 let autoPlayInterval;
 
-function updateCarousel() {
+function updateCarousel(){
   const total = items.length;
-  items.forEach(item => item.className='carousel-item'); // reset
+  items.forEach(item=>item.className='carousel-item'); // reset
+  const prev2 = (currentIndex-2+total)%total;
+  const prev = (currentIndex-1+total)%total;
+  const next = (currentIndex+1)%total;
+  const next2 = (currentIndex+2)%total;
 
-  const prev2Index = (currentIndex-2+total)%total;
-  const prevIndex = (currentIndex-1+total)%total;
-  const nextIndex = (currentIndex+1)%total;
-  const next2Index = (currentIndex+2)%total;
-
-  items[prev2Index].classList.add('prev2');
-  items[prevIndex].classList.add('prev');
+  items[prev2].classList.add('prev2');
+  items[prev].classList.add('prev');
   items[currentIndex].classList.add('active');
-  items[nextIndex].classList.add('next');
-  items[next2Index].classList.add('next2');
+  items[next].classList.add('next');
+  items[next2].classList.add('next2');
 }
 
 // Botões
