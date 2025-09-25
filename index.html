@@ -57,20 +57,22 @@ header p { font-size:1.2rem; opacity:0.8; }
   z-index:5;
 }
 .carousel-item.prev {
-  transform: translate(-180px, -50%) scale(0.95);
+  transform: translate(calc(-50% - 120px), -50%) scale(0.95);
   z-index:4;
+  opacity:0.85;
 }
 .carousel-item.next {
-  transform: translate(180px, -50%) scale(0.95);
+  transform: translate(calc(-50% + 120px), -50%) scale(0.95);
   z-index:4;
+  opacity:0.85;
 }
 .carousel-item.prev2 {
-  transform: translate(-360px, -50%) scale(0.8);
+  transform: translate(calc(-50% - 240px), -50%) scale(0.8);
   z-index:3;
   opacity:0.6;
 }
 .carousel-item.next2 {
-  transform: translate(360px, -50%) scale(0.8);
+  transform: translate(calc(-50% + 240px), -50%) scale(0.8);
   z-index:3;
   opacity:0.6;
 }
@@ -151,10 +153,10 @@ footer a:hover { text-decoration:underline; }
 @media(max-width:768px){
   .carousel-container { height:300px; }
   .carousel-item img { width:140px; height:210px; }
-  .carousel-item.prev { transform: translate(-120px, -50%) scale(0.9); }
-  .carousel-item.next { transform: translate(120px, -50%) scale(0.9); }
-  .carousel-item.prev2 { transform: translate(-240px, -50%) scale(0.75); }
-  .carousel-item.next2 { transform: translate(240px, -50%) scale(0.75); }
+  .carousel-item.prev { transform: translate(calc(-50% - 100px), -50%) scale(0.9); }
+  .carousel-item.next { transform: translate(calc(-50% + 100px), -50%) scale(0.9); }
+  .carousel-item.prev2 { transform: translate(calc(-50% - 200px), -50%) scale(0.75); }
+  .carousel-item.next2 { transform: translate(calc(-50% + 200px), -50%) scale(0.75); }
   .livro img { width:90px; height:130px; }
 }
 </style>
@@ -228,25 +230,25 @@ footer a:hover { text-decoration:underline; }
 </footer>
 
 <script>
+let carouselItems = document.query
+<script>
 let carouselItems = document.querySelectorAll('.carousel-item');
+let totalItems = carouselItems.length;
 let currentIndex = 0;
-const totalItems = carouselItems.length;
 
-// Atualiza classes para roleta
+// Função para atualizar classes de cada item
 function updateCarousel() {
-  carouselItems.forEach(item=>item.className='carousel-item');
-  const prev2 = (currentIndex-2+totalItems)%totalItems;
-  const prev = (currentIndex-1+totalItems)%totalItems;
-  const next = (currentIndex+1)%totalItems;
-  const next2 = (currentIndex+2)%totalItems;
-  carouselItems[prev2].classList.add('prev2');
-  carouselItems[prev].classList.add('prev');
-  carouselItems[currentIndex].classList.add('active');
-  carouselItems[next].classList.add('next');
-  carouselItems[next2].classList.add('next2');
+  carouselItems.forEach((item, i) => {
+    item.classList.remove('prev2','prev','active','next','next2');
+    if(i === currentIndex) item.classList.add('active');
+    else if(i === (currentIndex - 1 + totalItems) % totalItems) item.classList.add('prev');
+    else if(i === (currentIndex - 2 + totalItems) % totalItems) item.classList.add('prev2');
+    else if(i === (currentIndex + 1) % totalItems) item.classList.add('next');
+    else if(i === (currentIndex + 2) % totalItems) item.classList.add('next2');
+  });
 }
 
-// Botões
+// Botões de navegação
 document.getElementById('prev').addEventListener('click', ()=>{
   currentIndex = (currentIndex - 1 + totalItems) % totalItems;
   updateCarousel();
@@ -267,16 +269,13 @@ carouselContainer.addEventListener('touchend', e => {
 });
 
 // Autoplay
-function startAutoPlay(){
-  setInterval(()=>{
-    currentIndex = (currentIndex + 1)%totalItems;
-    updateCarousel();
-  },4000);
-}
+setInterval(()=>{
+  currentIndex = (currentIndex + 1) % totalItems;
+  updateCarousel();
+}, 4000);
 
+// Inicializa carrossel
 updateCarousel();
-startAutoPlay();
 </script>
-
 </body>
 </html>
