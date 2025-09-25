@@ -20,9 +20,8 @@ header p { font-size:1.2rem; opacity:0.8; }
 .carousel-container {
   position:relative;
   width:90%;
-  max-width:1000px;
+  max-width:900px;
   margin:40px auto;
-  perspective:1000px;
   height:260px;
   overflow:visible;
 }
@@ -34,7 +33,7 @@ header p { font-size:1.2rem; opacity:0.8; }
 }
 .carousel-item {
   position:relative;
-  margin:0 -40px;
+  margin:0 -60px;
   transition: transform 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
   cursor:pointer;
   opacity:0.6;
@@ -58,12 +57,8 @@ header p { font-size:1.2rem; opacity:0.8; }
   opacity:0.85;
   z-index:4;
 }
-.carousel-item.prev2,
-.carousel-item.next2 {
-  transform: scale(0.9);
-  opacity:0.6;
-  z-index:3;
-}
+
+/* Botões */
 .carousel-btn {
   position:absolute;
   top:50%;
@@ -143,9 +138,7 @@ footer a:hover { text-decoration:underline; }
     <div class="carousel-track" id="carousel-track">
       <div class="carousel-item active"><a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a></div>
       <div class="carousel-item next"><a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a></div>
-      <div class="carousel-item next2"><a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a></div>
-      <div class="carousel-item prev"><a href="#"><img src="livros/img/livro4.png" alt="Livro 4"></a></div>
-      <div class="carousel-item prev2"><a href="#"><img src="livros/img/livro5.png" alt="Livro 5"></a></div>
+      <div class="carousel-item prev"><a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a></div>
     </div>
     <button class="carousel-btn" id="next">&#10095;</button>
   </div>
@@ -203,12 +196,10 @@ let currentIndex = 0;
 
 function updateCarousel() {
   carouselItems.forEach((item, i) => {
-    item.classList.remove('prev2','prev','active','next','next2');
+    item.classList.remove('prev','active','next');
     if(i === currentIndex) item.classList.add('active');
     else if(i === (currentIndex - 1 + totalItems) % totalItems) item.classList.add('prev');
-    else if(i === (currentIndex - 2 + totalItems) % totalItems) item.classList.add('prev2');
     else if(i === (currentIndex + 1) % totalItems) item.classList.add('next');
-    else if(i === (currentIndex + 2) % totalItems) item.classList.add('next2');
   });
 }
 
@@ -240,6 +231,5 @@ setInterval(()=>{
 
 updateCarousel();
 </script>
-
 </body>
 </html>
