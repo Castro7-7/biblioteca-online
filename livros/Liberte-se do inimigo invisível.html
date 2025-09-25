@@ -6,86 +6,64 @@
 <title>Biblioteca Online</title>
 <style>
 body {
-  margin:0; padding:0;
-  font-family: 'Arial', sans-serif;
+  margin:0;
+  font-family:'Arial', sans-serif;
   background: linear-gradient(135deg, #0d0717, #1a0f2e);
   color:#fff;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  overflow-x:hidden;
 }
-
 header {
-  text-align: center;
-  padding: 40px 20px;
+  text-align:center;
+  padding:40px 20px;
 }
-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-header p {
-  font-size: 1.2rem;
-  opacity: 0.8;
-}
+header h1 { font-size:2.5rem; margin-bottom:10px; }
+header p { font-size:1.2rem; opacity:0.8; }
 
-.container {
+/* ===== CARROSSEL ===== */
+.carousel-container {
+  position:relative;
+  margin: 40px auto;
   width:90%;
   max-width:1000px;
-  margin:30px auto;
-}
-
-/* ===== CARROSSEL 3D ===== */
-.carousel-container {
-  position: relative;
-  width: 100%;
-  max-width: 1000px;
-  height: 400px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  perspective: 1500px;
-  margin-bottom: 40px;
+  perspective:1000px;
   overflow:visible;
 }
-
 .carousel-track {
   display:flex;
   justify-content:center;
   align-items:center;
-  position:relative;
-  width:100%;
-  height:100%;
+  transform-style:preserve-3d;
+  transition: transform 0.6s ease;
 }
-
 .carousel-item {
   position:absolute;
-  width:180px;
-  height:270px;
-  transition: all 0.6s ease;
-  cursor:pointer;
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:0 10px 30px rgba(155,89,182,0.5);
-  transform-style: preserve-3d;
+  top:0;
+  left:50%;
+  transform:translateX(-50%) scale(0.6);
+  opacity:0.5;
+  transition: transform 0.6s, opacity 0.6s;
 }
 .carousel-item img {
-  width:100%;
-  height:100%;
+  width:140px;
+  height:200px;
   object-fit:cover;
-  border-radius:15px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  cursor:pointer;
+  display:block;
+  margin:auto;
 }
+.carousel-item a { display:block; pointer-events:auto; }
 
-/* Posições stack 5 livros */
-.carousel-item.hidden { opacity:0; z-index:0; pointer-events:none; transform: scale(0.6);}
-.carousel-item.prev2 { transform: translateX(-280px) scale(0.7) rotateY(30deg); opacity:0.4; z-index:0; filter: brightness(0.7);}
-.carousel-item.prev { transform: translateX(-140px) scale(0.85) rotateY(15deg); opacity:0.7; z-index:1; filter: brightness(0.85);}
-.carousel-item.active { transform: translateX(0px) scale(1) rotateY(0deg); opacity:1; z-index:3; filter: brightness(1);}
-.carousel-item.next { transform: translateX(140px) scale(0.85) rotateY(-15deg); opacity:0.7; z-index:1; filter: brightness(0.85);}
-.carousel-item.next2 { transform: translateX(280px) scale(0.7) rotateY(-30deg); opacity:0.4; z-index:0; filter: brightness(0.7);}
+.carousel-item.prev2 { transform: translateX(-220px) scale(0.5) rotateY(30deg); opacity:0.3; z-index:1; }
+.carousel-item.prev { transform: translateX(-110px) scale(0.7) rotateY(15deg); opacity:0.6; z-index:2; }
+.carousel-item.active { transform: translateX(0) scale(1) rotateY(0deg); opacity:1; z-index:3; }
+.carousel-item.next { transform: translateX(110px) scale(0.7) rotateY(-15deg); opacity:0.6; z-index:2; }
+.carousel-item.next2 { transform: translateX(220px) scale(0.5) rotateY(-30deg); opacity:0.3; z-index:1; }
+.carousel-item.hidden { opacity:0; pointer-events:none; }
 
-/* Botões */
 .carousel-btn {
-  position: absolute;
+  position:absolute;
   top:50%;
   transform:translateY(-50%);
   background: rgba(124,58,174,0.8);
@@ -95,18 +73,14 @@ header p {
   padding:5px 10px;
   cursor:pointer;
   border-radius:5px;
-  z-index:5;
+  z-index:10;
 }
-.carousel-btn:hover { background:#8e44ad; }
 #prev { left:10px; }
 #next { right:10px; }
 
-/* ===== LIVROS EM RETÂNGULOS HORIZONTAIS ===== */
-.library-list {
-  display:flex;
-  flex-direction: column;
-  gap:20px;
-}
+/* ===== LISTA DE LIVROS ===== */
+.container { width:90%; max-width:1000px; margin:30px auto; }
+.library-list { display:flex; flex-direction:column; gap:20px; }
 .livro {
   display:flex;
   background: rgba(255,255,255,0.05);
@@ -117,16 +91,10 @@ header p {
   align-items:flex-start;
   gap:15px;
   box-shadow:0 4px 12px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease;
+  transition:transform 0.3s ease;
 }
-.livro:hover { transform: translateY(-3px); }
-.livro img {
-  width:100px;
-  height:140px;
-  object-fit:cover;
-  border-radius:8px;
-  flex-shrink:0;
-}
+.livro:hover { transform:translateY(-3px); }
+.livro img { width:100px; height:140px; object-fit:cover; border-radius:8px; flex-shrink:0; }
 .livro-info { flex:1; display:flex; flex-direction:column; justify-content:center; }
 .livro-info h2 { margin-top:0; margin-bottom:6px; font-size:1.3em; }
 .livro-info p { margin-bottom:10px; line-height:1.4; opacity:0.9; }
@@ -142,26 +110,27 @@ header p {
 }
 .botao:hover { background:#5b21b6; }
 
-/* ===== RODAPÉ ===== */
+/* RODAPÉ */
 footer {
-  background: #1a0f2e;
+  background:#1a0f2e;
   text-align:center;
   padding:25px 20px;
   margin-top:50px;
   color:#aaa;
 }
-footer img { max-width:200px; margin-top:10px; }
 footer p { margin:5px 0; }
 footer a { color:#7c3aed; text-decoration:none; margin:0 8px; }
 footer a:hover { text-decoration:underline; }
 
-/* RESPONSIVIDADE */
+/* TIPOGRAFIA PEQUENA */
+.signature { margin-top:20px; text-align:center; }
+.signature img { max-width:120px; opacity:0.7; }
 @media(max-width:768px){
   .livro { flex-direction:row; align-items:center; }
   .livro img { width:80px; height:120px; }
   .livro-info h2 { font-size:1.1em; }
   .livro-info p { font-size:0.9em; }
-  .carousel-item { width:140px; height:210px; }
+  .carousel-item img { width:100px; height:150px; }
 }
 </style>
 </head>
@@ -173,34 +142,25 @@ footer a:hover { text-decoration:underline; }
 </header>
 
 <div class="container">
-  <!-- CARROSSEL 3D -->
+
+  <!-- CARROSSEL -->
   <div class="carousel-container" id="carousel-container">
     <button class="carousel-btn" id="prev">&#10094;</button>
     <div class="carousel-track" id="carousel-track">
       <div class="carousel-item active">
-        <a href="livros/Liberte-se do inimigo invisível.html">
-          <img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível">
-        </a>
+        <a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a>
       </div>
       <div class="carousel-item next">
-        <a href="livros/destravando.html">
-          <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
-        </a>
+        <a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a>
       </div>
       <div class="carousel-item next2">
-        <a href="livros/48-leis-do-poder.html">
-          <img src="livros/img/48.png" alt="48 Leis do Poder">
-        </a>
+        <a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a>
       </div>
       <div class="carousel-item prev">
-        <a href="#">
-          <img src="livros/img/livro4.png" alt="Livro 4">
-        </a>
+        <a href="#"><img src="livros/img/livro4.png" alt="Livro 4"></a>
       </div>
       <div class="carousel-item prev2">
-        <a href="#">
-          <img src="livros/img/livro5.png" alt="Livro 5">
-        </a>
+        <a href="#"><img src="livros/img/livro5.png" alt="Livro 5"></a>
       </div>
     </div>
     <button class="carousel-btn" id="next">&#10095;</button>
@@ -211,12 +171,11 @@ footer a:hover { text-decoration:underline; }
     <div class="livro">
       <img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível">
       <div class="livro-info">
-        <h2>Liberte-se do Inimigo Invisível</h2>
-        <p>Um guia baseado em 'Mais Esperto que o Diabo', para ajudar você a superar obstáculos invisíveis e desbloquear seu potencial.</p>
+        <h2>Liberte-se do inimigo invisível</h2>
+        <p>Baseado em “Mais Esperto que o Diabo”, este livro ajuda a identificar obstáculos invisíveis e liberar seu potencial.</p>
         <a href="livros/Liberte-se do inimigo invisível.html" class="botao">Ver detalhes</a>
       </div>
     </div>
-
     <div class="livro">
       <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
       <div class="livro-info">
@@ -225,16 +184,21 @@ footer a:hover { text-decoration:underline; }
         <a href="livros/destravando.html" class="botao">Ver detalhes</a>
       </div>
     </div>
-
     <div class="livro">
       <img src="livros/img/48.png" alt="48 Leis do Poder">
       <div class="livro-info">
         <h2>48 Leis do Poder</h2>
-        <p>Domine as regras do poder! Um guia essencial para entender e aplicar estratégias de influência no dia a dia.</p>
+        <p>Domine as regras do poder e influencie pessoas de forma estratégica.</p>
         <a href="livros/48-leis-do-poder.html" class="botao">Ver detalhes</a>
       </div>
     </div>
   </div>
+
+</div>
+
+<!-- TIPOGRAFIA PEQUENA -->
+<div class="signature">
+  <img src="livros/img/signature.png" alt="Sua assinatura">
 </div>
 
 <!-- RODAPÉ -->
@@ -246,17 +210,16 @@ footer a:hover { text-decoration:underline; }
     <a href="#">Instagram</a> |
     <a href="#">Facebook</a>
   </p>
-  <img src="livros/img/signature.png" alt="Sua assinatura">
 </footer>
 
 <script>
-// ===== CARROSSEL 3D =====
 const items = Array.from(document.querySelectorAll('.carousel-item'));
 let currentIndex = 0;
+let autoPlayInterval;
 
 function updateCarousel() {
   const total = items.length;
-  items.forEach(item => item.className='carousel-item hidden');
+  items.forEach(item => { item.className='carousel-item hidden'; item.style.pointerEvents='none'; });
 
   const prev2Index = (currentIndex-2+total)%total;
   const prevIndex = (currentIndex-1+total)%total;
@@ -268,6 +231,9 @@ function updateCarousel() {
   items[currentIndex].classList.add('active');
   items[nextIndex].classList.add('next');
   items[next2Index].classList.add('next2');
+
+  // apenas livros ativos e próximos são clicáveis
+  [prevIndex, currentIndex, nextIndex].forEach(i=>items[i].style.pointerEvents='auto');
 }
 
 // Botões
@@ -281,19 +247,24 @@ document.getElementById('next').addEventListener('click', ()=>{
 });
 
 // Swipe mobile
-let startX=0, endX=0;
+let startX = 0;
 const container = document.getElementById('carousel-container');
-container.addEventListener('touchstart', e=>{
-  startX = e.touches[0].clientX;
-});
-container.addEventListener('touchmove', e=>{
-  endX = e.touches[0].clientX;
-});
+container.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; });
 container.addEventListener('touchend', e=>{
-  if(startX-endX>30) currentIndex = (currentIndex+1)%items.length;
-  else if(endX-startX>30) currentIndex = (currentIndex-1+items.length)%items.length;
+  const endX = e.changedTouches[0].clientX;
+  if(startX-endX > 40) currentIndex = (currentIndex+1)%items.length;
+  else if(endX-startX > 40) currentIndex = (currentIndex-1+items.length)%items.length;
   updateCarousel();
 });
+
+// Autoplay
+function startAutoplay(){
+  autoPlayInterval = setInterval(()=>{
+    currentIndex = (currentIndex+1)%items.length;
+    updateCarousel();
+  },4000);
+}
+startAutoplay();
 
 updateCarousel();
 </script>
