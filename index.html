@@ -26,7 +26,7 @@ header p { font-size:1.2rem; opacity:0.8; }
   width:90%;
   max-width:1000px;
   perspective:1000px;
-  height:220px;
+  height:260px;
   overflow:hidden;
 }
 .carousel-track {
@@ -45,22 +45,20 @@ header p { font-size:1.2rem; opacity:0.8; }
   z-index:0;
 }
 .carousel-item img {
-  width:140px;
-  height:200px;
+  width:160px;
+  height:230px;
   object-fit:cover;
   border-radius:10px;
   box-shadow:0 4px 12px rgba(0,0,0,0.3);
   display:block;
   margin:auto;
 }
-
 /* Classes dinâmicas para efeito 3D */
-.carousel-item.active { transform: translateX(-50%) scale(1.1); z-index:5; opacity:1; }
-.carousel-item.prev { transform: translateX(-170%) scale(0.8); z-index:4; opacity:0.7; }
-.carousel-item.next { transform: translateX(70%) scale(0.8); z-index:4; opacity:0.7; }
-.carousel-item.prev2 { transform: translateX(-290%) scale(0.6); z-index:3; opacity:0.5; }
-.carousel-item.next2 { transform: translateX(210%) scale(0.6); z-index:3; opacity:0.5; }
-
+.carousel-item.active { transform: translateX(-50%) scale(1.15); z-index:5; opacity:1; }
+.carousel-item.prev { transform: translateX(-150%) scale(0.9); z-index:4; opacity:0.8; }
+.carousel-item.next { transform: translateX(50%) scale(0.9); z-index:4; opacity:0.8; }
+.carousel-item.prev2 { transform: translateX(-270%) scale(0.7); z-index:3; opacity:0.6; }
+.carousel-item.next2 { transform: translateX(170%) scale(0.7); z-index:3; opacity:0.6; }
 .carousel-btn {
   position:absolute;
   top:50%;
@@ -86,14 +84,14 @@ header p { font-size:1.2rem; opacity:0.8; }
   border-radius:16px;
   padding:15px;
   width:100%;
-  min-height:140px;
+  min-height:160px;
   align-items:flex-start;
   gap:15px;
   box-shadow:0 4px 12px rgba(0,0,0,0.3);
   transition:transform 0.3s ease;
 }
 .livro:hover { transform:translateY(-3px); }
-.livro img { width:100px; height:140px; object-fit:cover; border-radius:8px; flex-shrink:0; }
+.livro img { width:110px; height:160px; object-fit:cover; border-radius:8px; flex-shrink:0; }
 .livro-info { flex:1; display:flex; flex-direction:column; justify-content:center; }
 .livro-info h2 { margin-top:0; margin-bottom:6px; font-size:1.3em; }
 .livro-info p { margin-bottom:10px; line-height:1.4; opacity:0.9; }
@@ -122,15 +120,17 @@ footer a { color:#7c3aed; text-decoration:none; margin:0 8px; }
 footer a:hover { text-decoration:underline; }
 
 /* TIPOGRAFIA PEQUENA */
-.signature { margin-top:20px; text-align:center; }
-.signature img { max-width:120px; opacity:0.7; }
+.signature { margin-top:10px; text-align:center; }
+.signature img { max-width:80px; opacity:0.7; }
 
 @media(max-width:768px){
-  .livro { flex-direction:row; align-items:center; }
-  .livro img { width:80px; height:120px; }
-  .livro-info h2 { font-size:1.1em; }
-  .livro-info p { font-size:0.9em; }
-  .carousel-item img { width:100px; height:150px; }
+  .carousel-container { height:280px; }
+  .carousel-item img { width:140px; height:200px; }
+  .carousel-item.prev { transform: translateX(-120%) scale(0.9); }
+  .carousel-item.next { transform: translateX(60%) scale(0.9); }
+  .carousel-item.prev2 { transform: translateX(-210%) scale(0.7); }
+  .carousel-item.next2 { transform: translateX(130%) scale(0.7); }
+  .livro img { width:90px; height:130px; }
 }
 </style>
 </head>
@@ -224,35 +224,37 @@ function updateCarousel(){
 
 // Botões
 document.getElementById('prev').addEventListener('click', ()=>{
-  currentIndex = (currentIndex-1+items.length)%items.length;
+  currentIndex = (currentIndex - 1 + items.length) % items.length;
   updateCarousel();
 });
 document.getElementById('next').addEventListener('click', ()=>{
-  currentIndex = (currentIndex+1)%items.length;
+  currentIndex = (currentIndex + 1) % items.length;
   updateCarousel();
 });
 
 // Swipe mobile
 let startX = 0;
-const container = document.getElementById('carousel-container');
-container.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; });
-container.addEventListener('touchend', e=>{
-  const endX = e.changedTouches[0].clientX;
-  if(startX-endX > 40) currentIndex = (currentIndex+1)%items.length;
-  else if(endX-startX > 40) currentIndex = (currentIndex-1+items.length)%items.length;
-  updateCarousel();
+const carouselContainer = document.getElementById('carousel-container');
+carouselContainer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+carouselContainer.addEventListener('touchend', e => {
+  let diff = e.changedTouches[0].clientX - startX;
+  if(diff>50) { currentIndex = (currentIndex - 1 + items.length)%items.length; updateCarousel(); }
+  else if(diff<-50){ currentIndex = (currentIndex + 1)%items.length; updateCarousel(); }
 });
 
 // Autoplay
-function startAutoplay(){
+function startAutoPlay(){
   autoPlayInterval = setInterval(()=>{
-    currentIndex = (currentIndex+1)%items.length;
+    currentIndex = (currentIndex + 1)%items.length;
     updateCarousel();
   },4000);
 }
-startAutoplay();
+function stopAutoPlay(){ clearInterval(autoPlayInterval); }
+carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+carouselContainer.addEventListener('mouseleave', startAutoPlay);
 
 updateCarousel();
+startAutoPlay();
 </script>
 
 </body>
