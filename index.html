@@ -21,25 +21,24 @@ header p { font-size:1.2rem; opacity:0.8; }
   position:relative;
   width:90%;
   max-width:900px;
+  height:280px;
   margin:40px auto;
-  height:260px;
   overflow:hidden;
 }
 .carousel-track {
   display:flex;
   justify-content:center;
   align-items:center;
-  position:relative;
   transition: transform 0.5s ease;
 }
 .carousel-item {
   min-width:160px;
-  margin:0 -60px;
+  margin:0 -40px; /* ligeira sobreposição */
+  flex-shrink:0;
   transition: transform 0.5s ease, opacity 0.5s ease, z-index 0.5s ease;
   cursor:pointer;
   opacity:0.6;
   z-index:1;
-  flex-shrink:0;
 }
 .carousel-item img {
   width:160px;
@@ -53,11 +52,10 @@ header p { font-size:1.2rem; opacity:0.8; }
   opacity:1;
   z-index:5;
 }
-.carousel-item.prev,
-.carousel-item.next {
+.carousel-item.prev, .carousel-item.next {
   transform: scale(1);
   opacity:0.85;
-  z-index:4;
+  z-index:3;
 }
 
 /* Botões */
@@ -116,8 +114,8 @@ footer a { color:#7c3aed; text-decoration:none; margin:0 8px; }
 footer a:hover { text-decoration:underline; }
 
 /* TIPOGRAFIA PEQUENA */
-.signature { margin:5px auto 0 auto; text-align:center; height:30px; overflow:hidden; }
-.signature img { max-height:30px; display:inline-block; vertical-align:middle; opacity:0.7; }
+.signature { margin:5px auto 0 auto; text-align:center; height:25px; overflow:hidden; }
+.signature img { max-height:25px; display:inline-block; vertical-align:middle; opacity:0.7; }
 
 @media(max-width:768px){
   .carousel-item img { width:140px; height:210px; }
@@ -197,41 +195,39 @@ let totalItems = carouselItems.length;
 let currentIndex = 0;
 
 function updateCarousel() {
-  carouselItems.forEach((item, i) => {
+  carouselItems.forEach((item,i)=>{
     item.classList.remove('prev','active','next');
-    if(i === currentIndex) item.classList.add('active');
-    else if(i === (currentIndex - 1 + totalItems) % totalItems) item.classList.add('prev');
-    else if(i === (currentIndex + 1) % totalItems) item.classList.add('next');
+    if(i===currentIndex) item.classList.add('active');
+    else if(i=== (currentIndex-1+totalItems)%totalItems) item.classList.add('prev');
+    else if(i=== (currentIndex+1)%totalItems) item.classList.add('next');
   });
 }
 
 // Botões
 document.getElementById('prev').addEventListener('click', ()=>{
-  currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+  currentIndex = (currentIndex - 1 + totalItems)%totalItems;
   updateCarousel();
 });
 document.getElementById('next').addEventListener('click', ()=>{
-  currentIndex = (currentIndex + 1) % totalItems;
+  currentIndex = (currentIndex + 1)%totalItems;
   updateCarousel();
 });
 
 // Swipe mobile
-let startX = 0;
+let startX=0;
 const carouselContainer = document.getElementById('carousel-container');
-carouselContainer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-carouselContainer.addEventListener('touchend', e => {
-  let diff = e.changedTouches[0].clientX - startX;
-  if(diff>50) { currentIndex = (currentIndex - 1 + totalItems)%totalItems; updateCarousel(); }
-  else if(diff<-50){ currentIndex = (currentIndex + 1)%totalItems; updateCarousel(); }
+carouselContainer.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
+carouselContainer.addEventListener('touchend',e=>{
+  let diff=e.changedTouches[0].clientX - startX;
+  if(diff>50){ currentIndex = (currentIndex - 1 + totalItems)%totalItems; updateCarousel();}
+  else if(diff<-50){ currentIndex = (currentIndex + 1)%totalItems; updateCarousel();}
 });
 
 // Autoplay
-setInterval(()=>{
-  currentIndex = (currentIndex + 1) % totalItems;
-  updateCarousel();
-}, 4000);
+setInterval(()=>{ currentIndex = (currentIndex + 1)%totalItems; updateCarousel(); },4000);
 
 updateCarousel();
 </script>
+
 </body>
 </html>
