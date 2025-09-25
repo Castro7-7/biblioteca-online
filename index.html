@@ -26,22 +26,20 @@ header p { font-size:1.2rem; opacity:0.8; }
   width:90%;
   max-width:1000px;
   perspective:1000px;
-  overflow:visible;
+  overflow:hidden;
+  height:220px;
 }
 .carousel-track {
   display:flex;
   justify-content:center;
   align-items:center;
-  transform-style:preserve-3d;
   transition: transform 0.6s ease;
 }
 .carousel-item {
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translateX(-50%) scale(0.6);
-  opacity:0.5;
+  flex:0 0 auto;
+  margin:0 10px;
   transition: transform 0.6s, opacity 0.6s;
+  cursor:pointer;
 }
 .carousel-item img {
   width:140px;
@@ -49,18 +47,14 @@ header p { font-size:1.2rem; opacity:0.8; }
   object-fit:cover;
   border-radius:10px;
   box-shadow:0 4px 12px rgba(0,0,0,0.3);
-  cursor:pointer;
   display:block;
   margin:auto;
 }
-.carousel-item a { display:block; pointer-events:auto; }
-
-.carousel-item.prev2 { transform: translateX(-220px) scale(0.5) rotateY(30deg); opacity:0.3; z-index:1; }
-.carousel-item.prev { transform: translateX(-110px) scale(0.7) rotateY(15deg); opacity:0.6; z-index:2; }
-.carousel-item.active { transform: translateX(0) scale(1) rotateY(0deg); opacity:1; z-index:3; }
-.carousel-item.next { transform: translateX(110px) scale(0.7) rotateY(-15deg); opacity:0.6; z-index:2; }
-.carousel-item.next2 { transform: translateX(220px) scale(0.5) rotateY(-30deg); opacity:0.3; z-index:1; }
-.carousel-item.hidden { opacity:0; pointer-events:none; }
+.carousel-item.active img { transform: scale(1.1); box-shadow:0 8px 20px rgba(124,58,174,0.7); }
+.carousel-item.prev img,
+.carousel-item.next img { transform: scale(0.8); opacity:0.7; }
+.carousel-item.prev2 img,
+.carousel-item.next2 img { transform: scale(0.6); opacity:0.5; }
 
 .carousel-btn {
   position:absolute;
@@ -125,6 +119,7 @@ footer a:hover { text-decoration:underline; }
 /* TIPOGRAFIA PEQUENA */
 .signature { margin-top:20px; text-align:center; }
 .signature img { max-width:120px; opacity:0.7; }
+
 @media(max-width:768px){
   .livro { flex-direction:row; align-items:center; }
   .livro img { width:80px; height:120px; }
@@ -219,7 +214,7 @@ let autoPlayInterval;
 
 function updateCarousel() {
   const total = items.length;
-  items.forEach(item => { item.className='carousel-item hidden'; item.style.pointerEvents='none'; });
+  items.forEach(item => item.className='carousel-item'); // reset
 
   const prev2Index = (currentIndex-2+total)%total;
   const prevIndex = (currentIndex-1+total)%total;
@@ -231,9 +226,6 @@ function updateCarousel() {
   items[currentIndex].classList.add('active');
   items[nextIndex].classList.add('next');
   items[next2Index].classList.add('next2');
-
-  // apenas livros ativos e próximos são clicáveis
-  [prevIndex, currentIndex, nextIndex].forEach(i=>items[i].style.pointerEvents='auto');
 }
 
 // Botões
