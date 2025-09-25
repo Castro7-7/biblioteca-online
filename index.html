@@ -12,35 +12,32 @@ body {
   color:#fff;
   overflow-x:hidden;
 }
-header {
-  text-align:center;
-  padding:40px 20px;
-}
+header { text-align:center; padding:40px 20px; }
 header h1 { font-size:2.5rem; margin-bottom:10px; }
 header p { font-size:1.2rem; opacity:0.8; }
 
-/* ===== CARROSSEL ===== */
+/* CARROSSEL */
 .carousel-container {
   position:relative;
-  margin:40px auto;
   width:90%;
   max-width:1000px;
+  margin:40px auto;
   perspective:1000px;
-  height:280px;
+  height:260px;
+  overflow:visible;
 }
 .carousel-track {
+  display:flex;
+  justify-content:center;
+  align-items:center;
   position:relative;
-  width:100%;
-  height:100%;
 }
 .carousel-item {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  transition: all 0.5s ease;
+  position:relative;
+  margin:0 -40px;
+  transition: transform 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
   cursor:pointer;
-  opacity:0.7;
+  opacity:0.6;
   z-index:1;
 }
 .carousel-item img {
@@ -49,32 +46,23 @@ header p { font-size:1.2rem; opacity:0.8; }
   object-fit:cover;
   border-radius:10px;
   display:block;
-  margin:auto;
 }
 .carousel-item.active {
-  transform: translate(-50%, -50%) scale(1.2);
+  transform: scale(1.2);
   opacity:1;
   z-index:5;
 }
-.carousel-item.prev {
-  transform: translate(calc(-50% - 120px), -50%) scale(0.95);
-  z-index:4;
-  opacity:0.85;
-}
+.carousel-item.prev,
 .carousel-item.next {
-  transform: translate(calc(-50% + 120px), -50%) scale(0.95);
-  z-index:4;
+  transform: scale(1);
   opacity:0.85;
+  z-index:4;
 }
-.carousel-item.prev2 {
-  transform: translate(calc(-50% - 240px), -50%) scale(0.8);
-  z-index:3;
-  opacity:0.6;
-}
+.carousel-item.prev2,
 .carousel-item.next2 {
-  transform: translate(calc(-50% + 240px), -50%) scale(0.8);
-  z-index:3;
+  transform: scale(0.9);
   opacity:0.6;
+  z-index:3;
 }
 .carousel-btn {
   position:absolute;
@@ -92,7 +80,7 @@ header p { font-size:1.2rem; opacity:0.8; }
 #prev { left:10px; }
 #next { right:10px; }
 
-/* ===== LISTA DE LIVROS ===== */
+/* LISTA DE LIVROS */
 .container { width:90%; max-width:1000px; margin:30px auto; }
 .library-list { display:flex; flex-direction:column; gap:20px; }
 .livro {
@@ -125,38 +113,17 @@ header p { font-size:1.2rem; opacity:0.8; }
 .botao:hover { background:#5b21b6; }
 
 /* RODAPÉ */
-footer {
-  background:#1a0f2e;
-  text-align:center;
-  padding:25px 20px;
-  margin-top:50px;
-  color:#aaa;
-}
+footer { background:#1a0f2e; text-align:center; padding:25px 20px; margin-top:50px; color:#aaa; }
 footer p { margin:5px 0; }
 footer a { color:#7c3aed; text-decoration:none; margin:0 8px; }
 footer a:hover { text-decoration:underline; }
 
 /* TIPOGRAFIA PEQUENA */
-.signature {
-  margin:5px auto 0 auto;
-  text-align:center;
-  height:35px;
-  overflow:hidden;
-}
-.signature img {
-  max-height:35px;
-  display:inline-block;
-  vertical-align:middle;
-  opacity:0.7;
-}
+.signature { margin:5px auto 0 auto; text-align:center; height:30px; overflow:hidden; }
+.signature img { max-height:30px; display:inline-block; vertical-align:middle; opacity:0.7; }
 
 @media(max-width:768px){
-  .carousel-container { height:300px; }
   .carousel-item img { width:140px; height:210px; }
-  .carousel-item.prev { transform: translate(calc(-50% - 100px), -50%) scale(0.9); }
-  .carousel-item.next { transform: translate(calc(-50% + 100px), -50%) scale(0.9); }
-  .carousel-item.prev2 { transform: translate(calc(-50% - 200px), -50%) scale(0.75); }
-  .carousel-item.next2 { transform: translate(calc(-50% + 200px), -50%) scale(0.75); }
   .livro img { width:90px; height:130px; }
 }
 </style>
@@ -230,13 +197,10 @@ footer a:hover { text-decoration:underline; }
 </footer>
 
 <script>
-let carouselItems = document.query
-<script>
 let carouselItems = document.querySelectorAll('.carousel-item');
 let totalItems = carouselItems.length;
 let currentIndex = 0;
 
-// Função para atualizar classes de cada item
 function updateCarousel() {
   carouselItems.forEach((item, i) => {
     item.classList.remove('prev2','prev','active','next','next2');
@@ -248,7 +212,7 @@ function updateCarousel() {
   });
 }
 
-// Botões de navegação
+// Botões
 document.getElementById('prev').addEventListener('click', ()=>{
   currentIndex = (currentIndex - 1 + totalItems) % totalItems;
   updateCarousel();
@@ -274,8 +238,8 @@ setInterval(()=>{
   updateCarousel();
 }, 4000);
 
-// Inicializa carrossel
 updateCarousel();
 </script>
+
 </body>
 </html>
