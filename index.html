@@ -1,259 +1,186 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biblioteca Online</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #0d0717, #1a0f2e);
-      color: #fff;
-    }
-    header {
-      text-align: center;
-      padding: 40px 20px;
-    }
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 1.2rem;
-      opacity: 0.8;
-    }
-    .container {
-      width: 90%;
-      max-width: 1000px;
-      margin: 30px auto;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca 3D Avançada</title>
+<style>
+body {
+  margin:0; padding:0;
+  font-family: 'Roboto', sans-serif;
+  background:#0d1117;
+  color:#f5f5f5;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow-x:hidden;
+}
 
-    /* ===== CARROSSEL ===== */
-    .carousel-container {
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 40px;
-    }
-    .carousel {
-      display: flex;
-      transition: transform 0.5s ease;
-      gap: 20px;
-    }
-    .carousel-item {
-      min-width: 150px;
-      text-align: center;
-      flex-shrink: 0;
-      padding: 5px;
-    }
-    .carousel-item img {
-      width: 120px;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 5px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
-      cursor: pointer;
-    }
-    .carousel-item span {
-      display: block;
-      font-weight: bold;
-      color: #fff;
-      font-size: 0.9em;
-    }
-    .carousel-item:hover img {
-      transform: translateY(-5px) scale(1.05);
-    }
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(124,58,174,0.8);
-      color: #fff;
-      border: none;
-      font-size: 2em;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      z-index: 10;
-    }
-    .carousel-btn.left { left: 10px; }
-    .carousel-btn.right { right: 10px; }
+h1 { color:#9b59b6; text-align:center; margin:40px 0; font-size:3em; }
 
-    /* ===== LIVROS EM RETÂNGULOS HORIZONTAIS ===== */
-    .library-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .livro {
-      display: flex;
-      background: rgba(255,255,255,0.05);
-      border-radius: 16px;
-      padding: 15px;
-      width: 100%;
-      min-height: 140px;
-      align-items: flex-start;
-      gap: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease;
-    }
-    .livro:hover {
-      transform: translateY(-3px);
-    }
-    .livro img {
-      width: 100px;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 8px;
-      flex-shrink: 0;
-    }
-    .livro-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .livro-info h2 {
-      margin-top: 0;
-      margin-bottom: 6px;
-      font-size: 1.3em;
-    }
-    .livro-info p {
-      margin-bottom: 10px;
-      line-height: 1.4;
-      opacity: 0.9;
-    }
-    .botao {
-      display: inline-block;
-      padding: 8px 10px;
-      background: #7c3aed;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .botao:hover {
-      background: #5b21b6;
-    }
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  height: 400px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  perspective: 1500px;
+  overflow: visible;
+}
 
-    /* ===== RODAPÉ ===== */
-    footer {
-      background: #1a0f2e;
-      text-align: center;
-      padding: 25px 20px;
-      margin-top: 50px;
-      color: #aaa;
-    }
-    footer p {
-      margin: 5px 0;
-    }
-    footer a {
-      color: #7c3aed;
-      text-decoration: none;
-      margin: 0 8px;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
+.carousel-track {
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+  width:100%;
+  height:100%;
+}
 
-    /* RESPONSIVIDADE */
-    @media(max-width:768px){
-      .livro {
-        flex-direction: row; /* Mantém horizontal no mobile */
-        align-items: center;
-      }
-      .livro img {
-        width: 80px;
-        height: 120px;
-      }
-      .livro-info h2 {
-        font-size: 1.1em;
-      }
-      .livro-info p {
-        font-size: 0.9em;
-      }
-      .carousel-item img {
-        width: 100px;
-        height: 150px;
-      }
-    }
-  </style>
+.carousel-item {
+  position: absolute;
+  width: 180px;
+  transition: all 0.6s ease;
+  cursor: pointer;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(155,89,182,0.5);
+  transform-style: preserve-3d;
+}
+
+.carousel-item img {
+  width: 100%;
+  display:block;
+  border-radius:15px;
+}
+
+/* Posicionamento stack 5 livros */
+.carousel-item.hidden { opacity:0; z-index:0; pointer-events:none; transform: scale(0.6);}
+.carousel-item.prev2 { transform: translateX(-280px) scale(0.7) rotateY(30deg); opacity:0.4; z-index:0; filter: brightness(0.7);}
+.carousel-item.prev { transform: translateX(-140px) scale(0.85) rotateY(15deg); opacity:0.7; z-index:1; filter: brightness(0.85);}
+.carousel-item.active { transform: translateX(0px) scale(1) rotateY(0deg); opacity:1; z-index:3; filter: brightness(1);}
+.carousel-item.next { transform: translateX(140px) scale(0.85) rotateY(-15deg); opacity:0.7; z-index:1; filter: brightness(0.85);}
+.carousel-item.next2 { transform: translateX(280px) scale(0.7) rotateY(-30deg); opacity:0.4; z-index:0; filter: brightness(0.7);}
+
+/* Botões */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #9b59b6;
+  color: #fff;
+  border:none;
+  padding:12px 20px;
+  font-size:1.5em;
+  cursor:pointer;
+  border-radius:50%;
+  z-index:5;
+}
+.carousel-btn:hover { background:#8e44ad; }
+#prev { left:-50px; }
+#next { right:-50px; }
+
+/* Tipografia no rodapé */
+footer {
+  margin-top:50px;
+  padding:20px;
+  text-align:center;
+}
+footer img {
+  max-width:200px;
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>📚 Biblioteca Online</h1>
-    <p>Uma coleção de livros digitais para quem busca crescimento pessoal, motivação e transformação.</p>
-  </header>
 
-  <div class="container">
-    <!-- CARROSSEL -->
-    <div class="carousel-container">
-      <button class="carousel-btn left">&#10094;</button>
-      <div class="carousel">
-        <a href="livros/destravando.html" class="carousel-item">
-          <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
-          <span>Destravando Seu Potencial</span>
-        </a>
-        <a href="livros/48-leis-do-poder.html" class="carousel-item">
-          <img src="livros/img/48.png" alt="48 Leis do Poder">
-          <span>48 Leis do Poder</span>
-        </a>
-      </div>
-      <button class="carousel-btn right">&#10095;</button>
+<h1>Minha Biblioteca</h1>
+
+<div class="carousel-container" id="carousel-container">
+  <button class="carousel-btn" id="prev">&#10094;</button>
+  <div class="carousel-track" id="carousel-track">
+    <div class="carousel-item active">
+      <a href="liberte-se do inimigo invisivel.html">
+        <img src="img/freeing_enemy.png" alt="Liberte-se do inimigo invisível">
+      </a>
     </div>
-
-    <!-- LISTA DE LIVROS -->
-    <div class="library-list">
-      <div class="livro">
-        <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
-        <div class="livro-info">
-          <h2>Destravando Seu Potencial</h2>
-          <p>Um guia prático para desbloquear sua mente e alcançar seus objetivos.</p>
-          <a href="livros/destravando.html" class="botao">Ver detalhes</a>
-        </div>
-      </div>
-
-      <div class="livro">
-        <img src="livros/img/48.png" alt="48 Leis do Poder">
-        <div class="livro-info">
-          <h2>48 Leis do Poder</h2>
-          <p>Domine as regras do poder! Um guia essencial para entender e aplicar estratégias de influência no dia a dia.</p>
-          <a href="livros/48-leis-do-poder.html" class="botao">Ver detalhes</a>
-        </div>
-      </div>
+    <div class="carousel-item next">
+      <a href="48_leis_do_poder.html">
+        <img src="img/48.png" alt="48 Leis do Poder">
+      </a>
+    </div>
+    <div class="carousel-item next2">
+      <a href="mais_esperto.html">
+        <img src="img/mais_esperto.png" alt="Mais Esperto que o Diabo">
+      </a>
+    </div>
+    <div class="carousel-item prev">
+      <a href="#">
+        <img src="img/livro4.png" alt="Livro 4">
+      </a>
+    </div>
+    <div class="carousel-item prev2">
+      <a href="#">
+        <img src="img/livro5.png" alt="Livro 5">
+      </a>
     </div>
   </div>
+  <button class="carousel-btn" id="next">&#10095;</button>
+</div>
 
-  <!-- RODAPÉ PROFISSIONAL -->
-  <footer>
-    <p>© 2025 Biblioteca Online</p>
-    <p>
-      <a href="#">Política de Privacidade</a> |
-      <a href="#">Termos de Uso</a> |
-      <a href="#">Instagram</a> |
-      <a href="#">Facebook</a>
-    </p>
-  </footer>
+<footer>
+  <img src="livros/img/signature.png" alt="Minha tipografia">
+</footer>
 
-  <script>
-    // CARROSSEL
-    const carousel = document.querySelector('.carousel');
-    const items = document.querySelectorAll('.carousel-item');
-    let index = 0;
+<script>
+const track = document.getElementById('carousel-track');
+const items = Array.from(track.children);
+let currentIndex = 0;
 
-    document.querySelector('.carousel-btn.left').addEventListener('click', () => {
-      if(index > 0) index--;
-      carousel.style.transform = `translateX(${-index * 180}px)`;
-    });
+function updateCarousel() {
+  const total = items.length;
+  items.forEach(item => item.className = 'carousel-item hidden');
 
-    document.querySelector('.carousel-btn.right').addEventListener('click', () => {
-      if(index < items.length - 4) index++;
-      carousel.style.transform = `translateX(${-index * 180}px)`;
-    });
-  </script>
+  const prev2Index = (currentIndex - 2 + total) % total;
+  const prevIndex = (currentIndex - 1 + total) % total;
+  const nextIndex = (currentIndex + 1) % total;
+  const next2Index = (currentIndex + 2) % total;
+
+  items[prev2Index].classList.add('prev2');
+  items[prevIndex].classList.add('prev');
+  items[currentIndex].classList.add('active');
+  items[nextIndex].classList.add('next');
+  items[next2Index].classList.add('next2');
+}
+
+// Botões
+document.getElementById('prev').addEventListener('click', ()=>{
+  currentIndex = (currentIndex - 1 + items.length) % items.length;
+  updateCarousel();
+});
+document.getElementById('next').addEventListener('click', ()=>{
+  currentIndex = (currentIndex + 1) % items.length;
+  updateCarousel();
+});
+
+// Swipe para mobile
+let startX = 0;
+let endX = 0;
+const container = document.getElementById('carousel-container');
+container.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+container.addEventListener('touchmove', e => endX = e.touches[0].clientX);
+container.addEventListener('touchend', e => {
+  if(startX - endX > 30){ // swipe left
+    currentIndex = (currentIndex + 1) % items.length;
+  } else if(endX - startX > 30){ // swipe right
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+  }
+  updateCarousel();
+});
+
+updateCarousel();
+</script>
+
 </body>
 </html>
-
