@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freeing Yourself from the Invisible Enemy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
+body {
+  margin:0; padding:0;
+  font-family:'Roboto',sans-serif;
+  background:#0d1117;
+  color:#f5f5f5;
+  overflow-x:hidden;
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+  max-width:900px;
+  margin:auto;
+  padding:60px 20px;
+  opacity:0;
+  transform:translateY(40px);
+  transition: all 1s ease;
+}
+.container.visible {opacity:1; transform:translateY(0);}
+
+/* TITULO PRINCIPAL */
+h1 {
+  font-family:'Playfair Display',serif;
+  font-size:3.8em;
+  color:#9b59b6;
+  text-align:center;
+  margin-bottom:15px;
+  line-height:1.2;
+}
+
+/* SINOPSE */
+.synopsis {
+  text-align:center;
+  font-size:1.2em;
+  margin:25px 0 50px 0;
+  color:#ccc;
+}
+
+/* CAPA DO LIVRO COM EFEITO 3D */
+.book-cover {
+  display:flex;
+  justify-content:center;
+  margin:40px 0;
+  perspective:1000px;
+}
+.book-cover img {
+  max-width:320px;
+  border-radius:15px;
+  cursor:pointer;
+  transition: transform 1s;
+}
+.book-cover img.rotating {
+  animation: rotate3d 3s infinite linear;
+}
+@keyframes rotate3d {
+  0% { transform: rotateY(0deg) rotateX(0deg); }
+  25% { transform: rotateY(180deg) rotateX(10deg); }
+  50% { transform: rotateY(360deg) rotateX(0deg); }
+  75% { transform: rotateY(540deg) rotateX(-10deg); }
+  100% { transform: rotateY(720deg) rotateX(0deg); }
+}
+
+/* SEÇÕES LINEARES */
+.section {
+  margin:50px 0;
+}
+.section h2 {
+  font-size:2em;
+  color:#f5f5f5;
+  margin-bottom:20px;
+}
+ul {
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+ul li {
+  background:#1b1f27;
+  padding:18px 20px;
+  margin-bottom:15px;
+  border-left:6px solid #9b59b6;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  font-size:1.1em;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+ul li span {
+  margin-right:12px;
+  font-size:1.4em;
+}
+ul li:hover { transform:translateY(-5px); box-shadow:0 0 15px rgba(155,89,182,0.5);}
+
+/* BOTÃO COMPRAR */
+.btn-buy {
+  display:inline-block;
+  padding:18px 40px;
+  font-size:1.2em;
+  font-weight:bold;
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  color:#fff;
+  text-decoration:none;
+  border-radius:50px;
+  margin-top:30px;
+  box-shadow:0 0 20px rgba(155,89,182,0.6);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.btn-buy:hover { transform:scale(1.05); box-shadow:0 0 45px rgba(155,89,182,0.9);}
+
+/* GARANTIA */
+.guarantee {
+  background:#1b1f27;
+  border-left:6px solid #9b59b6;
+  border-radius:12px;
+  padding:20px;
+  margin-top:40px;
+  font-size:1.1em;
+}
+
+/* DEPOIMENTOS */
+.testimonials {
+  margin-top:60px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:25px;
+}
+.testimonial {
+  background:#1b1f27;
+  border-left:6px solid #9b59b6;
+  border-radius:12px;
+  padding:22px 25px;
+  max-width:750px;
+  text-align:left;
+  font-size:1.1em;
+  box-shadow:0 0 15px rgba(155,89,182,0.3);
+  transform:translateY(40px);
+  opacity:0;
+  transition: all 0.8s ease-out;
+}
+.testimonial.show { transform:translateY(0); opacity:1;}
+.testimonial span { display:block; margin-top:8px; font-weight:bold; color:#9b59b6;}
+
+/* RODAPÉ */
+footer { 
+  background:#1b1f27; 
+  padding:25px; 
+  text-align:center; 
+  color:#aaa; 
+  margin-top:60px;
+  position:relative;
+}
+footer a { color:#9b59b6; text-decoration:none; margin:0 12px;}
+footer a:hover { text-decoration:underline; }
+
+/* TIPOGRAFIA NO RODAPÉ */
+footer .signature {
+  display:block;
+  margin-top:20px;
+}
+footer .signature img {
+  max-width:180px;
+  filter: brightness(1.1);
+}
+
+/* BOTÃO FIXO MOBILE */
+.btn-fixed {
+  display:none;
+  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  color:#fff; padding:16px 38px;
+  border-radius:50px; font-weight:bold; text-decoration:none;
+  z-index:999;
+  box-shadow:0 0 25px rgba(155,89,182,0.7);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.btn-fixed:hover { transform: scale(1.05); box-shadow:0 0 45px rgba(155,89,182,0.9);}
+@media (max-width:768px){ .btn-fixed{ display:block; } }
+
+</style>
+</head>
+<body>
+
+<div class="container" id="main-container">
+  <h1>Freeing Yourself from the Invisible Enemy 🚀</h1>
+
+  <div class="synopsis">
+    Este livro revela como identificar e superar os inimigos invisíveis que limitam sua mente e suas decisões.<br>
+    Descubra estratégias práticas para se libertar de medos, hábitos e crenças que impedem seu sucesso.
+  </div>
+
+  <div class="book-cover" id="book-cover">
+    <img src="img/freeing_enemy.png" alt="Capa do livro">
+  </div>
+
+  <div class="section">
+    <h2>Benefícios do Livro</h2>
+    <ul>
+      <li><span>🧠</span> Compreender padrões mentais limitantes</li>
+      <li><span>⚡</span> Superar medos e hábitos inconscientes</li>
+      <li><span>📈</span> Desenvolver disciplina e foco</li>
+      <li><span>🔍</span> Tomar decisões conscientes</li>
+      <li><span>💡</span> Aplicar técnicas para liberdade e sucesso</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Para Quem É</h2>
+    <ul>
+      <li><span>👤</span> Pessoas buscando autoconhecimento</li>
+      <li><span>🎯</span> Profissionais que querem superar limitações</li>
+      <li><span>⚡</span> Interessados em desenvolvimento pessoal</li>
+    </ul>
+  </div>
+
+  <div style="text-align:center; margin-top:50px;">
+    <h2>Invista em Você</h2>
+    <p>Adquira seu exemplar digital por <strong>R$ 29,99</strong> e comece a transformação agora.</p>
+    <a href="https://pay.cakto.com.br/koepwor_583125" class="btn-buy">Comprar Agora</a>
+  </div>
+
+  <div class="guarantee">
+    <p><strong>Garantia:</strong> Produto digital entregue por e-mail. Você tem <strong>7 dias</strong> para solicitar reembolso caso não fique satisfeito.</p>
+  </div>
+
+  <div class="testimonials">
+    <h2>Depoimentos</h2>
+    <div class="testimonial">
+      <p>"Um guia essencial que mudou minha percepção sobre decisões e vida."</p>
+      <span>- Ana P.</span>
+    </div>
+    <div class="testimonial">
+      <p>"Prático, inspirador e transformador. Já percebo mudanças reais."</p>
+      <span>- Carlos M.</span>
+    </div>
+    <div class="testimonial">
+      <p>"Exercícios simples, mas muito eficazes. Recomendo fortemente."</p>
+      <span>- Mariana R.</span>
+    </div>
+  </div>
+</div>
+
+<a href="https://pay.cakto.com.br/koepwor_583125" class="btn-fixed" id="btn-fixed">📘 Comprar Agora</a>
+
+<footer>
+  <p>© 2025 Freeing Yourself from the Invisible Enemy</p>
+  <p>
+    <a href="#">Política de Privacidade</a> | 
+    <a href="#">Termos de Uso</a>
+  </p>
+  <span class="signature"><img src="img/signature.png" alt="Minha tipografia"></span>
+</footer>
+
+<script>
+// FADE-IN
+window.addEventListener('load', ()=>{
+  document.getElementById('main-container').classList.add('visible');
+  document.querySelectorAll('ul li').forEach((li,i)=>{
+    setTimeout(()=>{li.style.opacity='1'; li.style.transform='translateY(0)';}, i*150);
+  });
+  const testimonials=document.querySelectorAll('.testimonial');
+  const revealTestimonials=()=>{const triggerBottom=window.innerHeight*0.9; testimonials.forEach(t=>{if(t.getBoundingClientRect().top<triggerBottom) t.classList.add('show');});};
+  window.addEventListener('scroll', revealTestimonials);
+  revealTestimonials();
+});
+
+// BOTÃO FIXO MOBILE
+const btnFixed=document.getElementById('btn-fixed');
+const footer=document.querySelector('footer');
+if(window.matchMedia("(max-width:768px)").matches){
+  window.addEventListener('scroll', ()=>{
+    btnFixed.style.display = footer.getBoundingClientRect().top<=window.innerHeight ? 'none':'block';
+  });
+}else{btnFixed.style.display='none';}
+
+// CAPA 3D AO CLICAR
+const bookCover=document.querySelector('.book-cover img');
+bookCover.addEventListener('click', ()=>{
+  if(!bookCover.classList.contains('rotating')){
+    bookCover.classList.add('rotating');
+    setTimeout(()=>{bookCover.classList.remove('rotating');}, 3500);
+  }
+});
+</script>
+</body>
+</html>
