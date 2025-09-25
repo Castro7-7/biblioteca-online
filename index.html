@@ -25,8 +25,8 @@ header p { font-size:1.2rem; opacity:0.8; }
   margin:40px auto;
   width:90%;
   max-width:1000px;
-  perspective:1000px;
-  height:260px;
+  perspective:1200px;
+  height:280px;
   overflow:hidden;
 }
 .carousel-track {
@@ -45,20 +45,19 @@ header p { font-size:1.2rem; opacity:0.8; }
   z-index:0;
 }
 .carousel-item img {
-  width:160px;
-  height:230px;
+  width:180px;
+  height:260px;
   object-fit:cover;
   border-radius:10px;
   box-shadow:0 4px 12px rgba(0,0,0,0.3);
   display:block;
   margin:auto;
 }
-/* Classes dinâmicas para efeito 3D */
-.carousel-item.active { transform: translateX(-50%) scale(1.15); z-index:5; opacity:1; }
-.carousel-item.prev { transform: translateX(-150%) scale(0.9); z-index:4; opacity:0.8; }
-.carousel-item.next { transform: translateX(50%) scale(0.9); z-index:4; opacity:0.8; }
-.carousel-item.prev2 { transform: translateX(-270%) scale(0.7); z-index:3; opacity:0.6; }
-.carousel-item.next2 { transform: translateX(170%) scale(0.7); z-index:3; opacity:0.6; }
+.carousel-item.active { transform: translateX(-50%) scale(1.2); z-index:5; opacity:1; }
+.carousel-item.prev { transform: translateX(-160px) scale(0.95); z-index:4; opacity:0.9; }
+.carousel-item.next { transform: translateX(160px) scale(0.95); z-index:4; opacity:0.9; }
+.carousel-item.prev2 { transform: translateX(-320px) scale(0.8); z-index:3; opacity:0.7; }
+.carousel-item.next2 { transform: translateX(320px) scale(0.8); z-index:3; opacity:0.7; }
 .carousel-btn {
   position:absolute;
   top:50%;
@@ -120,16 +119,26 @@ footer a { color:#7c3aed; text-decoration:none; margin:0 8px; }
 footer a:hover { text-decoration:underline; }
 
 /* TIPOGRAFIA PEQUENA */
-.signature { margin-top:10px; text-align:center; }
-.signature img { max-width:80px; opacity:0.7; }
+.signature {
+  margin:10px auto 0 auto;
+  text-align:center;
+  height:40px;
+  overflow:hidden;
+}
+.signature img {
+  max-height:40px;
+  display:inline-block;
+  vertical-align:middle;
+  opacity:0.7;
+}
 
 @media(max-width:768px){
-  .carousel-container { height:280px; }
-  .carousel-item img { width:140px; height:200px; }
-  .carousel-item.prev { transform: translateX(-120%) scale(0.9); }
-  .carousel-item.next { transform: translateX(60%) scale(0.9); }
-  .carousel-item.prev2 { transform: translateX(-210%) scale(0.7); }
-  .carousel-item.next2 { transform: translateX(130%) scale(0.7); }
+  .carousel-container { height:300px; }
+  .carousel-item img { width:160px; height:220px; }
+  .carousel-item.prev { transform: translateX(-120px) scale(0.9); }
+  .carousel-item.next { transform: translateX(120px) scale(0.9); }
+  .carousel-item.prev2 { transform: translateX(-240px) scale(0.75); }
+  .carousel-item.next2 { transform: translateX(240px) scale(0.75); }
   .livro img { width:90px; height:130px; }
 }
 </style>
@@ -203,32 +212,31 @@ footer a:hover { text-decoration:underline; }
 </footer>
 
 <script>
-const items = Array.from(document.querySelectorAll('.carousel-item'));
+let carouselItems = document.querySelectorAll('.carousel-item');
 let currentIndex = 0;
-let autoPlayInterval;
+const totalItems = carouselItems.length;
 
-function updateCarousel(){
-  const total = items.length;
-  items.forEach(item=>item.className='carousel-item'); // reset
-  const prev2 = (currentIndex-2+total)%total;
-  const prev = (currentIndex-1+total)%total;
-  const next = (currentIndex+1)%total;
-  const next2 = (currentIndex+2)%total;
-
-  items[prev2].classList.add('prev2');
-  items[prev].classList.add('prev');
-  items[currentIndex].classList.add('active');
-  items[next].classList.add('next');
-  items[next2].classList.add('next2');
+// Função para atualizar classes
+function updateCarousel() {
+  carouselItems.forEach(item=>item.className='carousel-item');
+  const prev2 = (currentIndex-2+totalItems)%totalItems;
+  const prev = (currentIndex-1+totalItems)%totalItems;
+  const next = (currentIndex+1)%totalItems;
+  const next2 = (currentIndex+2)%totalItems;
+  carouselItems[prev2].classList.add('prev2');
+  carouselItems[prev].classList.add('prev');
+  carouselItems[currentIndex].classList.add('active');
+  carouselItems[next].classList.add('next');
+  carouselItems[next2].classList.add('next2');
 }
 
 // Botões
 document.getElementById('prev').addEventListener('click', ()=>{
-  currentIndex = (currentIndex - 1 + items.length) % items.length;
+  currentIndex = (currentIndex - 1 + totalItems) % totalItems;
   updateCarousel();
 });
 document.getElementById('next').addEventListener('click', ()=>{
-  currentIndex = (currentIndex + 1) % items.length;
+  currentIndex = (currentIndex + 1) % totalItems;
   updateCarousel();
 });
 
@@ -238,20 +246,17 @@ const carouselContainer = document.getElementById('carousel-container');
 carouselContainer.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
 carouselContainer.addEventListener('touchend', e => {
   let diff = e.changedTouches[0].clientX - startX;
-  if(diff>50) { currentIndex = (currentIndex - 1 + items.length)%items.length; updateCarousel(); }
-  else if(diff<-50){ currentIndex = (currentIndex + 1)%items.length; updateCarousel(); }
+  if(diff>50) { currentIndex = (currentIndex - 1 + totalItems)%totalItems; updateCarousel(); }
+  else if(diff<-50){ currentIndex = (currentIndex + 1)%totalItems; updateCarousel(); }
 });
 
 // Autoplay
 function startAutoPlay(){
-  autoPlayInterval = setInterval(()=>{
-    currentIndex = (currentIndex + 1)%items.length;
+  setInterval(()=>{
+    currentIndex = (currentIndex + 1)%totalItems;
     updateCarousel();
   },4000);
 }
-function stopAutoPlay(){ clearInterval(autoPlayInterval); }
-carouselContainer.addEventListener('mouseenter', stopAutoPlay);
-carouselContainer.addEventListener('mouseleave', startAutoPlay);
 
 updateCarousel();
 startAutoPlay();
