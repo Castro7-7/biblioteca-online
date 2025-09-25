@@ -23,21 +23,23 @@ header p { font-size:1.2rem; opacity:0.8; }
   max-width:900px;
   margin:40px auto;
   height:260px;
-  overflow:visible;
+  overflow:hidden;
 }
 .carousel-track {
   display:flex;
   justify-content:center;
   align-items:center;
   position:relative;
+  transition: transform 0.5s ease;
 }
 .carousel-item {
-  position:relative;
+  min-width:160px;
   margin:0 -60px;
-  transition: transform 0.5s ease, z-index 0.5s ease, opacity 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease, z-index 0.5s ease;
   cursor:pointer;
   opacity:0.6;
   z-index:1;
+  flex-shrink:0;
 }
 .carousel-item img {
   width:160px;
