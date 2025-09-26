@@ -106,10 +106,7 @@ header p { font-size:1.2rem; opacity:0.8; }
   position: absolute;
   top: 8px;
   right: 8px;
-  background: rgba(124,58,174,0.8);
   color: #fff;
-  padding: 4px 8px;
-  border-radius: 12px;
   font-size: 0.9em;
   font-weight: bold;
   display: flex;
@@ -141,7 +138,6 @@ footer a:hover { text-decoration:underline; }
 <header>
   <h1>📚 Biblioteca Online</h1>
   <p>Uma coleção de livros digitais para quem busca crescimento pessoal, motivação e transformação.</p>
-  <p>Total de visitas: <span id="contador">0</span></p>
 </header>
 
 <div class="container">
@@ -217,7 +213,6 @@ footer a:hover { text-decoration:underline; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-  // Configuração Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
     authDomain: "biblioteca-b73c3.firebaseapp.com",
@@ -228,67 +223,56 @@ footer a:hover { text-decoration:underline; }
     appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
     measurementId: "G-1FPNRPMM9R"
   };
-
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // Contador global
-  const contadorGlobalRef = db.ref('contadorGlobal');
-  const contadorGlobalEl = document.getElementById('contador');
-  contadorGlobalRef.on('value', snapshot => {
-    contadorGlobalEl.innerText = snapshot.val() || 0;
-  });
-  contadorGlobalRef.transaction(current => (current || 0) + 1);
-
-  // Contadores individuais
+  // Contadores individuais dos livros
   const livros = document.querySelectorAll('.livro');
   livros.forEach(livro => {
     const livroId = livro.dataset.id;
     const livroRef = db.ref('livros/' + livroId + '/visualizacoes');
     const contadorEl = livro.querySelector('.contador');
+    const botao = livro.querySelector('.botao');
 
+    // Atualiza contador em tempo real
     livroRef.on('value', snapshot => {
       const novoValor = snapshot.val() || 0;
       contadorEl.innerText = novoValor;
 
-      // Animação
+      // animação
       contadorEl.parentElement.classList.add('atualizado');
-      setTimeout(() => {
-        contadorEl.parentElement.classList.remove('atualizado');
-      }, 300);
+      setTimeout(()=>contadorEl.parentElement.classList.remove('atualizado'), 300);
     });
 
-    livroRef.transaction(current => (current || 0) + 1);
+    // Incrementa ao clicar no botão "Ver detalhes"
+    botao.addEventListener('click', e => {
+      e.preventDefault();
+      livroRef.transaction(current => (current || 0) + 1).then(()=>{
+        window.location.href = botao.href;
+      });
+    });
   });
 
   // CARROSSEL
   const track = document.getElementById('carousel-track');
   const items = document.querySelectorAll('.carousel-item');
   let currentIndex = 0;
-
   function updateCarousel() {
-    items.forEach(item => item.classList.remove('active'));
+    items.forEach(item=>item.classList.remove('active'));
     items[currentIndex].classList.add('active');
     const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
     track.style.transform = `translateX(${-offset}px)`;
   }
-
-  document.getElementById('prev').addEventListener('click', ()=>{
-    currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel();
-  });
-  document.getElementById('next').addEventListener('click', ()=>{
-    currentIndex = (currentIndex + 1) % items.length; updateCarousel();
-  });
-
+  document.getElementById('prev').addEventListener('click', ()=>{ currentIndex=(currentIndex-1+items.length)%items.length; updateCarousel(); });
+  document.getElementById('next').addEventListener('click', ()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); });
   let startX=0;
-  track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
-  track.addEventListener('touchend',e=>{
-    let diff=e.changedTouches[0].clientX - startX;
-    if(diff>50){ currentIndex = (currentIndex - 1 + items.length)%items.length; updateCarousel();}
-    else if(diff<-50){ currentIndex = (currentIndex + 1)%items.length; updateCarousel();}
+  track.addEventListener('touchstart', e=>{ startX=e.touches[0].clientX; });
+  track.addEventListener('touchend', e=>{
+    let diff = e.changedTouches[0].clientX - startX;
+    if(diff>50){ currentIndex=(currentIndex-1+items.length)%items.length; updateCarousel(); }
+    else if(diff<-50){ currentIndex=(currentIndex+1)%items.length; updateCarousel(); }
   });
-
-  setInterval(()=>{ currentIndex = (currentIndex + 1)%items.length; updateCarousel(); },4000);
+  setInterval(()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); },4000);
   updateCarousel();
 </script>
 
