@@ -117,29 +117,73 @@ footer a:hover { text-decoration:underline; }
 </style>
 </head>
 <body>  
-  <a id="meuLink" href="https://castro7-7.github.io/biblioteca-online/" target="_blank">Ir para o link</a>
-<p>Total de cliques: <span id="contador">0</span></p>
+ <!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Contador com CountAPI</title>
+</head>
+<body>
+
+  <a id="meuLink" href="https://seu-link.com" target="_blank">Ir para o link</a>
+  <p>Total de cliques: <span id="contador">carregando...</span></p>
 
 <script>
-  // Namespace e chave únicos (mude se quiser personalizar)
-  const namespace = "contador-castro";
-  const key = "cliques-link";
+document.addEventListener('DOMContentLoaded', () => {
+  const namespace = 'contador-castro';   // seu namespace
+  const key = 'cliques-link';            // sua key
+  const base = 'https://api.countapi.xyz';
+  const counterEl = document.getElementById('contador');
+  const link = document.getElementById('meuLink');
 
+  // Pega o valor atual (se não existir ainda, mostra 0)
   async function atualizarContador() {
-    let res = await fetch(`https://api.countapi.xyz/get/${namespace}/${key}`);
-    let data = await res.json();
-    document.getElementById("contador").innerText = data.value;
+    try {
+      const res = await fetch(`${base}/get/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`);
+      if (!res.ok) {
+        // se não existir, retorna 0 (espera o primeiro clique para criar)
+        counterEl.innerText = '0';
+        return;
+      }
+      const json = await res.json();
+      counterEl.innerText = String(Number(json.value || 0));
+    } catch (err) {
+      console.error('Erro ao buscar contador:', err);
+      counterEl.innerText = 'erro';
+    }
   }
 
-  document.getElementById("meuLink").addEventListener("click", async () => {
-    let res = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
-    let data = await res.json();
-    document.getElementById("contador").innerText = data.value;
-  });
+  // Função para contar e abrir o link sem ser bloqueada
+  function contarEClicar(e) {
+    e.preventDefault();
+    const href = link.href;
 
+    // Abre uma aba em branco imediatamente (evita bloqueio de popup)
+    const newWin = window.open('', '_blank');
+
+    // chama o "hit" (aumenta o contador). fire-and-wait para atualizar a UI
+    fetch(`${base}/hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`)
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(json => {
+        counterEl.innerText = String(Number(json.value || 0));
+      })
+      .catch(err => {
+        console.error('Erro ao incrementar contador:', err);
+        // não impedimos o usuário de seguir — a aba será aberta abaixo
+      })
+      .finally(() => {
+        // redireciona a aba recém-aberta para o link final
+        try { newWin.location = href; } catch(e) { window.location.href = href; }
+      });
+  }
+
+  link.addEventListener('click', contarEClicar);
   atualizarContador();
+});
 </script>
 
+</body>
+</html>
 
 <header>
   <h1>📚 Biblioteca Online</h1>
@@ -250,4 +294,5 @@ updateCarousel();
 
 </body>
 </html>
+
 
