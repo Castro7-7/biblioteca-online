@@ -117,71 +117,66 @@ footer a:hover { text-decoration:underline; }
 </style>
 </head>
 <body>  
- <!doctype html>
+<!doctype html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <title>Contador com CountAPI</title>
+  <meta charset="utf-8">
+  <title>Biblioteca Online</title>
 </head>
 <body>
-
-  <a id="meuLink" href="https://castro7-7.github.io/biblioteca-online/"_blank">Ir para o link</a>
+  <a id="meuLink" href="https://castro7-7.github.io/biblioteca-online/" target="_blank">Ir para o link</a>
   <p>Total de cliques: <span id="contador">carregando...</span></p>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const namespace = 'contador-castro';   // seu namespace
-  const key = 'cliques-link';            // sua key
-  const base = 'https://api.countapi.xyz';
-  const counterEl = document.getElementById('contador');
-  const link = document.getElementById('meuLink');
+  <!-- SDKs do Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-  // Pega o valor atual (se não existir ainda, mostra 0)
-  async function atualizarContador() {
-    try {
-      const res = await fetch(`${base}/get/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`);
-      if (!res.ok) {
-        // se não existir, retorna 0 (espera o primeiro clique para criar)
-        counterEl.innerText = '0';
-        return;
-      }
-      const json = await res.json();
-      counterEl.innerText = String(Number(json.value || 0));
-    } catch (err) {
-      console.error('Erro ao buscar contador:', err);
-      counterEl.innerText = 'erro';
-    }
-  }
+  <script>
+    // Configuração do Firebase que você forneceu
+    const firebaseConfig = {
+      apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
+      authDomain: "biblioteca-b73c3.firebaseapp.com",
+      databaseURL: "https://biblioteca-b73c3-default-rtdb.firebaseio.com",
+      projectId: "biblioteca-b73c3",
+      storageBucket: "biblioteca-b73c3.firebasestorage.app",
+      messagingSenderId: "19441912897",
+      appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
+      measurementId: "G-1FPNRPMM9R"
+    };
 
-  // Função para contar e abrir o link sem ser bloqueada
-  function contarEClicar(e) {
-    e.preventDefault();
-    const href = link.href;
+    // Inicializa Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-    // Abre uma aba em branco imediatamente (evita bloqueio de popup)
-    const newWin = window.open('', '_blank');
+    // Referência do contador no banco
+    const contadorRef = db.ref('contadorCliques');
 
-    // chama o "hit" (aumenta o contador). fire-and-wait para atualizar a UI
-    fetch(`${base}/hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`)
-      .then(r => r.ok ? r.json() : Promise.reject(r.status))
-      .then(json => {
-        counterEl.innerText = String(Number(json.value || 0));
-      })
-      .catch(err => {
+    const counterEl = document.getElementById('contador');
+    const link = document.getElementById('meuLink');
+
+    // Atualiza o contador em tempo real
+    contadorRef.on('value', snapshot => {
+      const val = snapshot.val();
+      counterEl.innerText = val !== null ? val : 0;
+    });
+
+    // Incrementa quando alguém clica
+    link.addEventListener('click', e => {
+      e.preventDefault();
+
+      // Incrementa o contador usando transaction (seguro para vários usuários ao mesmo tempo)
+      contadorRef.transaction(current => {
+        return (current || 0) + 1;
+      }).then(() => {
+        // Abre o link após contar
+        window.open(link.href, '_blank');
+      }).catch(err => {
         console.error('Erro ao incrementar contador:', err);
-        // não impedimos o usuário de seguir — a aba será aberta abaixo
-      })
-      .finally(() => {
-        // redireciona a aba recém-aberta para o link final
-        try { newWin.location = href; } catch(e) { window.location.href = href; }
+        // Mesmo em caso de erro, abre o link
+        window.open(link.href, '_blank');
       });
-  }
-
-  link.addEventListener('click', contarEClicar);
-  atualizarContador();
-});
-</script>
-
+    });
+  </script>
 </body>
 </html>
 
@@ -294,6 +289,7 @@ updateCarousel();
 
 </body>
 </html>
+
 
 
 
