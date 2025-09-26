@@ -18,62 +18,55 @@ header p { font-size:1.2rem; opacity:0.8; }
 
 /* CARROSSEL */
 .carousel-container {
-  position:relative;
-  width:90%;
-  max-width:900px;
-  height:280px;
-  margin:40px auto;
-  overflow:hidden;
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto;
+  overflow: visible;
 }
 .carousel-track {
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
   transition: transform 0.5s ease;
+  padding: 20px 0;
 }
 .carousel-item {
-  min-width:160px;
-  margin:0 -40px; /* ligeira sobreposição */
-  flex-shrink:0;
-  transition: transform 0.5s ease, opacity 0.5s ease, z-index 0.5s ease;
-  cursor:pointer;
-  opacity:0.6;
-  z-index:1;
+  width: 160px; 
+  height: 240px; 
+  margin: 0 10px;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transform: scale(0.9);
+  transition: all 0.5s ease;
+  cursor: pointer;
 }
 .carousel-item img {
-  width:160px;
-  height:240px;
-  object-fit:cover;
-  border-radius:10px;
-  display:block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* todas as capas do mesmo tamanho */
+  border-radius: 10px;
+  display: block;
 }
 .carousel-item.active {
-  transform: scale(1.2);
-  opacity:1;
-  z-index:5;
-}
-.carousel-item.prev, .carousel-item.next {
+  opacity: 1;
   transform: scale(1);
-  opacity:0.85;
-  z-index:3;
 }
 
 /* Botões */
 .carousel-btn {
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   background: rgba(124,58,174,0.8);
-  color:#fff;
-  border:none;
-  font-size:2em;
-  padding:5px 10px;
-  cursor:pointer;
-  border-radius:5px;
-  z-index:10;
+  color: #fff;
+  border: none;
+  font-size: 2em;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 10;
 }
-#prev { left:10px; }
-#next { right:10px; }
+#prev { left: 10px; }
+#next { right: 10px; }
 
 /* LISTA DE LIVROS */
 .container { width:90%; max-width:1000px; margin:30px auto; }
@@ -118,7 +111,7 @@ footer a:hover { text-decoration:underline; }
 .signature img { max-height:25px; display:inline-block; vertical-align:middle; opacity:0.7; }
 
 @media(max-width:768px){
-  .carousel-item img { width:140px; height:210px; }
+  .carousel-item { width:140px; height:210px; margin:0 8px; }
   .livro img { width:90px; height:130px; }
 }
 </style>
@@ -136,9 +129,15 @@ footer a:hover { text-decoration:underline; }
   <div class="carousel-container" id="carousel-container">
     <button class="carousel-btn" id="prev">&#10094;</button>
     <div class="carousel-track" id="carousel-track">
-      <div class="carousel-item active"><a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a></div>
-      <div class="carousel-item next"><a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a></div>
-      <div class="carousel-item prev"><a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a></div>
+      <div class="carousel-item">
+        <a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a>
+      </div>
+      <div class="carousel-item">
+        <a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a>
+      </div>
+      <div class="carousel-item">
+        <a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a>
+      </div>
     </div>
     <button class="carousel-btn" id="next">&#10095;</button>
   </div>
@@ -190,41 +189,38 @@ footer a:hover { text-decoration:underline; }
 </footer>
 
 <script>
-let carouselItems = document.querySelectorAll('.carousel-item');
-let totalItems = carouselItems.length;
+const track = document.getElementById('carousel-track');
+const items = document.querySelectorAll('.carousel-item');
 let currentIndex = 0;
 
 function updateCarousel() {
-  carouselItems.forEach((item,i)=>{
-    item.classList.remove('prev','active','next');
-    if(i===currentIndex) item.classList.add('active');
-    else if(i=== (currentIndex-1+totalItems)%totalItems) item.classList.add('prev');
-    else if(i=== (currentIndex+1)%totalItems) item.classList.add('next');
-  });
+  items.forEach(item => item.classList.remove('active'));
+  items[currentIndex].classList.add('active');
+  const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
+  track.style.transform = `translateX(${-offset}px)`;
 }
 
 // Botões
 document.getElementById('prev').addEventListener('click', ()=>{
-  currentIndex = (currentIndex - 1 + totalItems)%totalItems;
+  currentIndex = (currentIndex - 1 + items.length) % items.length;
   updateCarousel();
 });
 document.getElementById('next').addEventListener('click', ()=>{
-  currentIndex = (currentIndex + 1)%totalItems;
+  currentIndex = (currentIndex + 1) % items.length;
   updateCarousel();
 });
 
 // Swipe mobile
 let startX=0;
-const carouselContainer = document.getElementById('carousel-container');
-carouselContainer.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
-carouselContainer.addEventListener('touchend',e=>{
+track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
+track.addEventListener('touchend',e=>{
   let diff=e.changedTouches[0].clientX - startX;
-  if(diff>50){ currentIndex = (currentIndex - 1 + totalItems)%totalItems; updateCarousel();}
-  else if(diff<-50){ currentIndex = (currentIndex + 1)%totalItems; updateCarousel();}
+  if(diff>50){ currentIndex = (currentIndex - 1 + items.length)%items.length; updateCarousel();}
+  else if(diff<-50){ currentIndex = (currentIndex + 1)%items.length; updateCarousel();}
 });
 
 // Autoplay
-setInterval(()=>{ currentIndex = (currentIndex + 1)%totalItems; updateCarousel(); },4000);
+setInterval(()=>{ currentIndex = (currentIndex + 1)%items.length; updateCarousel(); },4000);
 
 updateCarousel();
 </script>
