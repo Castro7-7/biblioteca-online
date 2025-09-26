@@ -38,7 +38,6 @@ header p { font-size:1.2rem; opacity:0.8; }
   transform: scale(0.9);
   transition: all 0.5s ease;
   cursor: pointer;
-  position: relative;
 }
 .carousel-item img {
   width: 100%;
@@ -52,20 +51,7 @@ header p { font-size:1.2rem; opacity:0.8; }
   transform: scale(1);
 }
 
-/* Contador no carrossel */
-.carousel-item .contador {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: rgba(124,58,174,0.8);
-  color:#fff;
-  padding:2px 6px;
-  border-radius:6px;
-  font-size:0.9em;
-  font-weight:bold;
-}
-
-/* Botões */
+/* Botões do carrossel */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -115,16 +101,20 @@ header p { font-size:1.2rem; opacity:0.8; }
 }
 .botao:hover { background:#5b21b6; }
 
-/* Contador dentro do card */
-.livro .contador {
-  display:inline-block;
-  margin-top:6px;
-  padding:2px 6px;
-  background: rgba(124,58,174,0.8);
-  color:#fff;
-  border-radius:6px;
-  font-size:0.9em;
-  font-weight:bold;
+/* Contador individual no card */
+.livro .contador-card {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(124,58,174,0.9);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* RODAPÉ */
@@ -157,17 +147,14 @@ footer a:hover { text-decoration:underline; }
   <div class="carousel-container" id="carousel-container">
     <button class="carousel-btn" id="prev">&#10094;</button>
     <div class="carousel-track" id="carousel-track">
-      <div class="carousel-item" data-id="livro1">
+      <div class="carousel-item">
         <a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a>
-        <span class="contador">0</span>
       </div>
-      <div class="carousel-item" data-id="livro2">
+      <div class="carousel-item">
         <a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a>
-        <span class="contador">0</span>
       </div>
-      <div class="carousel-item" data-id="livro3">
+      <div class="carousel-item">
         <a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a>
-        <span class="contador">0</span>
       </div>
     </div>
     <button class="carousel-btn" id="next">&#10095;</button>
@@ -181,26 +168,28 @@ footer a:hover { text-decoration:underline; }
         <h2>Liberte-se do inimigo invisível</h2>
         <p>Baseado em “Mais Esperto que o Diabo”, este livro ajuda a identificar obstáculos invisíveis e liberar seu potencial.</p>
         <a href="livros/Liberte-se do inimigo invisível.html" class="botao">Ver detalhes</a>
-        <span class="contador">0</span> visualizações
       </div>
+      <div class="contador-card"><span class="contador">0</span> 👁️</div>
     </div>
+
     <div class="livro" data-id="livro2">
       <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
       <div class="livro-info">
         <h2>Destravando Seu Potencial</h2>
         <p>Um guia prático para desbloquear sua mente e alcançar seus objetivos.</p>
         <a href="livros/destravando.html" class="botao">Ver detalhes</a>
-        <span class="contador">0</span> visualizações
       </div>
+      <div class="contador-card"><span class="contador">0</span> 👁️</div>
     </div>
+
     <div class="livro" data-id="livro3">
       <img src="livros/img/48.png" alt="48 Leis do Poder">
       <div class="livro-info">
         <h2>48 Leis do Poder</h2>
         <p>Domine as regras do poder e influencie pessoas de forma estratégica.</p>
         <a href="livros/48-leis-do-poder.html" class="botao">Ver detalhes</a>
-        <span class="contador">0</span> visualizações
       </div>
+      <div class="contador-card"><span class="contador">0</span> 👁️</div>
     </div>
   </div>
 
@@ -238,28 +227,31 @@ footer a:hover { text-decoration:underline; }
     appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
     measurementId: "G-1FPNRPMM9R"
   };
+
+  // Inicializa Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // Contador global do site
-  const visitasRef = db.ref('contadorCliques');
-  visitasRef.transaction(current => (current || 0) + 1);
-  const counterEl = document.getElementById('contador');
-  visitasRef.on('value', snapshot => { counterEl.innerText = snapshot.val() || 0; });
+  // Contador global de visitas
+  const contadorGlobalRef = db.ref('contadorGlobal');
+  const contadorGlobalEl = document.getElementById('contador');
+
+  contadorGlobalRef.on('value', snapshot => {
+    contadorGlobalEl.innerText = snapshot.val() || 0;
+  });
+  contadorGlobalRef.transaction(current => (current || 0) + 1);
 
   // Contadores individuais dos livros
-  const livros = document.querySelectorAll('.livro, .carousel-item');
+  const livros = document.querySelectorAll('.library-list .livro');
   livros.forEach(livro => {
     const livroId = livro.dataset.id;
     const livroRef = db.ref('livros/' + livroId + '/visualizacoes');
     const contadorEl = livro.querySelector('.contador');
 
-    // Atualiza contador em tempo real
     livroRef.on('value', snapshot => {
       contadorEl.innerText = snapshot.val() || 0;
     });
 
-    // Incrementa automaticamente
     livroRef.transaction(current => (current || 0) + 1);
   });
 
@@ -282,7 +274,6 @@ footer a:hover { text-decoration:underline; }
     currentIndex = (currentIndex + 1) % items.length; updateCarousel();
   });
 
-  // Swipe mobile
   let startX=0;
   track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
   track.addEventListener('touchend',e=>{
@@ -291,9 +282,9 @@ footer a:hover { text-decoration:underline; }
     else if(diff<-50){ currentIndex = (currentIndex + 1)%items.length; updateCarousel();}
   });
 
-  // Autoplay
   setInterval(()=>{ currentIndex = (currentIndex + 1)%items.length; updateCarousel(); },4000);
   updateCarousel();
+
 </script>
 
 </body>
