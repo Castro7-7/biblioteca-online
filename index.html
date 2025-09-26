@@ -144,8 +144,11 @@ header p { font-size:1.2rem; opacity:0.8; }
 #adminPanel h2 { text-align:center; margin-bottom:15px; }
 .admin-book { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:rgba(255,255,255,0.1); padding:8px 10px; border-radius:8px; }
 .admin-book span { font-weight:bold; }
-.admin-book button { background:#7c3aed; border:none; color:white; padding:4px 8px; border-radius:5px; cursor:pointer; }
+.admin-book button { background:#7c3aed; border:none; color:white; padding:4px 8px; border-radius:5px; cursor:pointer; margin-left:4px; }
 .admin-book button:hover { background:#5b21b6; }
+
+/* Botão fechar painel */
+#closeAdmin { position:absolute; top:10px; right:15px; background:#7c3aed; padding:4px 8px; border:none; border-radius:5px; cursor:pointer; }
 
 /* RODAPÉ */
 footer { background:#1a0f2e; text-align:center; padding:25px 20px; margin-top:50px; color:#aaa; }
@@ -235,6 +238,7 @@ footer a:hover { text-decoration:underline; }
 
 <!-- Painel Admin -->
 <div id="adminPanel">
+  <button id="closeAdmin">Fechar</button>
   <h2>PAINEL ADMIN</h2>
   <div id="adminBooks"></div>
   <div style="margin-top:15px; text-align:center;">
@@ -259,110 +263,108 @@ footer a:hover { text-decoration:underline; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <script>
-  // Config Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
-    authDomain: "biblioteca-b73c3.firebaseapp.com",
-    databaseURL: "https://biblioteca-b73c3-default-rtdb.firebaseio.com",
-    projectId: "biblioteca-b73c3",
-    storageBucket: "biblioteca-b73c3.firebasestorage.app",
-    messagingSenderId: "19441912897",
-    appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
-    measurementId: "G-1FPNRPMM9R"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-  const auth = firebase.auth();
+const firebaseConfig = {
+  apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
+  authDomain: "biblioteca-b73c3.firebaseapp.com",
+  databaseURL: "https://biblioteca-b73c3-default-rtdb.firebaseio.com",
+  projectId: "biblioteca-b73c3",
+  storageBucket: "biblioteca-b73c3.firebasestorage.app",
+  messagingSenderId: "19441912897",
+  appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
+  measurementId: "G-1FPNRPMM9R"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const auth = firebase.auth();
 
-  // Livros e contadores
-  const livros = document.querySelectorAll('.livro');
-  const totalVisitsEl = document.getElementById('totalVisits');
-  const totalRef = db.ref('totalVisits');
+// Total site
+const totalVisitsEl = document.getElementById('totalVisits');
+const totalRef = db.ref('totalVisits');
+totalRef.once('value', snap => {
+  if(snap.val()===null) totalRef.set(0);
+});
+totalRef.on('value', snap => { totalVisitsEl.innerText = snap.val()||0; });
 
-  // Incrementa total do site apenas uma vez
-  totalRef.transaction(current => (current || 0) + 1);
+// Livros
+const livros = document.querySelectorAll('.livro');
+livros.forEach(livro=>{
+  const key = livro.dataset.book;
+  const ref = db.ref('books/'+key);
+  // Cria contador se não existir
+  ref.once('value', snap => { if(snap.val()===null) ref.set(0); });
+  // Atualiza contador visual
+  const span = livro.querySelector('.livro-views span');
+  ref.on('value', snap => { span.innerText = snap.val()||0; });
+});
 
-  // Atualiza total do site
-  totalRef.on('value', snap => { totalVisitsEl.innerText = snap.val() || 0; });
+// Carrossel
+const track = document.getElementById('carousel-track');
+const items = document.querySelectorAll('.carousel-item');
+let currentIndex = 0;
+function updateCarousel() {
+  items.forEach(item => item.classList.remove('active'));
+  items[currentIndex].classList.add('active');
+  const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
+  track.style.transform = `translateX(${-offset}px)`;
+}
+document.getElementById('prev').addEventListener('click', ()=>{
+  currentIndex = (currentIndex-1+items.length)%items.length; updateCarousel();
+});
+document.getElementById('next').addEventListener('click', ()=>{
+  currentIndex = (currentIndex+1)%items.length; updateCarousel();
+});
+let startX=0;
+track.addEventListener('touchstart',e=>{ startX=e.touches[0].clientX; });
+track.addEventListener('touchend',e=>{
+  let diff=e.changedTouches[0].clientX-startX;
+  if(diff>50){ currentIndex=(currentIndex-1+items.length)%items.length; updateCarousel(); }
+  else if(diff<-50){ currentIndex=(currentIndex+1)%items.length; updateCarousel(); }
+});
+setInterval(()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); },4000);
+updateCarousel();
 
-  livros.forEach(livro => {
+// Painel Admin Alt+Shift+A
+let adminPanel = document.getElementById('adminPanel');
+document.getElementById('closeAdmin').addEventListener('click', ()=>{ adminPanel.style.display='none'; });
+
+document.addEventListener('keydown', e=>{
+  if(e.altKey && e.shiftKey && e.key.toLowerCase()=='a'){
+    const email = prompt('Digite seu e-mail de admin:');
+    const password = prompt('Digite sua senha de admin:');
+    auth.signInWithEmailAndPassword(email,password)
+      .then(()=>{ adminPanel.style.display='block'; loadAdminPanel(); })
+      .catch(()=>alert('E-mail ou senha incorretos'));
+  }
+});
+
+function loadAdminPanel(){
+  const adminBooks = document.getElementById('adminBooks');
+  adminBooks.innerHTML='';
+  livros.forEach(livro=>{
     const key = livro.dataset.book;
-    const ref = db.ref('books/' + key);
+    const ref = db.ref('books/'+key);
+    const div = document.createElement('div');
+    div.className='admin-book';
+    div.innerHTML=`
+      <span>${livro.querySelector('h2').innerText}: <span id="count-${key}">0</span></span>
+      <button id="inc-${key}">+</button>
+      <button id="dec-${key}">-</button>
+      <button id="reset-${key}">Zerar</button>
+    `;
+    adminBooks.appendChild(div);
 
-    // Cria contador se não existir
-    ref.once('value', snap => { if(snap.val()===null) ref.set(0); });
+    // Atualiza contador
+    ref.on('value', snap => { div.querySelector('#count-'+key).innerText = snap.val()||0; });
 
-    // Incrementa contador apenas uma vez ao entrar
-    ref.transaction(current => (current || 0) + 1);
-
-    // Atualiza visual do contador
-    const span = livro.querySelector('.livro-views span');
-    ref.on('value', snap => { span.innerText = snap.val() || 0; });
+    // Aumentar
+    div.querySelector('#inc-'+key).addEventListener('click', ()=>{ ref.transaction(current=>(current||0)+1); });
+    // Diminuir
+    div.querySelector('#dec-'+key).addEventListener('click', ()=>{ ref.transaction(current=>(current||0)-1); });
+    // Zerar
+    div.querySelector('#reset-'+key).addEventListener('click', ()=>{ ref.set(0); });
   });
-
-  // Carrossel
-  const track = document.getElementById('carousel-track');
-  const items = document.querySelectorAll('.carousel-item');
-  let currentIndex = 0;
-  function updateCarousel() {
-    items.forEach(item => item.classList.remove('active'));
-    items[currentIndex].classList.add('active');
-    const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
-    track.style.transform = `translateX(${-offset}px)`;
-  }
-  document.getElementById('prev').addEventListener('click', ()=>{
-    currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel();
-  });
-  document.getElementById('next').addEventListener('click', ()=>{
-    currentIndex = (currentIndex + 1) % items.length; updateCarousel();
-  });
-  track.addEventListener('touchstart',e=>{ startX=e.touches[0].clientX; });
-  track.addEventListener('touchend',e=>{
-    let diff=e.changedTouches[0].clientX-startX;
-    if(diff>50){ currentIndex=(currentIndex-1+items.length)%items.length; updateCarousel(); }
-    else if(diff<-50){ currentIndex=(currentIndex+1)%items.length; updateCarousel(); }
-  });
-  setInterval(()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); },4000);
-  updateCarousel();
-
-  // Painel Admin: Alt + Shift + A
-  let adminPanel = document.getElementById('adminPanel');
-  document.addEventListener('keydown', e => {
-    if(e.altKey && e.shiftKey && e.key.toLowerCase() === 'a'){
-      const email = prompt('Digite seu e-mail de admin:');
-      const password = prompt('Digite sua senha de admin:');
-      auth.signInWithEmailAndPassword(email,password)
-        .then(() => {
-          adminPanel.style.display='block';
-          loadAdminPanel();
-        })
-        .catch(() => alert('E-mail ou senha incorretos'));
-    }
-  });
-
-  function loadAdminPanel(){
-    const adminBooks = document.getElementById('adminBooks');
-    adminBooks.innerHTML='';
-    livros.forEach(livro=>{
-      const key = livro.dataset.book;
-      const ref = db.ref('books/' + key);
-      const div = document.createElement('div');
-      div.className='admin-book';
-      div.innerHTML=`<span>${livro.querySelector('h2').innerText}: <span id="count-${key}">0</span></span>
-        <button id="reset-${key}">Zerar</button>`;
-      adminBooks.appendChild(div);
-      // Atualiza contador em tempo real
-      ref.on('value', snap => {
-        div.querySelector('#count-'+key).innerText = snap.val() || 0;
-      });
-      // Botão zerar
-      div.querySelector('button').addEventListener('click', ()=>{
-        ref.set(0);
-      });
-    });
-    // Botão zerar total
-    document.getElementById('resetTotal').onclick = ()=>{ totalRef.set(0); };
-  }
+  document.getElementById('resetTotal').onclick = ()=>{ totalRef.set(0); };
+}
 </script>
 </body>
 </html>
