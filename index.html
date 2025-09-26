@@ -101,12 +101,12 @@ header p { font-size:1.2rem; opacity:0.8; }
 }
 .botao:hover { background:#5b21b6; }
 
-/* Contador individual no card */
+/* Contador moderno sobre a capa */
 .livro .contador-card {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(124,58,174,0.9);
+  top: 8px;
+  right: 8px;
+  background: rgba(124,58,174,0.8);
   color: #fff;
   padding: 4px 8px;
   border-radius: 12px;
@@ -115,7 +115,10 @@ header p { font-size:1.2rem; opacity:0.8; }
   display: flex;
   align-items: center;
   gap: 4px;
+  pointer-events: none;
+  transition: transform 0.2s ease;
 }
+.livro .contador-card.atualizado { transform: scale(1.3); }
 
 /* RODAPÉ */
 footer { background:#1a0f2e; text-align:center; padding:25px 20px; margin-top:50px; color:#aaa; }
@@ -195,12 +198,10 @@ footer a:hover { text-decoration:underline; }
 
 </div>
 
-<!-- TIPOGRAFIA PEQUENA -->
 <div class="signature">
   <img src="livros/img/signature.png" alt="Sua assinatura">
 </div>
 
-<!-- RODAPÉ -->
 <footer>
   <p>© 2025 Biblioteca Online</p>
   <p>
@@ -228,28 +229,33 @@ footer a:hover { text-decoration:underline; }
     measurementId: "G-1FPNRPMM9R"
   };
 
-  // Inicializa Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // Contador global de visitas
+  // Contador global
   const contadorGlobalRef = db.ref('contadorGlobal');
   const contadorGlobalEl = document.getElementById('contador');
-
   contadorGlobalRef.on('value', snapshot => {
     contadorGlobalEl.innerText = snapshot.val() || 0;
   });
   contadorGlobalRef.transaction(current => (current || 0) + 1);
 
-  // Contadores individuais dos livros
-  const livros = document.querySelectorAll('.library-list .livro');
+  // Contadores individuais
+  const livros = document.querySelectorAll('.livro');
   livros.forEach(livro => {
     const livroId = livro.dataset.id;
     const livroRef = db.ref('livros/' + livroId + '/visualizacoes');
     const contadorEl = livro.querySelector('.contador');
 
     livroRef.on('value', snapshot => {
-      contadorEl.innerText = snapshot.val() || 0;
+      const novoValor = snapshot.val() || 0;
+      contadorEl.innerText = novoValor;
+
+      // Animação
+      contadorEl.parentElement.classList.add('atualizado');
+      setTimeout(() => {
+        contadorEl.parentElement.classList.remove('atualizado');
+      }, 300);
     });
 
     livroRef.transaction(current => (current || 0) + 1);
@@ -284,7 +290,6 @@ footer a:hover { text-decoration:underline; }
 
   setInterval(()=>{ currentIndex = (currentIndex + 1)%items.length; updateCarousel(); },4000);
   updateCarousel();
-
 </script>
 
 </body>
