@@ -17,53 +17,20 @@ header h1 { font-size:2.5rem; margin-bottom:10px; }
 header p { font-size:1.2rem; opacity:0.8; }
 
 /* CARROSSEL */
-.carousel-container {
-  position: relative;
-  width: 90%;
-  max-width: 900px;
-  margin: 40px auto;
-  overflow: visible;
-}
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease;
-  padding: 20px 0;
-}
+.carousel-container { position: relative; width: 90%; max-width: 900px; margin: 40px auto; overflow: visible; }
+.carousel-track { display: flex; transition: transform 0.5s ease; padding: 20px 0; }
 .carousel-item {
-  width: 160px; 
-  height: 240px; 
-  margin: 0 10px;
-  flex-shrink: 0;
-  opacity: 0.6;
-  transform: scale(0.9);
-  transition: all 0.5s ease;
-  cursor: pointer;
-  position: relative;
+  width: 160px; height: 240px; margin: 0 10px; flex-shrink: 0;
+  opacity: 0.6; transform: scale(0.9); transition: all 0.5s ease;
+  cursor: pointer; position: relative;
 }
-.carousel-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
-}
-.carousel-item.active {
-  opacity: 1;
-  transform: scale(1);
-}
-/* Botões */
+.carousel-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: block; }
+.carousel-item.active { opacity: 1; transform: scale(1); }
 .carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(124,58,174,0.8);
-  color: #fff;
-  border: none;
-  font-size: 2em;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  z-index: 10;
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(124,58,174,0.8); color: #fff; border: none;
+  font-size: 2em; padding: 5px 10px; cursor: pointer;
+  border-radius: 5px; z-index: 10;
 }
 #prev { left: 10px; }
 #next { right: 10px; }
@@ -72,17 +39,10 @@ header p { font-size:1.2rem; opacity:0.8; }
 .container { width:90%; max-width:1000px; margin:30px auto; }
 .library-list { display:flex; flex-direction:column; gap:20px; }
 .livro {
-  display:flex;
-  background: rgba(255,255,255,0.05);
-  border-radius:16px;
-  padding:15px;
-  width:100%;
-  min-height:160px;
-  align-items:flex-start;
-  gap:15px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.3);
-  transition:transform 0.3s ease;
-  position: relative;
+  display:flex; background: rgba(255,255,255,0.05);
+  border-radius:16px; padding:15px; width:100%; min-height:160px;
+  align-items:flex-start; gap:15px; box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  transition:transform 0.3s ease; position: relative;
 }
 .livro:hover { transform:translateY(-3px); }
 .livro img { width:110px; height:160px; object-fit:cover; border-radius:8px; flex-shrink:0; }
@@ -90,65 +50,43 @@ header p { font-size:1.2rem; opacity:0.8; }
 .livro-info h2 { margin-top:0; margin-bottom:6px; font-size:1.3em; }
 .livro-info p { margin-bottom:10px; line-height:1.4; opacity:0.9; }
 .botao {
-  display:inline-block;
-  padding:8px 10px;
-  background:#7c3aed;
-  color:white;
-  text-decoration:none;
-  border-radius:8px;
-  font-weight:bold;
+  display:inline-block; padding:8px 10px; background:#7c3aed;
+  color:white; text-decoration:none; border-radius:8px; font-weight:bold;
   transition: background 0.3s;
 }
 .botao:hover { background:#5b21b6; }
 
 /* Contador individual dos livros */
 .livro-views {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display:flex;
-  align-items:center;
-  gap:5px;
+  position: absolute; top: 10px; right: 10px;
+  display:flex; align-items:center; gap:5px;
   font-size: 0.9rem;
 }
 .livro-views img { width:18px; height:18px; }
 
 /* Contador total */
 #total-visits {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  font-size:1.2rem;
-  margin:15px auto;
+  display:flex; align-items:center; justify-content:center;
+  gap:8px; font-size:1.2rem; margin:15px auto;
 }
 #total-visits img { width:24px; height:24px; }
 
 /* Painel admin */
 #adminPanel {
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:#4c1d95;
-  padding:20px;
-  border-radius:12px;
-  z-index:999;
-  color:white;
-  display:none;
-  max-height:80vh;
-  overflow-y:auto;
-  width:90%;
-  max-width:500px;
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  background:#4c1d95; padding:20px; border-radius:12px;
+  z-index:999; color:white; display:none;
+  max-height:80vh; overflow-y:auto; width:90%; max-width:500px;
 }
 #adminPanel h2 { text-align:center; margin-bottom:15px; }
-.admin-book { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:rgba(255,255,255,0.1); padding:8px 10px; border-radius:8px; }
+.admin-book { display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:10px; background:rgba(255,255,255,0.1); padding:8px 10px; border-radius:8px; }
 .admin-book span { font-weight:bold; }
-.admin-book button { background:#7c3aed; border:none; color:white; padding:4px 8px; border-radius:5px; cursor:pointer; margin-left:4px; }
+.admin-book button { background:#7c3aed; border:none; color:white;
+  padding:4px 8px; border-radius:5px; cursor:pointer; margin-left:4px; }
 .admin-book button:hover { background:#5b21b6; }
-
-/* Botão fechar painel */
-#closeAdmin { position:absolute; top:10px; right:15px; background:#7c3aed; padding:4px 8px; border:none; border-radius:5px; cursor:pointer; }
+#closeAdmin { position:absolute; top:10px; right:15px;
+  background:#7c3aed; padding:4px 8px; border:none; border-radius:5px; cursor:pointer; }
 
 /* RODAPÉ */
 footer { background:#1a0f2e; text-align:center; padding:25px 20px; margin-top:50px; color:#aaa; }
@@ -156,9 +94,12 @@ footer p { margin:5px 0; }
 footer a { color:#7c3aed; text-decoration:none; margin:0 8px; }
 footer a:hover { text-decoration:underline; }
 
+/* Mobile ajustes */
 @media(max-width:768px){
   .carousel-item { width:140px; height:210px; margin:0 8px; }
   .livro img { width:90px; height:130px; }
+  .livro-views img { width:14px; height:14px; } /* ícone menor */
+  #total-visits img { width:18px; height:18px; } /* total menor também */
 }
 </style>
 </head>
@@ -197,10 +138,7 @@ footer a:hover { text-decoration:underline; }
         <p>Baseado em “Mais Esperto que o Diabo”, este livro ajuda a identificar obstáculos invisíveis e liberar seu potencial.</p>
         <a href="livros/Liberte-se do inimigo invisível.html" class="botao">Ver detalhes</a>
       </div>
-      <div class="livro-views">
-        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
-        <span>0</span>
-      </div>
+      <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
     </div>
     <div class="livro" data-book="potencial">
       <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
@@ -209,10 +147,7 @@ footer a:hover { text-decoration:underline; }
         <p>Um guia prático para desbloquear sua mente e alcançar seus objetivos.</p>
         <a href="livros/destravando.html" class="botao">Ver detalhes</a>
       </div>
-      <div class="livro-views">
-        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
-        <span>0</span>
-      </div>
+      <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
     </div>
     <div class="livro" data-book="48leis">
       <img src="livros/img/48.png" alt="48 Leis do Poder">
@@ -221,10 +156,7 @@ footer a:hover { text-decoration:underline; }
         <p>Domine as regras do poder e influencie pessoas de forma estratégica.</p>
         <a href="livros/48-leis-do-poder.html" class="botao">Ver detalhes</a>
       </div>
-      <div class="livro-views">
-        <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
-        <span>0</span>
-      </div>
+      <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
     </div>
   </div>
 
@@ -283,6 +215,12 @@ const totalRef = db.ref('totalVisits');
 totalRef.once('value', snap=>{ if(snap.val()===null) totalRef.set(0); });
 totalRef.on('value', snap=>{ totalVisitsEl.innerText = snap.val()||0; });
 
+// Incrementa total só 1x por sessão
+if(!sessionStorage.getItem("visited")){
+  totalRef.transaction(current=>(current||0)+1);
+  sessionStorage.setItem("visited","true");
+}
+
 // LIVROS
 const livros = document.querySelectorAll('.livro');
 livros.forEach(livro=>{
@@ -294,7 +232,7 @@ livros.forEach(livro=>{
 
   // Incrementa visual ao clicar "Ver detalhes"
   const link = livro.querySelector('.botao');
-  link.addEventListener('click', e=>{
+  link.addEventListener('click', ()=>{
     ref.transaction(current=>(current||0)+1);
     totalRef.transaction(current=>(current||0)+1);
   });
@@ -326,21 +264,22 @@ track.addEventListener('touchend',e=>{
 setInterval(()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); },4000);
 updateCarousel();
 
-// PAINEL ADMIN (Alt+Shift+A)
+// PAINEL ADMIN
 let adminPanel = document.getElementById('adminPanel');
 document.getElementById('closeAdmin').addEventListener('click', ()=>{ adminPanel.style.display='none'; });
 
-// Login persistente
-auth.onAuthStateChanged(user=>{
-  if(user){ adminPanel.style.display='block'; loadAdminPanel(); }
-});
-
 document.addEventListener('keydown', e=>{
-  if(e.altKey && e.shiftKey && e.key.toLowerCase()=='a' && !auth.currentUser){
-    const email = prompt('Digite seu e-mail de admin:');
-    const password = prompt('Digite sua senha de admin:');
-    auth.signInWithEmailAndPassword(email,password)
-      .catch(()=>alert('E-mail ou senha incorretos'));
+  if(e.altKey && e.shiftKey && e.key.toLowerCase()=='a'){
+    if(!auth.currentUser){
+      const email = prompt('Digite seu e-mail de admin:');
+      const password = prompt('Digite sua senha de admin:');
+      auth.signInWithEmailAndPassword(email,password)
+        .then(()=>{ adminPanel.style.display='block'; loadAdminPanel(); })
+        .catch(()=>alert('E-mail ou senha incorretos'));
+    } else {
+      adminPanel.style.display='block';
+      loadAdminPanel();
+    }
   }
 });
 
