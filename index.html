@@ -116,7 +116,30 @@ footer a:hover { text-decoration:underline; }
 }
 </style>
 </head>
-<body>
+<body>  
+  <a id="meuLink" href="https://castro7-7.github.io/biblioteca-online/" target="_blank">Ir para o link</a>
+<p>Total de cliques: <span id="contador">0</span></p>
+
+<script>
+  // Namespace e chave únicos (mude se quiser personalizar)
+  const namespace = "contador-castro";
+  const key = "cliques-link";
+
+  async function atualizarContador() {
+    let res = await fetch(`https://api.countapi.xyz/get/${namespace}/${key}`);
+    let data = await res.json();
+    document.getElementById("contador").innerText = data.value;
+  }
+
+  document.getElementById("meuLink").addEventListener("click", async () => {
+    let res = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
+    let data = await res.json();
+    document.getElementById("contador").innerText = data.value;
+  });
+
+  atualizarContador();
+</script>
+
 
 <header>
   <h1>📚 Biblioteca Online</h1>
@@ -227,3 +250,4 @@ updateCarousel();
 
 </body>
 </html>
+
