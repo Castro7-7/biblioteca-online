@@ -38,6 +38,7 @@ header p { font-size:1.2rem; opacity:0.8; }
   transform: scale(0.9);
   transition: all 0.5s ease;
   cursor: pointer;
+  position: relative;
 }
 .carousel-item img {
   width: 100%;
@@ -72,7 +73,6 @@ header p { font-size:1.2rem; opacity:0.8; }
 .container { width:90%; max-width:1000px; margin:30px auto; }
 .library-list { display:flex; flex-direction:column; gap:20px; }
 .livro {
-  position: relative;
   display:flex;
   background: rgba(255,255,255,0.05);
   border-radius:16px;
@@ -83,6 +83,7 @@ header p { font-size:1.2rem; opacity:0.8; }
   gap:15px;
   box-shadow:0 4px 12px rgba(0,0,0,0.3);
   transition:transform 0.3s ease;
+  position: relative;
 }
 .livro:hover { transform:translateY(-3px); }
 .livro img { width:110px; height:160px; object-fit:cover; border-radius:8px; flex-shrink:0; }
@@ -101,25 +102,18 @@ header p { font-size:1.2rem; opacity:0.8; }
 }
 .botao:hover { background:#5b21b6; }
 
-/* Contador no canto superior direito do card */
+/* Contador de visualizações */
 .view-counter {
   position: absolute;
-  top:10px;
-  right:10px;
+  top: 10px;
+  right: 10px;
   display:flex;
   align-items:center;
   gap:5px;
-  font-weight:bold;
-  font-size:0.9em;
 }
-.view-counter img { width:16px; height:16px; }
-
-/* Contador total do site */
-#totalViews {
-  text-align:center;
-  margin:20px 0;
-  font-size:1.2em;
-  font-weight:bold;
+.view-counter img {
+  width:20px;
+  height:20px;
 }
 
 /* RODAPÉ */
@@ -128,25 +122,28 @@ footer p { margin:5px 0; }
 footer a { color:#7c3aed; text-decoration:none; margin:0 8px; }
 footer a:hover { text-decoration:underline; }
 
-/* Painel admin oculto */
+/* TIPOGRAFIA PEQUENA */
+.signature { margin:5px auto 0 auto; text-align:center; height:25px; overflow:hidden; }
+.signature img { max-height:25px; display:inline-block; vertical-align:middle; opacity:0.7; }
+
+/* PAINEL ADMIN */
 #adminPanel {
   display:none;
   position:fixed;
-  top:10%;
+  top:50%;
   left:50%;
-  transform:translateX(-50%);
-  background:rgba(0,0,0,0.95);
-  color:#fff;
-  padding:30px;
+  transform:translate(-50%,-50%);
+  background: rgba(30,30,30,0.95);
+  padding:20px;
   border-radius:12px;
-  z-index:1000;
-  width:400px;
-  max-width:90%;
+  z-index:9999;
+  color:#fff;
+  width:300px;
 }
-#adminPanel h2 { margin-top:0; }
-#adminClose { position:absolute; top:10px; right:10px; cursor:pointer; color:#fff; font-weight:bold; }
-
-#adminToggleHint {position:fixed;bottom:10px;right:10px;padding:10px;background:#7c3aed;border:none;border-radius:8px;color:#fff;cursor:pointer;}
+#adminPanel h2 { margin-top:0; text-align:center; }
+#adminPanel input, #adminPanel button { width:100%; margin:5px 0; padding:8px; border-radius:6px; border:none; }
+#adminPanel button { background:#7c3aed; color:#fff; font-weight:bold; cursor:pointer; }
+#adminPanel #adminClose { position:absolute; top:8px; right:12px; cursor:pointer; font-weight:bold; }
 
 @media(max-width:768px){
   .carousel-item { width:140px; height:210px; margin:0 8px; }
@@ -161,22 +158,23 @@ footer a:hover { text-decoration:underline; }
   <p>Uma coleção de livros digitais para quem busca crescimento pessoal, motivação e transformação.</p>
 </header>
 
-<div id="totalViews">Total de visitas: <span>0</span></div>
-
 <div class="container">
 
   <!-- CARROSSEL -->
   <div class="carousel-container" id="carousel-container">
     <button class="carousel-btn" id="prev">&#10094;</button>
     <div class="carousel-track" id="carousel-track">
-      <div class="carousel-item">
+      <div class="carousel-item" data-id="livro1">
         <a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a>
+        <div class="view-counter"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item" data-id="livro2">
         <a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a>
+        <div class="view-counter"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item" data-id="livro3">
         <a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a>
+        <div class="view-counter"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
       </div>
     </div>
     <button class="carousel-btn" id="next">&#10095;</button>
@@ -193,7 +191,6 @@ footer a:hover { text-decoration:underline; }
       </div>
       <div class="view-counter"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
     </div>
-
     <div class="livro" data-id="livro2">
       <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
       <div class="livro-info">
@@ -203,7 +200,6 @@ footer a:hover { text-decoration:underline; }
       </div>
       <div class="view-counter"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
     </div>
-
     <div class="livro" data-id="livro3">
       <img src="livros/img/48.png" alt="48 Leis do Poder">
       <div class="livro-info">
@@ -217,165 +213,102 @@ footer a:hover { text-decoration:underline; }
 
 </div>
 
-<!-- Painel Admin -->
-<div id="adminPanel">
-  <span id="adminClose">✖</span>
-  <h2>Painel de Admin</h2>
-  <button onclick="resetCounters()">Zerar todos contadores</button>
-  <h3>Ajustar visualizações</h3>
-  <div id="adminControls"></div>
-</div>
-
-<button id="adminToggleHint">Admin</button>
-
-<!-- TIPOGRAFIA PEQUENA -->
 <div class="signature">
   <img src="livros/img/signature.png" alt="Sua assinatura">
 </div>
 
-<!-- RODAPÉ -->
 <footer>
   <p>© 2025 Biblioteca Online</p>
+  <p>
+    <a href="#">Política de Privacidade</a> |
+    <a href="#">Termos de Uso</a> |
+    <a href="#">Instagram</a> |
+    <a href="#">Facebook</a>
+  </p>
 </footer>
 
-<!-- Firebase SDKs -->
+<!-- PAINEL ADMIN OCULTO -->
+<div id="adminPanel">
+  <div id="adminClose">X</div>
+  <h2>Painel Admin</h2>
+  <p>Digite o ID do livro e o valor para alterar visualizações:</p>
+  <input type="text" id="adminBookId" placeholder="Ex: livro1">
+  <input type="number" id="adminBookValue" placeholder="Ex: 10">
+  <button id="adminUpdate">Atualizar</button>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <script>
-// Firebase Config
-const firebaseConfig = {
-  apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
-  authDomain: "biblioteca-b73c3.firebaseapp.com",
-  databaseURL: "https://biblioteca-b73c3-default-rtdb.firebaseio.com",
-  projectId: "biblioteca-b73c3",
-  storageBucket: "biblioteca-b73c3.firebasestorage.app",
-  messagingSenderId: "19441912897",
-  appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
-  measurementId: "G-1FPNRPMM9R"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
+    authDomain: "biblioteca-b73c3.firebaseapp.com",
+    databaseURL: "https://biblioteca-b73c3-default-rtdb.firebaseio.com",
+    projectId: "biblioteca-b73c3",
+    storageBucket: "biblioteca-b73c3.firebasestorage.app",
+    messagingSenderId: "19441912897",
+    appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
+    measurementId: "G-1FPNRPMM9R"
+  };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const auth = firebase.auth();
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-// Contadores totais
-const totalViewsEl = document.querySelector('#totalViews span');
-const livros = document.querySelectorAll('.livro');
-
-// Função para atualizar contadores
-function updateCounters() {
-  let total = 0;
+  // Atualiza contadores individuais
+  const livros = document.querySelectorAll('.livro, .carousel-item');
   livros.forEach(livro => {
-    const id = livro.dataset.id;
+    const bookId = livro.dataset.id;
+    const btn = livro.querySelector('.botao, a');
     const counterEl = livro.querySelector('.view-counter span');
-    const ref = db.ref('livros/' + id);
-    ref.once('value').then(snapshot => {
-      const val = snapshot.val() || 0;
-      counterEl.innerText = val;
-      total += val;
-      totalViewsEl.innerText = total;
+    const bookRef = db.ref('livros/' + bookId);
+
+    // Valor inicial e updates
+    bookRef.on('value', snapshot => { counterEl.innerText = snapshot.val() || 0; });
+
+    // Incrementa somente ao clicar
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      bookRef.transaction(current => (current || 0) + 1).then(() => { window.open(btn.href, '_blank'); }).catch(() => { window.open(btn.href, '_blank'); });
     });
   });
-}
 
-// Incrementa contador individual
-livros.forEach(livro => {
-  const id = livro.dataset.id;
-  const ref = db.ref('livros/' + id);
-  // Quando entra na página conta 1
-  ref.transaction(current => (current||0)+1).then(updateCounters);
+  // CARROSSEL
+  const track = document.getElementById('carousel-track');
+  const items = document.querySelectorAll('.carousel-item');
+  let currentIndex = 0;
+  function updateCarousel() {
+    items.forEach(item => item.classList.remove('active'));
+    items[currentIndex].classList.add('active');
+    const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
+    track.style.transform = `translateX(${-offset}px)`;
+  }
+  document.getElementById('prev').addEventListener('click', ()=>{currentIndex=(currentIndex-1+items.length)%items.length;updateCarousel();});
+  document.getElementById('next').addEventListener('click', ()=>{currentIndex=(currentIndex+1)%items.length;updateCarousel();});
+  let startX=0;
+  track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
+  track.addEventListener('touchend',e=>{let diff=e.changedTouches[0].clientX-startX;if(diff>50){currentIndex=(currentIndex-1+items.length)%items.length;updateCarousel();}else if(diff<-50){currentIndex=(currentIndex+1)%items.length;updateCarousel();}});
+  setInterval(()=>{currentIndex=(currentIndex+1)%items.length;updateCarousel();},4000);
+  updateCarousel();
 
-  // Incrementa ao clicar no botão
-  const botao = livro.querySelector('.botao');
-  botao.addEventListener('click', e=>{
-    ref.transaction(current=>(current||0)+1).then(updateCounters);
+  // PAINEL ADMIN OCULTO (com combinação de teclas: Alt+Shift+A)
+  const adminPanel = document.getElementById('adminPanel');
+  const adminClose = document.getElementById('adminClose');
+  const adminUpdate = document.getElementById('adminUpdate');
+
+  document.addEventListener('keydown', e => {
+    if(e.altKey && e.shiftKey && e.code === 'KeyA') { adminPanel.style.display='block'; }
   });
-});
+  adminClose.addEventListener('click', ()=>{ adminPanel.style.display='none'; });
 
-// Painel Admin
-const adminPanel = document.getElementById('adminPanel');
-const adminToggle = document.getElementById('adminToggleHint');
-const adminClose = document.getElementById('adminClose');
-const adminControls = document.getElementById('adminControls');
-
-adminToggle.addEventListener('click', ()=>{
-  const email = prompt("Email admin:");
-  const senha = prompt("Senha:");
-  auth.signInWithEmailAndPassword(email, senha)
-    .then(() => {
-      adminPanel.style.display='block';
-      renderAdminControls();
-    }).catch(err=>alert("Login inválido!"));
-});
-adminClose.addEventListener('click', ()=>{adminPanel.style.display='none';});
-
-// Renderiza controles de cada livro
-function renderAdminControls() {
-  adminControls.innerHTML = '';
-  livros.forEach(livro=>{
-    const id = livro.dataset.id;
-    const div = document.createElement('div');
-    div.style.marginBottom='10px';
-    div.innerHTML = `
-      <strong>${livro.querySelector('h2').innerText}</strong>
-      <input type="number" id="input_${id}" style="width:60px" placeholder="visu">
-      <button onclick="setCounter('${id}')">Definir</button>
-      <button onclick="incrementCounter('${id}')">+</button>
-      <button onclick="decrementCounter('${id}')">-</button>
-    `;
-    adminControls.appendChild(div);
+  adminUpdate.addEventListener('click', ()=>{
+    const id = document.getElementById('adminBookId').value;
+    const val = parseInt(document.getElementById('adminBookValue').value);
+    if(id && !isNaN(val)){
+      db.ref('livros/'+id).set(val);
+      alert('Contador atualizado!');
+    }
   });
-}
-
-// Funções de admin
-function setCounter(id){
-  const val = parseInt(document.getElementById('input_'+id).value)||0;
-  db.ref('livros/'+id).set(val).then(updateCounters);
-}
-function incrementCounter(id){
-  db.ref('livros/'+id).transaction(c=>(c||0)+1).then(updateCounters);
-}
-function decrementCounter(id){
-  db.ref('livros/'+id).transaction(c=>(c||0)-1).then(updateCounters);
-}
-function resetCounters(){
-  livros.forEach(livro=>{
-    db.ref('livros/'+livro.dataset.id).set(0);
-  });
-  updateCounters();
-}
-
-// Inicializa carrossel
-const track = document.getElementById('carousel-track');
-const items = document.querySelectorAll('.carousel-item');
-let currentIndex = 0;
-function updateCarousel() {
-  items.forEach(item => item.classList.remove('active'));
-  items[currentIndex].classList.add('active');
-  const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
-  track.style.transform = `translateX(${-offset}px)`;
-}
-document.getElementById('prev').addEventListener('click', ()=>{
-  currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel();
-});
-document.getElementById('next').addEventListener('click', ()=>{
-  currentIndex = (currentIndex + 1) % items.length; updateCarousel();
-});
-let startX=0;
-track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
-track.addEventListener('touchend',e=>{
-  let diff=e.changedTouches[0].clientX - startX;
-  if(diff>50){ currentIndex = (currentIndex - 1 + items.length)%items.length; updateCarousel();}
-  else if(diff<-50){ currentIndex = (currentIndex + 1)%items.length; updateCarousel();}
-});
-setInterval(()=>{ currentIndex = (currentIndex + 1)%items.length; updateCarousel(); },4000);
-updateCarousel();
-
-// Atualiza todos contadores ao carregar
-updateCounters();
 </script>
-
 </body>
 </html>
