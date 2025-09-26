@@ -16,6 +16,58 @@ header { text-align:center; padding:40px 20px; }
 header h1 { font-size:2.5rem; margin-bottom:10px; }
 header p { font-size:1.2rem; opacity:0.8; }
 
+/* CARROSSEL */
+.carousel-container {
+  position: relative;
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto;
+  overflow: visible;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+  padding: 20px 0;
+}
+.carousel-item {
+  width: 160px; 
+  height: 240px; 
+  margin: 0 10px;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transform: scale(0.9);
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+.carousel-item.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Botões */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(124,58,174,0.8);
+  color: #fff;
+  border: none;
+  font-size: 2em;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  z-index: 10;
+}
+#prev { left: 10px; }
+#next { right: 10px; }
+
 /* LISTA DE LIVROS */
 .container { width:90%; max-width:1000px; margin:30px auto; }
 .library-list { display:flex; flex-direction:column; gap:20px; }
@@ -60,9 +112,14 @@ header p { font-size:1.2rem; opacity:0.8; }
   font-weight:bold;
   font-size:0.9em;
 }
-.view-counter img {
-  width:16px;
-  height:16px;
+.view-counter img { width:16px; height:16px; }
+
+/* Contador total do site */
+#totalViews {
+  text-align:center;
+  margin:20px 0;
+  font-size:1.2em;
+  font-weight:bold;
 }
 
 /* RODAPÉ */
@@ -89,7 +146,10 @@ footer a:hover { text-decoration:underline; }
 #adminPanel h2 { margin-top:0; }
 #adminClose { position:absolute; top:10px; right:10px; cursor:pointer; color:#fff; font-weight:bold; }
 
+#adminToggleHint {position:fixed;bottom:10px;right:10px;padding:10px;background:#7c3aed;border:none;border-radius:8px;color:#fff;cursor:pointer;}
+
 @media(max-width:768px){
+  .carousel-item { width:140px; height:210px; margin:0 8px; }
   .livro img { width:90px; height:130px; }
 }
 </style>
@@ -101,7 +161,26 @@ footer a:hover { text-decoration:underline; }
   <p>Uma coleção de livros digitais para quem busca crescimento pessoal, motivação e transformação.</p>
 </header>
 
+<div id="totalViews">Total de visitas: <span>0</span></div>
+
 <div class="container">
+
+  <!-- CARROSSEL -->
+  <div class="carousel-container" id="carousel-container">
+    <button class="carousel-btn" id="prev">&#10094;</button>
+    <div class="carousel-track" id="carousel-track">
+      <div class="carousel-item">
+        <a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a>
+      </div>
+      <div class="carousel-item">
+        <a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a>
+      </div>
+      <div class="carousel-item">
+        <a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a>
+      </div>
+    </div>
+    <button class="carousel-btn" id="next">&#10095;</button>
+  </div>
 
   <!-- LISTA DE LIVROS -->
   <div class="library-list">
@@ -143,9 +222,16 @@ footer a:hover { text-decoration:underline; }
   <span id="adminClose">✖</span>
   <h2>Painel de Admin</h2>
   <button onclick="resetCounters()">Zerar todos contadores</button>
+  <h3>Ajustar visualizações</h3>
+  <div id="adminControls"></div>
 </div>
 
-<button id="adminToggleHint" style="position:fixed;bottom:10px;right:10px;padding:10px;background:#7c3aed;border:none;border-radius:8px;color:#fff;cursor:pointer;">Admin</button>
+<button id="adminToggleHint">Admin</button>
+
+<!-- TIPOGRAFIA PEQUENA -->
+<div class="signature">
+  <img src="livros/img/signature.png" alt="Sua assinatura">
+</div>
 
 <!-- RODAPÉ -->
 <footer>
@@ -158,6 +244,7 @@ footer a:hover { text-decoration:underline; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <script>
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
   authDomain: "biblioteca-b73c3.firebaseapp.com",
@@ -173,57 +260,121 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const auth = firebase.auth();
 
-// --- CONTADORES ---
+// Contadores totais
+const totalViewsEl = document.querySelector('#totalViews span');
 const livros = document.querySelectorAll('.livro');
 
+// Função para atualizar contadores
+function updateCounters() {
+  let total = 0;
+  livros.forEach(livro => {
+    const id = livro.dataset.id;
+    const counterEl = livro.querySelector('.view-counter span');
+    const ref = db.ref('livros/' + id);
+    ref.once('value').then(snapshot => {
+      const val = snapshot.val() || 0;
+      counterEl.innerText = val;
+      total += val;
+      totalViewsEl.innerText = total;
+    });
+  });
+}
+
+// Incrementa contador individual
 livros.forEach(livro => {
   const id = livro.dataset.id;
-  const contadorEl = livro.querySelector('.view-counter span');
   const ref = db.ref('livros/' + id);
+  // Quando entra na página conta 1
+  ref.transaction(current => (current||0)+1).then(updateCounters);
 
-  // Incrementa visita só uma vez por load
-  ref.transaction(current => (current || 0) + 1);
-
-  // Atualiza contador em tempo real
-  ref.on('value', snapshot => {
-    contadorEl.innerText = snapshot.val() || 0;
+  // Incrementa ao clicar no botão
+  const botao = livro.querySelector('.botao');
+  botao.addEventListener('click', e=>{
+    ref.transaction(current=>(current||0)+1).then(updateCounters);
   });
 });
 
-// Contador total do site
-const totalRef = db.ref('totalVisitas');
-totalRef.transaction(current => (current || 0) + 1);
-
-// --- PAINEL ADMIN ---
+// Painel Admin
 const adminPanel = document.getElementById('adminPanel');
-const adminToggleHint = document.getElementById('adminToggleHint');
+const adminToggle = document.getElementById('adminToggleHint');
 const adminClose = document.getElementById('adminClose');
+const adminControls = document.getElementById('adminControls');
 
-adminToggleHint.addEventListener('click', () => {
+adminToggle.addEventListener('click', ()=>{
   const email = prompt("Email admin:");
-  const password = prompt("Senha:");
-  if(!email || !password) return;
-
-  auth.signInWithEmailAndPassword(email,password)
-    .then(userCredential => {
+  const senha = prompt("Senha:");
+  auth.signInWithEmailAndPassword(email, senha)
+    .then(() => {
       adminPanel.style.display='block';
-    })
-    .catch(err=>alert("Erro: "+err.message));
+      renderAdminControls();
+    }).catch(err=>alert("Login inválido!"));
 });
+adminClose.addEventListener('click', ()=>{adminPanel.style.display='none';});
 
-adminClose.addEventListener('click', ()=> {
-  adminPanel.style.display='none';
-});
-
-// Função para zerar contadores
-function resetCounters(){
-  if(confirm("Zerar todos contadores?")){
-    livros.forEach(livro=>{
-      db.ref('livros/'+livro.dataset.id).set(0);
-    });
-    db.ref('totalVisitas').set(0);
-  }
+// Renderiza controles de cada livro
+function renderAdminControls() {
+  adminControls.innerHTML = '';
+  livros.forEach(livro=>{
+    const id = livro.dataset.id;
+    const div = document.createElement('div');
+    div.style.marginBottom='10px';
+    div.innerHTML = `
+      <strong>${livro.querySelector('h2').innerText}</strong>
+      <input type="number" id="input_${id}" style="width:60px" placeholder="visu">
+      <button onclick="setCounter('${id}')">Definir</button>
+      <button onclick="incrementCounter('${id}')">+</button>
+      <button onclick="decrementCounter('${id}')">-</button>
+    `;
+    adminControls.appendChild(div);
+  });
 }
+
+// Funções de admin
+function setCounter(id){
+  const val = parseInt(document.getElementById('input_'+id).value)||0;
+  db.ref('livros/'+id).set(val).then(updateCounters);
+}
+function incrementCounter(id){
+  db.ref('livros/'+id).transaction(c=>(c||0)+1).then(updateCounters);
+}
+function decrementCounter(id){
+  db.ref('livros/'+id).transaction(c=>(c||0)-1).then(updateCounters);
+}
+function resetCounters(){
+  livros.forEach(livro=>{
+    db.ref('livros/'+livro.dataset.id).set(0);
+  });
+  updateCounters();
+}
+
+// Inicializa carrossel
+const track = document.getElementById('carousel-track');
+const items = document.querySelectorAll('.carousel-item');
+let currentIndex = 0;
+function updateCarousel() {
+  items.forEach(item => item.classList.remove('active'));
+  items[currentIndex].classList.add('active');
+  const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
+  track.style.transform = `translateX(${-offset}px)`;
+}
+document.getElementById('prev').addEventListener('click', ()=>{
+  currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel();
+});
+document.getElementById('next').addEventListener('click', ()=>{
+  currentIndex = (currentIndex + 1) % items.length; updateCarousel();
+});
+let startX=0;
+track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
+track.addEventListener('touchend',e=>{
+  let diff=e.changedTouches[0].clientX - startX;
+  if(diff>50){ currentIndex = (currentIndex - 1 + items.length)%items.length; updateCarousel();}
+  else if(diff<-50){ currentIndex = (currentIndex + 1)%items.length; updateCarousel();}
+});
+setInterval(()=>{ currentIndex = (currentIndex + 1)%items.length; updateCarousel(); },4000);
+updateCarousel();
+
+// Atualiza todos contadores ao carregar
+updateCounters();
 </script>
 
 </body>
