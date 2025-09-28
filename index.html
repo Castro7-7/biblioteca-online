@@ -9,14 +9,66 @@
       margin: 0;
       padding: 0;
       width: 100%;
-      overflow-x: hidden; /* 🔒 evita espaço lateral no mobile */
+      overflow-x: hidden;
       font-family: 'Arial', sans-serif;
       background: linear-gradient(135deg, #0d0717, #1a0f2e);
       color: #fff;
     }
+
     header { text-align:center; padding:40px 20px; }
     header h1 { font-size:2.5rem; margin-bottom:10px; }
     header p { font-size:1.2rem; opacity:0.8; }
+
+    /* CARROSSEL */
+    .carousel-container {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      margin: 40px auto;
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease;
+      padding: 20px 0;
+      box-sizing: border-box;
+    }
+    .carousel-item {
+      width: 160px;
+      height: 240px;
+      margin: 0 10px;
+      flex-shrink: 0;
+      opacity: 0.6;
+      transform: scale(0.9);
+      transition: all 0.5s ease;
+      cursor: pointer;
+      position: relative;
+      border: 2px solid transparent;
+      border-radius: 10px;
+    }
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+    }
+    .carousel-item.active { opacity: 1; transform: scale(1); }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(124,58,174,0.8);
+      color: #fff;
+      border: none;
+      font-size: 2em;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      z-index: 10;
+    }
+    #prev { left: 10px; }
+    #next { right: 10px; }
 
     /* LISTA DE LIVROS */
     .container { width:90%; max-width:1000px; margin:30px auto; }
@@ -31,7 +83,7 @@
       align-items:flex-start;
       gap:15px;
       box-shadow:0 4px 12px rgba(0,0,0,0.3);
-      transition:transform 0.3s ease;
+      transition:transform 0.3s ease, border-color 0.3s ease;
       position: relative;
     }
     .livro:hover { transform:translateY(-3px); }
@@ -69,6 +121,13 @@
     }
     .livro-views img { width:18px; height:18px; }
 
+    /* Borda piscando efeito hacker */
+    @keyframes flashBorder {
+      0%,100% { border-color: #7c3aed; }
+      50% { border-color: #00ff00; }
+    }
+    .flash { animation: flashBorder 1s ease 0s 3; }
+
     /* Contador total */
     #total-visits {
       display:flex;
@@ -80,86 +139,73 @@
     }
     #total-visits img { width:24px; height:24px; }
 
-    /* Painel Hacker Admin */
+    /* Painel admin hacker */
     #adminPanel {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      background: #0a0a1e;
-      padding: 25px;
-      border-radius: 15px;
-      z-index: 999;
-      color: #00ffcc;
-      display: flex;
-      flex-direction: column;
-      max-height: 80vh;
-      overflow-y: auto;
-      width: 90%;
-      max-width: 650px;
-      border: 3px solid #00ffcc;
-      box-shadow: 0 0 20px #00ffcc, 0 0 40px #00cc99 inset;
-      font-family: 'Courier New', monospace;
-      transition: transform 0.6s ease, box-shadow 0.6s ease;
-      animation: glitch 2s infinite;
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      background:#0d0d0d;
+      padding:20px;
+      border-radius:12px;
+      z-index:999;
+      color:#0f0;
+      display:none;
+      max-height:80vh;
+      overflow-y:auto;
+      width:90%;
+      max-width:500px;
+      box-shadow: 0 0 20px #00ff00, 0 0 40px #0f0, 0 0 60px #0f0;
+      border: 2px solid #0f0;
+      animation: pulseBorder 2s infinite;
     }
-    #adminPanel.show { transform: translate(-50%, -50%) scale(1); }
-    @keyframes glitch {
-      0% { box-shadow: 0 0 20px #00ffcc, 0 0 40px #00cc99 inset; }
-      25% { box-shadow: 0 0 25px #00ffcc, 0 0 45px #00cc99 inset; }
-      50% { box-shadow: 0 0 20px #00ffcc, 0 0 40px #00cc99 inset; }
-      75% { box-shadow: 0 0 25px #00ffcc, 0 0 45px #00cc99 inset; }
-      100% { box-shadow: 0 0 20px #00ffcc, 0 0 40px #00cc99 inset; }
+    @keyframes pulseBorder {
+      0%,100% { box-shadow: 0 0 20px #00ff00, 0 0 40px #0f0, 0 0 60px #0f0; }
+      50% { box-shadow: 0 0 40px #ff0000, 0 0 60px #ff0, 0 0 80px #0ff; }
     }
-    #adminPanel h2 { text-align:center; margin-bottom:20px; text-shadow: 0 0 5px #00ffcc,0 0 15px #00cc99,0 0 25px #00ffcc; }
-    #closeAdmin {
-      position:absolute;
-      top:10px;
-      right:15px;
-      background:#00ffcc;
-      color:#000;
-      padding:6px 12px;
-      border:none;
-      border-radius:5px;
-      cursor:pointer;
-      font-weight:bold;
-      transition: all 0.3s ease;
-    }
-    #closeAdmin:hover { background:#00cc99; box-shadow:0 0 20px #00ffcc; }
+    #adminPanel h2 { text-align:center; margin-bottom:15px; }
     .admin-book {
       display:flex;
       justify-content:space-between;
       align-items:center;
-      margin-bottom:14px;
-      padding:12px;
-      border:1px solid #00ffcc;
-      border-radius:10px;
-      transition: all 0.3s ease;
-      background: rgba(0,255,204,0.05);
+      margin-bottom:10px;
+      background:rgba(0,255,0,0.1);
+      padding:8px 10px;
+      border-radius:8px;
     }
-    .admin-book:hover { transform: scale(1.02); box-shadow:0 0 15px #00ffcc; }
-    .admin-book span { font-weight:bold; display:flex; align-items:center; gap:12px; }
+    .admin-book span { font-weight:bold; }
+    .admin-book input {
+      width:50px;
+      margin-left:5px;
+      padding:2px 4px;
+      border-radius:4px;
+      border:1px solid #0f0;
+      background:#000;
+      color:#0f0;
+      text-align:center;
+    }
     .admin-book button {
-      background:#00ffcc;
+      background:#0f0;
       border:none;
-      color:#000;
-      padding:6px 10px;
+      color:black;
+      padding:4px 8px;
       border-radius:5px;
       cursor:pointer;
-      margin-left:6px;
+      margin-left:4px;
       font-weight:bold;
-      transition: all 0.3s ease;
+      transition: all 0.3s;
     }
-    .admin-book button:hover { background:#00cc99; box-shadow:0 0 10px #00ffcc; }
-    .admin-input {
-      width:60px;
-      padding:4px 6px;
-      border-radius:4px;
-      border:1px solid #00ffcc;
-      background:#0a0a1e;
-      color:#00ffcc;
-      text-align:center;
-      font-family:'Courier New', monospace;
+    .admin-book button:hover { background:#ff0; color:#000; }
+    #closeAdmin {
+      position:absolute;
+      top:10px;
+      right:15px;
+      background:#0f0;
+      color:black;
+      padding:4px 8px;
+      border:none;
+      border-radius:5px;
+      cursor:pointer;
     }
 
     /* RODAPÉ */
@@ -170,6 +216,7 @@
 
     /* Mobile ajustes */
     @media(max-width:768px){
+      .carousel-item { width:140px; height:210px; margin:0 8px; }
       .livro img { width:90px; height:130px; }
       .livro-views img { width:14px; height:14px; }
       #total-visits img { width:18px; height:18px; }
@@ -183,6 +230,23 @@
   </header>
 
   <div class="container">
+    <!-- CARROSSEL -->
+    <div class="carousel-container" id="carousel-container">
+      <button class="carousel-btn" id="prev">&#10094;</button>
+      <div class="carousel-track" id="carousel-track">
+        <div class="carousel-item" data-book="invisivel">
+          <a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a>
+        </div>
+        <div class="carousel-item" data-book="potencial">
+          <a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a>
+        </div>
+        <div class="carousel-item" data-book="48leis">
+          <a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a>
+        </div>
+      </div>
+      <button class="carousel-btn" id="next">&#10095;</button>
+    </div>
+
     <!-- LISTA DE LIVROS -->
     <div class="library-list">
       <div class="livro" data-book="invisivel">
@@ -224,9 +288,9 @@
   <!-- Painel Admin -->
   <div id="adminPanel">
     <button id="closeAdmin">Fechar</button>
-    <h2>💻 PAINEL HACKER</h2>
+    <h2>PAINEL ADMIN</h2>
     <div id="adminBooks"></div>
-    <div style="margin-top:20px; text-align:center;">
+    <div style="margin-top:15px; text-align:center;">
       <button id="resetTotal">Zerar total do site</button>
     </div>
   </div>
@@ -246,7 +310,9 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
   <script>
+    // CONFIG FIREBASE
     const firebaseConfig = {
       apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
       authDomain: "biblioteca-b73c3.firebaseapp.com",
@@ -265,84 +331,119 @@
     const totalVisitsEl = document.getElementById('totalVisits');
     const totalRef = db.ref('totalVisits');
     totalRef.once('value', snap => { if (!snap.val()) totalRef.set(0); });
-    totalRef.on('value', snap => { animateCount(totalVisitsEl, snap.val() || 0); });
-    if (!sessionStorage.getItem("visited")) { totalRef.transaction(c => (c||0)+1); sessionStorage.setItem("visited","true"); }
+    totalRef.on('value', snap => { totalVisitsEl.innerText = snap.val() || 0; });
+
+    if (!sessionStorage.getItem("visited")) {
+      totalRef.transaction(current => (current || 0) + 1);
+      sessionStorage.setItem("visited", "true");
+    }
 
     // LIVROS
     const livros = document.querySelectorAll('.livro');
     livros.forEach(livro => {
       const key = livro.dataset.book;
       const ref = db.ref('books/' + key);
-      const span = livro.querySelector('.livro-views span');
       ref.once('value', snap => { if (!snap.val()) ref.set(0); });
-      ref.on('value', snap => { animateCount(span, snap.val()||0); });
+      const span = livro.querySelector('.livro-views span');
+      ref.on('value', snap => { span.innerText = snap.val() || 0; });
+
       const link = livro.querySelector('.botao');
       const href = link.getAttribute("href");
+
       link.addEventListener('click', e => {
         e.preventDefault();
-        ref.transaction(c => (c||0)+1, () => window.location=href);
+        ref.transaction(current => (current || 0) + 1, () => {
+          livro.classList.add('flash');
+          setTimeout(() => livro.classList.remove('flash'), 3500);
+          totalRef.transaction(current => (current || 0) + 1);
+          window.location = href;
+        });
       });
     });
 
-    // ANIMAÇÃO DIGITAÇÃO CONTADOR
-    function animateCount(el, value) {
-      let current = parseInt(el.innerText)||0;
-      if(current === value) return;
-      const step = value>current ? 1 : -1;
-      const interval = setInterval(()=>{
-        current+=step;
-        el.innerText=current;
-        if(current===value) clearInterval(interval);
-      }, 20);
+    // CARROSSEL
+    const track = document.getElementById('carousel-track');
+    const items = document.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      items.forEach(item => item.classList.remove('active'));
+      items[currentIndex].classList.add('active');
+      const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
+      track.style.transform = `translateX(${-offset}px)`;
     }
+
+    document.getElementById('prev').addEventListener('click', () => {
+      currentIndex = (currentIndex-1+items.length)%items.length;
+      updateCarousel();
+    });
+
+    document.getElementById('next').addEventListener('click', () => {
+      currentIndex = (currentIndex+1)%items.length;
+      updateCarousel();
+    });
+
+    let startX=0;
+    track.addEventListener('touchstart', e => { startX=e.touches[0].clientX; });
+    track.addEventListener('touchend', e => {
+      let diff=e.changedTouches[0].clientX-startX;
+      if(diff>50){ currentIndex=(currentIndex-1+items.length)%items.length; }
+      else if(diff<-50){ currentIndex=(currentIndex+1)%items.length; }
+      updateCarousel();
+    });
+
+    setInterval(()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); },4000);
+    updateCarousel();
 
     // PAINEL ADMIN
     const adminPanel = document.getElementById('adminPanel');
-    document.getElementById('closeAdmin').addEventListener('click',()=>adminPanel.classList.remove('show'));
+    document.getElementById('closeAdmin').addEventListener('click', ()=>{ adminPanel.style.display='none'; });
+
+    document.addEventListener('keydown', e => {
+      if(e.altKey && e.shiftKey && e.key.toLowerCase()=='a'){
+        if(!auth.currentUser){
+          const email = prompt('Digite seu e-mail de admin:');
+          const password = prompt('Digite sua senha de admin:');
+          auth.signInWithEmailAndPassword(email,password)
+          .then(()=>{ adminPanel.style.display='block'; loadAdminPanel(); })
+          .catch(()=>alert('E-mail ou senha incorretos'));
+        } else { adminPanel.style.display='block'; loadAdminPanel(); }
+      }
+    });
+
     function loadAdminPanel(){
       const adminBooks = document.getElementById('adminBooks');
       adminBooks.innerHTML='';
       livros.forEach(livro=>{
-        const key = livro.dataset.book;
-        const ref = db.ref('books/'+key);
-        const div = document.createElement('div');
+        const key=livro.dataset.book;
+        const ref=db.ref('books/'+key);
+        const div=document.createElement('div');
         div.className='admin-book';
         div.innerHTML=`
-          <span>${livro.querySelector('h2').innerText}: <span id="count-${key}">0</span></span>
-          <div>
-            <button id="inc-${key}">+</button>
-            <button id="dec-${key}">-</button>
-            <input type="number" min="0" id="set-${key}" class="admin-input" placeholder="Set">
-            <button id="set-btn-${key}">✔</button>
-            <button id="reset-${key}">Zerar</button>
-          </div>`;
+          <span>${livro.querySelector('h2').innerText}: 
+            <span id="count-${key}">0</span>
+          </span>
+          <input type="number" id="input-${key}" min="0" placeholder="N">
+          <button id="inc-${key}">+</button>
+          <button id="dec-${key}">-</button>
+          <button id="set-${key}">Set</button>
+          <button id="reset-${key}">Zerar</button>
+        `;
         adminBooks.appendChild(div);
-        const countSpan = div.querySelector('#count-'+key);
-        ref.on('value', snap=>animateCount(countSpan,snap.val()||0));
-        div.querySelector('#inc-'+key).addEventListener('click',()=>ref.transaction(c=>(c||0)+1));
-        div.querySelector('#dec-'+key).addEventListener('click',()=>ref.transaction(c=>Math.max((c||0)-1,0)));
-        div.querySelector('#reset-'+key).addEventListener('click',()=>ref.set(0));
-        div.querySelector('#set-btn-'+key).addEventListener('click',()=>{
-          const val = parseInt(div.querySelector('#set-'+key).value);
-          if(!isNaN(val)&&val>=0) ref.set(val);
+
+        ref.on('value', snap=>{ div.querySelector('#count-'+key).innerText = snap.val() || 0; });
+
+        div.querySelector('#inc-'+key).addEventListener('click', ()=>{ ref.transaction(c => (c||0)+1); });
+        div.querySelector('#dec-'+key).addEventListener('click', ()=>{ ref.transaction(c => (c||0)-1); });
+        div.querySelector('#reset-'+key).addEventListener('click', ()=>{ ref.set(0); });
+        div.querySelector('#set-'+key).addEventListener('click', ()=>{
+          const val = parseInt(div.querySelector('#input-'+key).value);
+          if(!isNaN(val)) ref.set(val);
         });
       });
-      document.getElementById('resetTotal').onclick=()=>totalRef.set(0);
-    }
 
-    document.addEventListener('keydown', e=>{
-      if(e.altKey && e.shiftKey && e.key.toLowerCase()=='a'){
-        if(!auth.currentUser){
-          const email=prompt('Digite seu e-mail de admin:');
-          const password=prompt('Digite sua senha de admin:');
-          auth.signInWithEmailAndPassword(email,password)
-            .then(()=>{adminPanel.classList.add('show'); loadAdminPanel();})
-            .catch(()=>alert('E-mail ou senha incorretos'));
-        }else{
-          adminPanel.classList.add('show'); loadAdminPanel();
-        }
-      }
-    });
+      document.getElementById('resetTotal').onclick = ()=>{ totalRef.set(0); };
+    }
   </script>
 </body>
 </html>
