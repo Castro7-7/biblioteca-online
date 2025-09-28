@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Biblioteca Online</title>
   <style>
     body { margin:0; font-family:'Arial', sans-serif; background: linear-gradient(135deg, #0d0717, #1a0f2e); color:#fff; overflow-x:hidden; }
@@ -10,17 +10,14 @@
     header h1 { font-size:2.5rem; margin-bottom:10px; }
     header p { font-size:1.2rem; opacity:0.8; }
 
-    /* CARROSSEL */
     .carousel-container { position: relative; width: 90%; max-width: 900px; margin: 40px auto; overflow: visible; }
     .carousel-track { display: flex; transition: transform 0.5s ease; padding: 20px 0; }
     .carousel-item { width: 160px; height: 240px; margin: 0 10px; flex-shrink: 0; opacity: 0.6; transform: scale(0.9); transition: all 0.5s ease; cursor: pointer; position: relative; }
     .carousel-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; display: block; }
     .carousel-item.active { opacity: 1; transform: scale(1); }
     .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(124,58,174,0.8); color: #fff; border: none; font-size: 2em; padding: 5px 10px; cursor: pointer; border-radius: 5px; z-index: 10; }
-    #prev { left: 10px; }
-    #next { right: 10px; }
+    #prev { left: 10px; } #next { right: 10px; }
 
-    /* LISTA DE LIVROS */
     .container { width:90%; max-width:1000px; margin:30px auto; }
     .library-list { display:flex; flex-direction:column; gap:20px; }
     .livro { display:flex; background: rgba(255,255,255,0.05); border-radius:16px; padding:15px; width:100%; min-height:160px; align-items:flex-start; gap:15px; box-shadow:0 4px 12px rgba(0,0,0,0.3); transition:transform 0.3s ease; position: relative; }
@@ -32,15 +29,12 @@
     .botao { display:inline-block; padding:8px 10px; background:#7c3aed; color:white; text-decoration:none; border-radius:8px; font-weight:bold; transition: background 0.3s; }
     .botao:hover { background:#5b21b6; }
 
-    /* Contador individual */
     .livro-views { position: absolute; top: 10px; right: 10px; display:flex; align-items:center; gap:5px; font-size: 0.9rem; }
     .livro-views img { width:18px; height:18px; }
 
-    /* Contador total */
     #total-visits { display:flex; align-items:center; justify-content:center; gap:8px; font-size:1.2rem; margin:15px auto; }
     #total-visits img { width:24px; height:24px; }
 
-    /* Painel admin */
     #adminPanel { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#4c1d95; padding:20px; border-radius:12px; z-index:999; color:white; display:none; max-height:80vh; overflow-y:auto; width:90%; max-width:500px; }
     #adminPanel h2 { text-align:center; margin-bottom:15px; }
     .admin-book { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:rgba(255,255,255,0.1); padding:8px 10px; border-radius:8px; }
@@ -49,13 +43,11 @@
     .admin-book button:hover { background:#5b21b6; }
     #closeAdmin { position:absolute; top:10px; right:15px; background:#7c3aed; padding:4px 8px; border:none; border-radius:5px; cursor:pointer; }
 
-    /* RODAPÉ */
     footer { background:#1a0f2e; text-align:center; padding:25px 20px; margin-top:50px; color:#aaa; }
     footer p { margin:5px 0; }
     footer a { color:#7c3aed; text-decoration:none; margin:0 8px; }
     footer a:hover { text-decoration:underline; }
 
-    /* Mobile */
     @media(max-width:768px){
       .carousel-item { width:140px; height:210px; margin:0 8px; }
       .livro img { width:90px; height:130px; }
@@ -144,12 +136,13 @@
   <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a> | <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
 </footer>
 
+<!-- Firebase compat (já no seu código) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <script>
-  // CONFIG FIREBASE
+  // CONFIG FIREBASE (seu config)
   const firebaseConfig = {
     apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
     authDomain: "biblioteca-b73c3.firebaseapp.com",
@@ -164,37 +157,53 @@
   const db = firebase.database();
   const auth = firebase.auth();
 
-  // UID do admin (troque pelo seu UID real do Firebase)
-  const ADMIN_UID = "SEU_UID_AQUI";
+  // SEU UID (já configurado)
+  const ADMIN_UID = "RHb8vZeeb0RfTRhR1fpzO0ICFq53";
 
-  // CONTADOR TOTAL
+  // ----- TOTAL -----
   const totalVisitsEl = document.getElementById('totalVisits');
   const totalRef = db.ref('totalVisits');
-  totalRef.once('value', snap=>{ if(snap.val()===null) totalRef.set(0); });
-  totalRef.on('value', snap=>{ totalVisitsEl.innerText = snap.val()||0; });
+  totalRef.once('value', snap => { if (snap.val() === null) totalRef.set(0); });
+  totalRef.on('value', snap => { totalVisitsEl.innerText = snap.val() || 0; });
 
-  if(!sessionStorage.getItem("visited")){
-    totalRef.transaction(current=>(current||0)+1);
-    sessionStorage.setItem("visited","true");
+  // opcional: incrementar apenas 1x por sessão (mantive como você tinha antes)
+  if (!sessionStorage.getItem('visited')) {
+    totalRef.transaction(c => (c || 0) + 1);
+    sessionStorage.setItem('visited', 'true');
   }
 
-  // LIVROS
+  // ----- LIVROS -----
   const livros = document.querySelectorAll('.livro');
-  livros.forEach(livro=>{
-    const key = livro.dataset.book;
-    const ref = db.ref('books/'+key);
-    ref.once('value', snap=>{ if(snap.val()===null) ref.set(0); });
-    const span = livro.querySelector('.livro-views span');
-    ref.on('value', snap=>{ span.innerText = snap.val()||0; });
 
+  livros.forEach(livro => {
+    const key = livro.dataset.book;
+    // usar o nó 'views' (numérico)
+    const ref = db.ref('books/' + key + '/views');
+
+    // inicializa se necessário
+    ref.once('value', snap => { if (snap.val() === null) ref.set(0); });
+
+    // atualiza UI
+    const span = livro.querySelector('.livro-views span');
+    ref.on('value', snap => { span.innerText = snap.val() || 0; });
+
+    // click handler: incrementa e só depois navega
     const link = livro.querySelector('.botao');
-    link.addEventListener('click', ()=>{
-      ref.transaction(current=>(current||0)+1);
-      totalRef.transaction(current=>(current||0)+1);
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const href = this.href;
+      // primeiro incrementa o contador do livro com callback
+      ref.transaction(function(current) { return (current || 0) + 1; }, function(error, committed, snapshot) {
+        // independentemente do resultado (committed ou erro), incrementa total e navega
+        totalRef.transaction(function(c) { return (c || 0) + 1; }, function() {
+          // navega depois das transações (abre na mesma aba)
+          window.location = href;
+        });
+      });
     });
   });
 
-  // CARROSSEL
+  // ----- CARROSSEL -----
   const track = document.getElementById('carousel-track');
   const items = document.querySelectorAll('.carousel-item');
   let currentIndex = 0;
@@ -204,47 +213,42 @@
     const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
     track.style.transform = `translateX(${-offset}px)`;
   }
-  document.getElementById('prev').addEventListener('click', ()=>{
-    currentIndex=(currentIndex-1+items.length)%items.length;
-    updateCarousel();
+  document.getElementById('prev').addEventListener('click', () => { currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel(); });
+  document.getElementById('next').addEventListener('click', () => { currentIndex = (currentIndex + 1) % items.length; updateCarousel(); });
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+  track.addEventListener('touchend', e => {
+    let diff = e.changedTouches[0].clientX - startX;
+    if (diff > 50) { currentIndex = (currentIndex - 1 + items.length) % items.length; updateCarousel(); }
+    else if (diff < -50) { currentIndex = (currentIndex + 1) % items.length; updateCarousel(); }
   });
-  document.getElementById('next').addEventListener('click', ()=>{
-    currentIndex=(currentIndex+1)%items.length;
-    updateCarousel();
-  });
-  let startX=0;
-  track.addEventListener('touchstart',e=>{ startX=e.touches[0].clientX; });
-  track.addEventListener('touchend',e=>{
-    let diff=e.changedTouches[0].clientX-startX;
-    if(diff>50){ currentIndex=(currentIndex-1+items.length)%items.length; updateCarousel(); }
-    else if(diff<-50){ currentIndex=(currentIndex+1)%items.length; updateCarousel(); }
-  });
-  setInterval(()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); },4000);
+  setInterval(() => { currentIndex = (currentIndex + 1) % items.length; updateCarousel(); }, 4000);
   updateCarousel();
 
-  // PAINEL ADMIN
-  let adminPanel = document.getElementById('adminPanel');
-  document.getElementById('closeAdmin').addEventListener('click', ()=>{ adminPanel.style.display='none'; });
+  // ----- PAINEL ADMIN -----
+  const adminPanel = document.getElementById('adminPanel');
+  document.getElementById('closeAdmin').addEventListener('click', () => { adminPanel.style.display = 'none'; });
 
-  document.addEventListener('keydown', e=>{
-    if(e.altKey && e.shiftKey && e.key.toLowerCase()=='a'){
-      if(!auth.currentUser){
+  document.addEventListener('keydown', e => {
+    if (e.altKey && e.shiftKey && e.key.toLowerCase() === 'a') {
+      if (!auth.currentUser) {
         const email = prompt('Digite seu e-mail de admin:');
         const password = prompt('Digite sua senha de admin:');
-        auth.signInWithEmailAndPassword(email,password)
-          .then(user=>{
-            if(user.user.uid === ADMIN_UID){
-              adminPanel.style.display='block'; 
+        if (!email || !password) return;
+        auth.signInWithEmailAndPassword(email, password)
+          .then(userCred => {
+            if (userCred.user.uid === ADMIN_UID) {
+              adminPanel.style.display = 'block';
               loadAdminPanel();
             } else {
               alert('Você não é admin autorizado.');
               auth.signOut();
             }
           })
-          .catch(()=>alert('E-mail ou senha incorretos'));
+          .catch(err => { console.error(err); alert('E-mail ou senha incorretos'); });
       } else {
-        if(auth.currentUser.uid === ADMIN_UID){
-          adminPanel.style.display='block';
+        if (auth.currentUser.uid === ADMIN_UID) {
+          adminPanel.style.display = 'block';
           loadAdminPanel();
         } else {
           alert('Conta logada não é admin.');
@@ -254,27 +258,45 @@
     }
   });
 
-  function loadAdminPanel(){
+  function loadAdminPanel() {
     const adminBooks = document.getElementById('adminBooks');
-    adminBooks.innerHTML='';
-    livros.forEach(livro=>{
+    adminBooks.innerHTML = '';
+    livros.forEach(livro => {
       const key = livro.dataset.book;
-      const ref = db.ref('books/'+key);
+      const ref = db.ref('books/' + key + '/views');
       const div = document.createElement('div');
-      div.className='admin-book';
-      div.innerHTML=`
+      div.className = 'admin-book';
+      div.innerHTML = `
         <span>${livro.querySelector('h2').innerText}: <span id="count-${key}">0</span></span>
-        <button id="inc-${key}">+</button>
-        <button id="dec-${key}">-</button>
-        <button id="reset-${key}">Zerar</button>
+        <div>
+          <button id="inc-${key}">+</button>
+          <button id="dec-${key}">-</button>
+          <button id="reset-${key}">Zerar</button>
+        </div>
       `;
       adminBooks.appendChild(div);
-      ref.on('value', snap=>{ div.querySelector('#count-'+key).innerText = snap.val()||0; });
-      div.querySelector(`#inc-${key}`).addEventListener('click', ()=>{ ref.transaction(c=>(c||0)+1); });
-      div.querySelector(`#dec-${key}`).addEventListener('click', ()=>{ ref.transaction(c=>(c||0)-1); });
-      div.querySelector(`#reset-${key}`).addEventListener('click', ()=>{ ref.set(0); });
+
+      // atualiza contador no painel
+      ref.on('value', snap => { 
+        const el = div.querySelector('#count-' + key);
+        if (el) el.innerText = snap.val() || 0;
+      });
+
+      // aumentar
+      div.querySelector('#inc-' + key).addEventListener('click', () => { ref.transaction(c => (c || 0) + 1); });
+      // diminuir (não menos que 0)
+      div.querySelector('#dec-' + key).addEventListener('click', () => { 
+        ref.transaction(c => {
+          const v = (c || 0) - 1;
+          return v < 0 ? 0 : v;
+        });
+      });
+      // zerar
+      div.querySelector('#reset-' + key).addEventListener('click', () => { ref.set(0); });
     });
-    document.getElementById('resetTotal').onclick = ()=>{ totalRef.set(0); };
+
+    // zerar total
+    document.getElementById('resetTotal').onclick = () => { totalRef.set(0); };
   }
 </script>
 </body>
