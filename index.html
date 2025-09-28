@@ -14,59 +14,9 @@
       background: linear-gradient(135deg, #0d0717, #1a0f2e);
       color: #fff;
     }
-
     header { text-align:center; padding:40px 20px; }
     header h1 { font-size:2.5rem; margin-bottom:10px; }
     header p { font-size:1.2rem; opacity:0.8; }
-
-    /* CARROSSEL */
-    .carousel-container {
-      position: relative;
-      width: 90%;
-      max-width: 900px;
-      margin: 40px auto;
-      overflow: hidden; /* 🔒 corrigido */
-    }
-    .carousel-track {
-      display: flex;
-      transition: transform 0.5s ease;
-      padding: 20px 0;
-      box-sizing: border-box;
-    }
-    .carousel-item {
-      width: 160px;
-      height: 240px;
-      margin: 0 10px;
-      flex-shrink: 0;
-      opacity: 0.6;
-      transform: scale(0.9);
-      transition: all 0.5s ease;
-      cursor: pointer;
-      position: relative;
-    }
-    .carousel-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 10px;
-      display: block;
-    }
-    .carousel-item.active { opacity: 1; transform: scale(1); }
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(124,58,174,0.8);
-      color: #fff;
-      border: none;
-      font-size: 2em;
-      padding: 5px 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      z-index: 10;
-    }
-    #prev { left: 10px; }
-    #next { right: 10px; }
 
     /* LISTA DE LIVROS */
     .container { width:90%; max-width:1000px; margin:30px auto; }
@@ -130,53 +80,86 @@
     }
     #total-visits img { width:24px; height:24px; }
 
-    /* Painel admin */
+    /* Painel Hacker Admin */
     #adminPanel {
-      position:fixed;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-      background:#4c1d95;
-      padding:20px;
-      border-radius:12px;
-      z-index:999;
-      color:white;
-      display:none;
-      max-height:80vh;
-      overflow-y:auto;
-      width:90%;
-      max-width:500px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: #0a0a1e;
+      padding: 25px;
+      border-radius: 15px;
+      z-index: 999;
+      color: #00ffcc;
+      display: flex;
+      flex-direction: column;
+      max-height: 80vh;
+      overflow-y: auto;
+      width: 90%;
+      max-width: 650px;
+      border: 3px solid #00ffcc;
+      box-shadow: 0 0 20px #00ffcc, 0 0 40px #00cc99 inset;
+      font-family: 'Courier New', monospace;
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+      animation: glitch 2s infinite;
     }
-    #adminPanel h2 { text-align:center; margin-bottom:15px; }
-    .admin-book {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:10px;
-      background:rgba(255,255,255,0.1);
-      padding:8px 10px;
-      border-radius:8px;
+    #adminPanel.show { transform: translate(-50%, -50%) scale(1); }
+    @keyframes glitch {
+      0% { box-shadow: 0 0 20px #00ffcc, 0 0 40px #00cc99 inset; }
+      25% { box-shadow: 0 0 25px #00ffcc, 0 0 45px #00cc99 inset; }
+      50% { box-shadow: 0 0 20px #00ffcc, 0 0 40px #00cc99 inset; }
+      75% { box-shadow: 0 0 25px #00ffcc, 0 0 45px #00cc99 inset; }
+      100% { box-shadow: 0 0 20px #00ffcc, 0 0 40px #00cc99 inset; }
     }
-    .admin-book span { font-weight:bold; }
-    .admin-book button {
-      background:#7c3aed;
-      border:none;
-      color:white;
-      padding:4px 8px;
-      border-radius:5px;
-      cursor:pointer;
-      margin-left:4px;
-    }
-    .admin-book button:hover { background:#5b21b6; }
+    #adminPanel h2 { text-align:center; margin-bottom:20px; text-shadow: 0 0 5px #00ffcc,0 0 15px #00cc99,0 0 25px #00ffcc; }
     #closeAdmin {
       position:absolute;
       top:10px;
       right:15px;
-      background:#7c3aed;
-      padding:4px 8px;
+      background:#00ffcc;
+      color:#000;
+      padding:6px 12px;
       border:none;
       border-radius:5px;
       cursor:pointer;
+      font-weight:bold;
+      transition: all 0.3s ease;
+    }
+    #closeAdmin:hover { background:#00cc99; box-shadow:0 0 20px #00ffcc; }
+    .admin-book {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:14px;
+      padding:12px;
+      border:1px solid #00ffcc;
+      border-radius:10px;
+      transition: all 0.3s ease;
+      background: rgba(0,255,204,0.05);
+    }
+    .admin-book:hover { transform: scale(1.02); box-shadow:0 0 15px #00ffcc; }
+    .admin-book span { font-weight:bold; display:flex; align-items:center; gap:12px; }
+    .admin-book button {
+      background:#00ffcc;
+      border:none;
+      color:#000;
+      padding:6px 10px;
+      border-radius:5px;
+      cursor:pointer;
+      margin-left:6px;
+      font-weight:bold;
+      transition: all 0.3s ease;
+    }
+    .admin-book button:hover { background:#00cc99; box-shadow:0 0 10px #00ffcc; }
+    .admin-input {
+      width:60px;
+      padding:4px 6px;
+      border-radius:4px;
+      border:1px solid #00ffcc;
+      background:#0a0a1e;
+      color:#00ffcc;
+      text-align:center;
+      font-family:'Courier New', monospace;
     }
 
     /* RODAPÉ */
@@ -187,7 +170,6 @@
 
     /* Mobile ajustes */
     @media(max-width:768px){
-      .carousel-item { width:140px; height:210px; margin:0 8px; }
       .livro img { width:90px; height:130px; }
       .livro-views img { width:14px; height:14px; }
       #total-visits img { width:18px; height:18px; }
@@ -212,7 +194,6 @@
         </div>
         <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
       </div>
-
       <div class="livro" data-book="potencial">
         <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
         <div class="livro-info">
@@ -222,7 +203,6 @@
         </div>
         <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
       </div>
-
       <div class="livro" data-book="48leis">
         <img src="livros/img/48.png" alt="48 Leis do Poder">
         <div class="livro-info">
@@ -244,10 +224,10 @@
   <!-- Painel Admin -->
   <div id="adminPanel">
     <button id="closeAdmin">Fechar</button>
-    <h2>PAINEL ADMIN</h2>
+    <h2>💻 PAINEL HACKER</h2>
     <div id="adminBooks"></div>
-    <div style="margin-top:15px; text-align:center;">
-      <button id="resetTotal" style="padding:6px 10px; background:#5b21b6; border:none; color:white; border-radius:5px; cursor:pointer;">Zerar total do site</button>
+    <div style="margin-top:20px; text-align:center;">
+      <button id="resetTotal">Zerar total do site</button>
     </div>
   </div>
 
@@ -267,7 +247,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script>
-    // CONFIG FIREBASE
     const firebaseConfig = {
       apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
       authDomain: "biblioteca-b73c3.firebaseapp.com",
@@ -285,91 +264,85 @@
     // CONTADOR TOTAL
     const totalVisitsEl = document.getElementById('totalVisits');
     const totalRef = db.ref('totalVisits');
-    totalRef.once('value', snap => {
-      if (snap.val() === null) totalRef.set(0);
-    });
-    totalRef.on('value', snap => {
-      totalVisitsEl.innerText = snap.val() || 0;
-    });
-
-    // incrementa total só na primeira visita
-    if (!sessionStorage.getItem("visited")) {
-      totalRef.transaction(current => (current || 0) + 1);
-      sessionStorage.setItem("visited", "true");
-    }
+    totalRef.once('value', snap => { if (!snap.val()) totalRef.set(0); });
+    totalRef.on('value', snap => { animateCount(totalVisitsEl, snap.val() || 0); });
+    if (!sessionStorage.getItem("visited")) { totalRef.transaction(c => (c||0)+1); sessionStorage.setItem("visited","true"); }
 
     // LIVROS
     const livros = document.querySelectorAll('.livro');
     livros.forEach(livro => {
       const key = livro.dataset.book;
       const ref = db.ref('books/' + key);
-      ref.once('value', snap => { if (snap.val() === null) ref.set(0); });
       const span = livro.querySelector('.livro-views span');
-      ref.on('value', snap => { span.innerText = snap.val() || 0; });
-      // só incrementa contador do livro
+      ref.once('value', snap => { if (!snap.val()) ref.set(0); });
+      ref.on('value', snap => { animateCount(span, snap.val()||0); });
       const link = livro.querySelector('.botao');
       const href = link.getAttribute("href");
       link.addEventListener('click', e => {
         e.preventDefault();
-        ref.transaction(current => (current || 0) + 1, () => {
-          window.location = href;
-        });
+        ref.transaction(c => (c||0)+1, () => window.location=href);
       });
     });
 
-    // PAINEL ADMIN
-    let adminPanel = document.getElementById('adminPanel');
-    document.getElementById('closeAdmin').addEventListener('click', () => {
-      adminPanel.style.display = 'none';
-    });
+    // ANIMAÇÃO DIGITAÇÃO CONTADOR
+    function animateCount(el, value) {
+      let current = parseInt(el.innerText)||0;
+      if(current === value) return;
+      const step = value>current ? 1 : -1;
+      const interval = setInterval(()=>{
+        current+=step;
+        el.innerText=current;
+        if(current===value) clearInterval(interval);
+      }, 20);
+    }
 
-    document.addEventListener('keydown', e => {
-      if (e.altKey && e.shiftKey && e.key.toLowerCase() == 'a') {
-        if (!auth.currentUser) {
-          const email = prompt('Digite seu e-mail de admin:');
-          const password = prompt('Digite sua senha de admin:');
-          auth.signInWithEmailAndPassword(email, password)
-            .then(() => { adminPanel.style.display = 'block'; loadAdminPanel(); })
-            .catch(() => alert('E-mail ou senha incorretos'));
-        } else {
-          adminPanel.style.display = 'block';
-          loadAdminPanel();
+    // PAINEL ADMIN
+    const adminPanel = document.getElementById('adminPanel');
+    document.getElementById('closeAdmin').addEventListener('click',()=>adminPanel.classList.remove('show'));
+    function loadAdminPanel(){
+      const adminBooks = document.getElementById('adminBooks');
+      adminBooks.innerHTML='';
+      livros.forEach(livro=>{
+        const key = livro.dataset.book;
+        const ref = db.ref('books/'+key);
+        const div = document.createElement('div');
+        div.className='admin-book';
+        div.innerHTML=`
+          <span>${livro.querySelector('h2').innerText}: <span id="count-${key}">0</span></span>
+          <div>
+            <button id="inc-${key}">+</button>
+            <button id="dec-${key}">-</button>
+            <input type="number" min="0" id="set-${key}" class="admin-input" placeholder="Set">
+            <button id="set-btn-${key}">✔</button>
+            <button id="reset-${key}">Zerar</button>
+          </div>`;
+        adminBooks.appendChild(div);
+        const countSpan = div.querySelector('#count-'+key);
+        ref.on('value', snap=>animateCount(countSpan,snap.val()||0));
+        div.querySelector('#inc-'+key).addEventListener('click',()=>ref.transaction(c=>(c||0)+1));
+        div.querySelector('#dec-'+key).addEventListener('click',()=>ref.transaction(c=>Math.max((c||0)-1,0)));
+        div.querySelector('#reset-'+key).addEventListener('click',()=>ref.set(0));
+        div.querySelector('#set-btn-'+key).addEventListener('click',()=>{
+          const val = parseInt(div.querySelector('#set-'+key).value);
+          if(!isNaN(val)&&val>=0) ref.set(val);
+        });
+      });
+      document.getElementById('resetTotal').onclick=()=>totalRef.set(0);
+    }
+
+    document.addEventListener('keydown', e=>{
+      if(e.altKey && e.shiftKey && e.key.toLowerCase()=='a'){
+        if(!auth.currentUser){
+          const email=prompt('Digite seu e-mail de admin:');
+          const password=prompt('Digite sua senha de admin:');
+          auth.signInWithEmailAndPassword(email,password)
+            .then(()=>{adminPanel.classList.add('show'); loadAdminPanel();})
+            .catch(()=>alert('E-mail ou senha incorretos'));
+        }else{
+          adminPanel.classList.add('show'); loadAdminPanel();
         }
       }
     });
-
-    function loadAdminPanel() {
-      const adminBooks = document.getElementById('adminBooks');
-      adminBooks.innerHTML = '';
-      livros.forEach(livro => {
-        const key = livro.dataset.book;
-        const ref = db.ref('books/' + key);
-        const div = document.createElement('div');
-        div.className = 'admin-book';
-        div.innerHTML = `
-          <span>${livro.querySelector('h2').innerText}: 
-            <span id="count-${key}">0</span>
-          </span>
-          <button id="inc-${key}">+</button>
-          <button id="dec-${key}">-</button>
-          <button id="reset-${key}">Zerar</button>
-        `;
-        adminBooks.appendChild(div);
-        ref.on('value', snap => {
-          div.querySelector('#count-' + key).innerText = snap.val() || 0;
-        });
-        div.querySelector('#inc-' + key).addEventListener('click', () => {
-          ref.transaction(current => (current || 0) + 1);
-        });
-        div.querySelector('#dec-' + key).addEventListener('click', () => {
-          ref.transaction(current => (current || 0) - 1);
-        });
-        div.querySelector('#reset-' + key).addEventListener('click', () => {
-          ref.set(0);
-        });
-      });
-      document.getElementById('resetTotal').onclick = () => { totalRef.set(0); };
-    }
   </script>
 </body>
 </html>
