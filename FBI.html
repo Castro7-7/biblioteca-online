@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Persuasão da FBI</title>
+<style>
+/* RESET E FUNDO TEMÁTICO */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  cursor: auto;
+  overflow-x: hidden;
+  background: radial-gradient(circle at top, #0a0d14 0%, #1c1f28 60%, #111317 100%);
+  color: #f5f5f5;
+  position: relative;
+}
+
+/* LINHAS DE INVESTIGAÇÃO */
+.line-bg {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  z-index:0;
+}
+.line {
+  position: absolute;
+  width:2px;
+  height:100%;
+  background: rgba(155,89,182,0.1);
+  animation: moveLine linear infinite;
+}
+@keyframes moveLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+  z-index:1;
+}
+
+/* TITULO */
+h1 {
+  font-size: 3em;
+  color: #e6e6e6;
+  margin-bottom: 10px;
+  transition: transform 0.5s;
+}
+h1:hover { transform: scale(1.05) rotate(-2deg); }
+
+/* SUBTITULO */
+p.subtitle {
+  font-size: 1.2em;
+  margin-bottom: 40px;
+  color: #ccc;
+}
+
+/* CAPA DO LIVRO COM ANIMAÇÃO "ACORDANDO" */
+.book-cover {
+  perspective: 1000px;
+  display: inline-block;
+  margin-bottom: 50px;
+  transform-style: preserve-3d;
+}
+.book-cover img {
+  width: 300px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+  transform: rotateX(90deg) rotateY(0deg) rotateZ(0deg); /* deitada */
+  transform-origin: bottom center;
+  transition: transform 1s ease-out;
+}
+
+/* SEÇÕES */
+.section {
+  text-align: left;
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+/* TÍTULOS DAS SEÇÕES */
+.section h2 { color: #9b59b6; margin-bottom: 15px; }
+
+/* LISTAS */
+ul { list-style: none; padding: 0; margin: 0; }
+ul li {
+  display: flex; align-items: center;
+  padding: 10px 15px; font-size: 1.1em; margin-bottom: 10px;
+  border-left: 5px solid #9b59b6; border-radius: 5px;
+  background: rgba(0,0,0,0.2); transition: transform 0.2s;
+}
+ul li span { margin-right: 10px; font-size: 1.3em; }
+ul li:hover { transform: translateX(5px); }
+
+/* BOTÃO DE COMPRA COM SHINING */
+.btn-buy {
+  display: inline-block; padding: 15px 30px; background-color: #9b59b6;
+  color: #fff; font-weight: bold; text-decoration: none;
+  border-radius: 5px; margin-top: 20px; position: relative; overflow: hidden;
+}
+.btn-buy::before {
+  content: "";
+  position: absolute; top:0; left:-75%; width:50%; height:100%;
+  background: rgba(255,255,255,0.4); transform: skewX(-20deg);
+}
+.btn-buy:hover::before { animation: shine 1s forwards; }
+@keyframes shine { 0%{ left:-75%; } 100%{ left:125%; } }
+
+/* BOTÃO FIXO MOBILE */
+.btn-fixed {
+  display: none; position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
+  background-color: #9b59b6; color: #fff; padding: 15px 30px; border-radius: 30px;
+  font-weight: bold; text-decoration: none; z-index: 999; transition: 0.3s;
+}
+.btn-fixed:hover { background-color:#8e44ad; box-shadow:0 0 20px #9b59b6; }
+@media (max-width:768px){ .btn-fixed{ display:block; } }
+
+/* RODAPÉ */
+footer {
+  background:#1b1f27; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; color:#aaa;
+}
+footer a { color:#9b59b6; text-decoration:none; margin:0 10px; }
+footer a:hover { text-decoration:underline; }
+
+</style>
+</head>
+<body>
+
+<!-- LINHAS DE INVESTIGAÇÃO -->
+<div class="line-bg" id="line-bg"></div>
+
+<div class="container">
+  <h1>Manual de Persuasão da FBI</h1>
+  <p class="subtitle">Aprenda técnicas de persuasão utilizadas por agentes do FBI para influenciar decisões.</p>
+
+  <!-- CAPA COM ANIMAÇÃO DE ENTRADA -->
+  <div class="book-cover">
+    <img src="livros/img/fbi.png" alt="Capa do Manual de Persuasão da FBI">
+  </div>
+
+  <!-- BENEFÍCIOS -->
+  <div class="section">
+    <h2>Benefícios do livro</h2>
+    <ul>
+      <li><span>🧠</span> Aprender técnicas psicológicas avançadas</li>
+      <li><span>⚡</span> Conduzir entrevistas e negociações com sucesso</li>
+      <li><span>📈</span> Desenvolver habilidades de influência e persuasão</li>
+      <li><span>🔍</span> Detectar sinais de mentira e manipulação</li>
+      <li><span>💡</span> Aplicar estratégias na vida profissional e pessoal</li>
+    </ul>
+  </div>
+
+  <!-- PÚBLICO-ALVO -->
+  <div class="section">
+    <h2>Para quem é este livro?</h2>
+    <ul>
+      <li><span>👤</span> Profissionais de vendas, líderes e negociadores</li>
+      <li><span>🎯</span> Pessoas que desejam melhorar influência pessoal</li>
+      <li><span>⚡</span> Interessados em persuasão e psicologia</li>
+    </ul>
+  </div>
+
+  <!-- RESUMO -->
+  <div class="section">
+    <h2>Resumo do Livro</h2>
+    <p>O Manual de Persuasão da FBI apresenta técnicas avançadas de comunicação e negociação usadas pelos agentes. Ele ensina como identificar padrões de comportamento, influenciar decisões e conduzir entrevistas eficazes, tornando você mais persuasivo e consciente em interações sociais e profissionais.</p>
+  </div>
+
+  <!-- BOTÃO DE COMPRA COM TEXTO, PREÇO E GARANTIA -->
+  <div class="section" style="text-align:center;">
+    <p style="font-size:1.3em; font-weight:bold; margin-bottom:10px;">Invista em você 🚀</p>
+    <p style="font-size:1.1em; margin-bottom:10px;">Transforme sua habilidade de influenciar pessoas. Comece hoje mesmo — você está a apenas um passo de dominar as técnicas de persuasão!</p>
+    <p><strong>Por apenas R$ 29,99</strong></p>
+    <a href="https://pay.cakto.com.br/csz46yb_589292" class="btn-buy">Garanta já o seu exemplar</a>
+    <div style="margin-top:15px; color:#ccc; font-size:0.95em;">
+      Produto entregue via e-mail. Você tem <strong>7 dias de garantia</strong> para solicitar reembolso caso não fique satisfeito.
+    </div>
+  </div>
+</div>
+
+<!-- BOTÃO FIXO MOBILE -->
+<a href="https://pay.cakto.com.br/csz46yb_589292" class="btn-fixed">📘 Comprar Agora</a>
+
+<!-- RODAPÉ -->
+<footer>
+  <p>© 2025 Manual de Persuasão da FBI</p>
+  <p>
+    <a href="#" target="_blank">Política de Privacidade</a> | 
+    <a href="#" target="_blank">Termos de Uso</a>
+  </p>
+</footer>
+
+<script>
+// BOTÃO FIXO MOBILE
+const btnFixed = document.querySelector('.btn-fixed');
+const footer = document.querySelector('footer');
+const isMobile = window.matchMedia("(max-width:768px)").matches;
+if(isMobile){
+  window.addEventListener('scroll', ()=>{
+    const footerTop = footer.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    if(footerTop <= windowHeight){ btnFixed.style.display="none"; }
+    else { btnFixed.style.display="block"; }
+  });
+} else { btnFixed.style.display="none"; }
+
+// ANIMAÇÃO DE ENTRADA DA CAPA ("ACORDANDO")
+window.addEventListener('load', ()=>{
+  const img = document.querySelector('.book-cover img');
+  img.style.transform = 'rotateX(0deg) rotateY(-5deg) rotateZ(2deg)';
+});
+
+// CRIAR LINHAS DE INVESTIGAÇÃO
+const lineBg = document.getElementById('line-bg');
+for(let i=0;i<30;i++){
+  const line = document.createElement('div');
+  line.className = 'line';
+  line.style.left = Math.random()*100 + '%';
+  line.style.animationDuration = 5 + Math.random()*5 + 's';
+  lineBg.appendChild(line);
+}
+</script>
+</body>
+</html>
