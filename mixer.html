@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como Fazer Amigos e Influenciar Pessoas</title>
+<style>
+/* RESET E FUNDO */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a001f 100%);
+  color: #eaeaea;
+  position: relative;
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+  z-index:1;
+}
+
+/* TITULO */
+h1 {
+  font-size: 2.8em;
+  color: #9b59b6;
+  margin-bottom: 10px;
+  transition: transform 0.4s;
+}
+h1:hover { transform: scale(1.05); }
+
+/* SUBTITULO */
+p.subtitle {
+  font-size: 1.2em;
+  margin-bottom: 40px;
+  color: #ccc;
+}
+
+/* CAPA DO LIVRO */
+.book-cover {
+  display: inline-block;
+  margin-bottom: 40px;
+  perspective: 1200px;
+}
+.book-cover img {
+  width: 280px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+.book-cover img.float-3d {
+  animation: float3D 8s linear infinite;
+}
+@keyframes float3D {
+  0%   { transform: translateY(0px) rotateY(0deg) rotateX(0deg); }
+  25%  { transform: translateY(-10px) rotateY(90deg) rotateX(5deg); }
+  50%  { transform: translateY(0px) rotateY(180deg) rotateX(0deg); }
+  75%  { transform: translateY(-10px) rotateY(270deg) rotateX(-5deg); }
+  100% { transform: translateY(0px) rotateY(360deg) rotateX(0deg); }
+}
+
+/* SEÇÕES */
+.section {
+  text-align: left;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+.section h2 { color: #9b59b6; margin-bottom: 15px; font-size:1.5em; }
+
+/* LISTAS */
+ul { list-style: none; padding: 0; margin: 0; }
+ul li {
+  display: flex; align-items: center;
+  padding: 10px 15px; font-size: 1.05em; margin-bottom: 10px;
+  border-left: 4px solid #9b59b6; border-radius: 5px;
+  background: rgba(255,255,255,0.03); transition: transform 0.2s;
+}
+ul li span { margin-right: 10px; font-size: 1.2em; color:#9b59b6; }
+ul li:hover { transform: translateX(5px); }
+
+/* BOTÃO DE COMPRA */
+.btn-buy {
+  display: inline-block; 
+  padding: 14px 28px; 
+  background-color: #9b59b6;
+  color: #fff; 
+  font-weight: bold; 
+  text-decoration: none;
+  border-radius: 6px; 
+  margin-top: 20px; 
+  position: relative; 
+  overflow: hidden;
+}
+.btn-buy::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -75px;
+  width: 50px; height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.5), transparent);
+  transform: skewX(-25deg);
+}
+.btn-buy:hover::before {
+  animation: shine 1s forwards;
+}
+@keyframes shine {
+  0% { left: -75px; }
+  100% { left: 120%; }
+}
+
+/* BOTÃO FIXO MOBILE */
+.btn-fixed {
+  display: none; 
+  position: fixed; 
+  bottom: 10px; left: 50%; 
+  transform: translateX(-50%);
+  background-color: #9b59b6; 
+  color: #fff; 
+  padding: 14px 28px; 
+  border-radius: 30px;
+  font-weight: bold; 
+  text-decoration: none; 
+  z-index: 999; 
+  transition: 0.3s;
+}
+.btn-fixed::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -75px;
+  width: 50px; height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.5), transparent);
+  transform: skewX(-25deg);
+}
+.btn-fixed:hover::before {
+  animation: shine 1s forwards;
+}
+@media (max-width:768px){ .btn-fixed{ display:block; } }
+
+/* RODAPÉ */
+footer {
+  background:#0d0d0d; 
+  text-align:center; 
+  padding:20px; 
+  margin-top:50px; 
+  font-size:0.9em; 
+  color:#777;
+}
+footer a { color:#9b59b6; text-decoration:none; margin:0 10px; }
+footer a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Como Fazer Amigos e Influenciar Pessoas</h1>
+  <p class="subtitle">O clássico que já transformou milhões de vidas em todo o mundo.</p>
+
+  <!-- CAPA -->
+  <div class="book-cover">
+    <img src="img/influenciar-pessoas.png" alt="Capa do livro Como Fazer Amigos e Influenciar Pessoas" id="bookImg">
+  </div>
+
+  <!-- BENEFÍCIOS -->
+  <div class="section">
+    <h2>O que você vai aprender</h2>
+    <ul>
+      <li><span>🤝</span> Como conquistar amizades verdadeiras</li>
+      <li><span>💬</span> A arte da comunicação persuasiva</li>
+      <li><span>📈</span> Estratégias para se destacar em qualquer ambiente</li>
+      <li><span>💡</span> Como resolver conflitos com sabedoria</li>
+      <li><span>🚀</span> Habilidades sociais que abrem portas na vida pessoal e profissional</li>
+    </ul>
+  </div>
+
+  <!-- PÚBLICO -->
+  <div class="section">
+    <h2>Este livro é para você se...</h2>
+    <ul>
+      <li><span>👤</span> Quer melhorar sua comunicação</li>
+      <li><span>🎯</span> Deseja ter mais influência positiva sobre as pessoas</li>
+      <li><span>🌍</span> Busca crescimento pessoal e profissional</li>
+    </ul>
+  </div>
+
+  <!-- RESUMO -->
+  <div class="section">
+    <h2>Resumo</h2>
+    <p>
+      Escrito por Dale Carnegie, este é um dos maiores clássicos do desenvolvimento pessoal. 
+      Ele ensina técnicas práticas para criar conexões reais, conquistar a simpatia das pessoas, 
+      exercer influência de forma ética e se tornar alguém admirado no convívio social e profissional. 
+      Um guia atemporal para transformar sua forma de se relacionar com o mundo.
+    </p>
+  </div>
+
+  <!-- COMPRA -->
+  <div class="section" style="text-align:center;">
+    <p style="font-size:1.2em; font-weight:bold; margin-bottom:10px;">Invista em você 🚀</p>
+    <p style="font-size:1.05em; margin-bottom:10px;">Comece agora sua transformação pessoal com um dos livros mais importantes de todos os tempos.</p>
+    <p><strong>Por apenas R$ 29,99</strong></p>
+    <a href="https://pay.cakto.com.br/qt2mggm_590434" class="btn-buy" id="buyBtn">Garanta já o seu exemplar</a>
+    <div style="margin-top:15px; color:#aaa; font-size:0.9em;">
+      Produto entregue via e-mail. Você tem <strong>7 dias de garantia</strong> para solicitar reembolso caso não fique satisfeito.
+    </div>
+  </div>
+</div>
+
+<!-- BOTÃO FIXO MOBILE -->
+<a href="https://pay.cakto.com.br/qt2mggm_590434" class="btn-fixed" id="buyBtnMobile">📘 Comprar Agora</a>
+
+<!-- RODAPÉ -->
+<footer>
+  <p>© 2025 Como Fazer Amigos e Influenciar Pessoas</p>
+  <p>
+    <a href="#" target="_blank">Política de Privacidade</a> | 
+    <a href="#" target="_blank">Termos de Uso</a>
+  </p>
+</footer>
+
+<!-- SONS -->
+<audio id="pageFlip" src="sounds/page-flip.mp3" preload="auto"></audio>
+<audio id="clickSound" src="sounds/click.mp3" preload="auto"></audio>
+
+<script>
+// ANIMAÇÃO DA CAPA
+window.addEventListener('load', ()=>{
+  const img = document.getElementById('bookImg');
+  const pageFlip = document.getElementById('pageFlip');
+  img.style.opacity = "1";
+  img.classList.add('float-3d');
+  pageFlip.play().catch(()=>{}); 
+});
+
+// SONS DO BOTÃO
+const buyBtn = document.getElementById('buyBtn');
+const buyBtnMobile = document.getElementById('buyBtnMobile');
+const clickSound = document.getElementById('clickSound');
+
+[buyBtn, buyBtnMobile].forEach(btn=>{
+  btn.addEventListener('mouseenter', ()=>{
+    clickSound.play().catch(()=>{});
+  });
+});
+</script>
+</body>
+</html>
