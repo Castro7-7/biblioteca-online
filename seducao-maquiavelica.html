@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seduçâo Maquiavélica</title>
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin:0; padding:0; cursor:auto;
+  background:#111317; color:#f5f5f5; position:relative;
+}
+
+/* FUNDO PARTICULAS VERMELHAS/ROXAS */
+#hearts { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+.particle { position:absolute; width:15px; height:15px; background: radial-gradient(circle, rgba(155,89,182,0.3) 0%, rgba(255,0,0,0.3) 70%, transparent 100%); border-radius:50%; opacity:0.7; }
+
+/* CONTAINER PRINCIPAL */
+.container { max-width:1000px; margin:auto; padding:40px 20px; text-align:center; position:relative; z-index:1; }
+
+/* TITULO */
+h1 { font-size:3em; color:#e6e6e6; margin-bottom:10px; transition: transform 0.5s; }
+h1:hover { transform: scale(1.05) rotate(-2deg); }
+
+/* SUBTITULO */
+p.subtitle { font-size:1.2em; margin-bottom:40px; color:#ccc; }
+
+/* CAPA DO LIVRO HIPNOTIZANTE */
+.book-cover { perspective:1000px; display:inline-block; margin-bottom:50px; transform-style: preserve-3d; }
+.book-cover img {
+  width:300px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.7);
+  opacity:0; transform: scale(0.8) rotateY(0deg); transition: transform 1.5s ease-out, opacity 1.5s ease-out;
+  animation: tilt 4s infinite alternate ease-in-out;
+}
+@keyframes tilt {
+  0% { transform: scale(1) rotateY(-10deg); }
+  50% { transform: scale(1.05) rotateY(10deg); }
+  100% { transform: scale(1) rotateY(-10deg); }
+}
+
+/* SEÇÕES */
+.section { text-align:left; padding:25px; margin-bottom:30px; }
+.section h2 { color:#9b59b6; margin-bottom:15px; }
+ul { list-style:none; padding:0; margin:0; }
+ul li { display:flex; align-items:center; padding:10px 15px; font-size:1.1em; margin-bottom:10px; border-left:5px solid #9b59b6; border-radius:5px; background:rgba(0,0,0,0.2); transition: transform 0.2s; }
+ul li span { margin-right:10px; font-size:1.3em; }
+ul li:hover { transform: translateX(5px); }
+
+/* BOTÕES */
+.btn-buy { display:inline-block; padding:15px 30px; background-color:#9b59b6; color:#fff; font-weight:bold; text-decoration:none; border-radius:5px; margin-top:20px; position:relative; overflow:hidden; }
+.btn-buy::before { content:""; position:absolute; top:0; left:-75%; width:50%; height:100%; background:rgba(255,255,255,0.4); transform:skewX(-20deg); }
+.btn-buy:hover::before { animation: shine 1s forwards; }
+@keyframes shine {0%{left:-75%;}100%{left:125%;}}
+
+.btn-fixed { display:none; position:fixed; bottom:10px; left:50%; transform:translateX(-50%); background-color:#9b59b6; color:#fff; padding:15px 30px; border-radius:30px; font-weight:bold; text-decoration:none; z-index:999; transition:0.3s; }
+.btn-fixed:hover { background-color:#8e44ad; box-shadow:0 0 20px #9b59b6; }
+@media (max-width:768px){ .btn-fixed{ display:block; } }
+
+footer { background:#1b1f27; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; color:#aaa; }
+footer a { color:#9b59b6; text-decoration:none; margin:0 10px; }
+footer a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div id="hearts"></div>
+
+<div class="container">
+  <h1>Seduçâo Maquiavélica</h1>
+  <p class="subtitle">Aprenda a arte da sedução com uma abordagem dark e estratégica.</p>
+
+  <div class="book-cover">
+    <img src="img/seduçao-maquiavelica.png" alt="Capa Sedução Maquiavélica">
+  </div>
+
+  <div class="section">
+    <h2>Benefícios do livro</h2>
+    <ul>
+      <li><span>🧠</span> Desenvolver sedução estratégica</li>
+      <li><span>❤️‍🔥</span> Compreender psicologia da atração</li>
+      <li><span>🔍</span> Aumentar autoconfiança e presença</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Para quem é este livro?</h2>
+    <ul>
+      <li><span>👤</span> Profissionais, líderes e curiosos</li>
+      <li><span>🎯</span> Interessados em psicologia, sedução e persuasão</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Resumo do Livro</h2>
+    <p>O livro ensina técnicas de sedução hipnotizante e estratégias psicológicas para conquistar e influenciar pessoas de forma sofisticada e dark.</p>
+  </div>
+
+  <div class="section" style="text-align:center;">
+    <p style="font-size:1.3em; font-weight:bold; margin-bottom:10px;">Invista em você 🚀</p>
+    <p style="font-size:1.1em; margin-bottom:10px;">Domine a arte da sedução e presença hipnotizante.</p>
+    <p><strong>Por apenas R$ 29,99</strong></p>
+    <a href="https://pay.cakto.com.br/csz46yb_589292" class="btn-buy">Garanta já o seu exemplar</a>
+    <div style="margin-top:15px; color:#ccc; font-size:0.95em;">Produto entregue via e-mail. Você tem <strong>7 dias de garantia</strong>.</div>
+  </div>
+</div>
+
+<a href="https://pay.cakto.com.br/csz46yb_589292" class="btn-fixed">📘 Comprar Agora</a>
+
+<footer>
+  <p>© 2025 Seduçâo Maquiavélica</p>
+  <p><a href="#" target="_blank">Política de Privacidade</a> | <a href="#" target="_blank">Termos de Uso</a></p>
+</footer>
+
+<script>
+// BOTÃO FIXO MOBILE
+const btnFixed = document.querySelector('.btn-fixed');
+const footer = document.querySelector('footer');
+const isMobile = window.matchMedia("(max-width:768px)").matches;
+if(isMobile){
+  window.addEventListener('scroll', ()=>{
+    const footerTop = footer.getBoundingClientRect().top;
+    btnFixed.style.display = (footerTop > window.innerHeight) ? "block" : "none";
+  });
+} else { btnFixed.style.display="none"; }
+
+// CAPA HIPNOTIZANTE
+window.addEventListener('load', ()=>{
+  const img = document.querySelector('.book-cover img');
+  setTimeout(()=>{ img.style.opacity='1'; img.style.transform='scale(1) rotateY(0deg)'; }, 400);
+
+  // PARTICULAS CAINDO
+  const hearts = document.getElementById('hearts');
+  const particles = [];
+  for(let i=0;i<50;i++){
+    const p = document.createElement('div'); p.className='particle';
+    p.x = Math.random()*window.innerWidth;
+    p.y = Math.random()*-window.innerHeight;
+    p.vy = 0.5 + Math.random()*0.5;
+    p.size = 10 + Math.random()*10;
+    p.style.width = p.size+'px';
+    p.style.height = p.size+'px';
+    p.style.left = p.x+'px';
+    p.style.top = p.y+'px';
+    p.style.opacity = 0.7;
+    hearts.appendChild(p); particles.push(p);
+  }
+
+  function animateParticles(){
+    particles.forEach(p=>{
+      p.y += p.vy;
+      if(p.y > window.innerHeight){ p.y = -10; p.x = Math.random()*window.innerWidth; }
+      p.style.top = p.y+'px';
+      p.style.left = p.x+'px';
+    });
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+});
+</script>
+</body>
+</html>

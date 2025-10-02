@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manipulação Oculta</title>
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin:0; padding:0; cursor:auto;
+  background:#111317; color:#f5f5f5; position:relative;
+}
+
+/* FUNDO FUMAÇA ROXA */
+#smoke { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+.particle { position:absolute; width:20px; height:20px; background: radial-gradient(circle, rgba(155,89,182,0.3) 0%, transparent 70%); border-radius:50%; }
+
+/* CONTAINER PRINCIPAL */
+.container { max-width:1000px; margin:auto; padding:40px 20px; text-align:center; position:relative; z-index:1; }
+
+/* TITULO */
+h1 { font-size:3em; color:#e6e6e6; margin-bottom:10px; transition: transform 0.5s; }
+h1:hover { transform: scale(1.05) rotate(-2deg); }
+
+/* SUBTITULO */
+p.subtitle { font-size:1.2em; margin-bottom:40px; color:#ccc; }
+
+/* CAPA DO LIVRO COM BRILHO */
+.book-cover { perspective:1000px; display:inline-block; margin-bottom:50px; transform-style: preserve-3d; }
+.book-cover img {
+  width:300px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.7);
+  opacity:0; transform: scale(0.8); transition: transform 1.2s ease-out, opacity 1.2s ease-out;
+  border: 3px solid rgba(155,89,182,0); box-shadow: 0 0 20px rgba(155,89,182,0);
+  animation: pulseBorder 2s infinite alternate;
+}
+@keyframes pulseBorder {
+  0% { border-color: rgba(155,89,182,0.2); box-shadow:0 0 20px rgba(155,89,182,0.2); }
+  100% { border-color: rgba(155,89,182,0.6); box-shadow:0 0 40px rgba(155,89,182,0.6); }
+}
+
+/* SEÇÕES */
+.section { text-align:left; padding:25px; margin-bottom:30px; }
+.section h2 { color:#9b59b6; margin-bottom:15px; }
+ul { list-style:none; padding:0; margin:0; }
+ul li { display:flex; align-items:center; padding:10px 15px; font-size:1.1em; margin-bottom:10px; border-left:5px solid #9b59b6; border-radius:5px; background:rgba(0,0,0,0.2); transition: transform 0.2s; }
+ul li span { margin-right:10px; font-size:1.3em; }
+ul li:hover { transform: translateX(5px); }
+
+/* BOTÕES */
+.btn-buy { display:inline-block; padding:15px 30px; background-color:#9b59b6; color:#fff; font-weight:bold; text-decoration:none; border-radius:5px; margin-top:20px; position:relative; overflow:hidden; }
+.btn-buy::before { content:""; position:absolute; top:0; left:-75%; width:50%; height:100%; background:rgba(255,255,255,0.4); transform:skewX(-20deg); }
+.btn-buy:hover::before { animation: shine 1s forwards; }
+@keyframes shine {0%{left:-75%;}100%{left:125%;}}
+
+.btn-fixed { display:none; position:fixed; bottom:10px; left:50%; transform:translateX(-50%); background-color:#9b59b6; color:#fff; padding:15px 30px; border-radius:30px; font-weight:bold; text-decoration:none; z-index:999; transition:0.3s; }
+.btn-fixed:hover { background-color:#8e44ad; box-shadow:0 0 20px #9b59b6; }
+@media (max-width:768px){ .btn-fixed{ display:block; } }
+
+footer { background:#1b1f27; text-align:center; padding:20px; margin-top:50px; font-size:0.9em; color:#aaa; }
+footer a { color:#9b59b6; text-decoration:none; margin:0 10px; }
+footer a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div id="smoke"></div>
+
+<div class="container">
+  <h1>Manipulação Oculta</h1>
+  <p class="subtitle">Descubra os segredos da manipulação e influência oculta.</p>
+
+  <div class="book-cover">
+    <img src="img/manipulaçao-oculta.png" alt="Capa Manipulação Oculta">
+  </div>
+
+  <div class="section">
+    <h2>Benefícios do livro</h2>
+    <ul>
+      <li><span>🧠</span> Aprender técnicas de influência</li>
+      <li><span>⚡</span> Entender manipulações sutis</li>
+      <li><span>🔍</span> Aumentar percepção social</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Para quem é este livro?</h2>
+    <ul>
+      <li><span>👤</span> Profissionais e líderes</li>
+      <li><span>🎯</span> Interessados em psicologia e persuasão</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Resumo do Livro</h2>
+    <p>O livro revela estratégias de manipulação invisível, ensinando como identificar, evitar e aplicar técnicas sutis de influência no dia a dia.</p>
+  </div>
+
+  <div class="section" style="text-align:center;">
+    <p style="font-size:1.3em; font-weight:bold; margin-bottom:10px;">Invista em você 🚀</p>
+    <p style="font-size:1.1em; margin-bottom:10px;">Transforme sua habilidade de perceber e influenciar pessoas.</p>
+    <p><strong>Por apenas R$ 29,99</strong></p>
+    <a href="https://pay.cakto.com.br/csz46yb_589292" class="btn-buy">Garanta já o seu exemplar</a>
+    <div style="margin-top:15px; color:#ccc; font-size:0.95em;">Produto entregue via e-mail. Você tem <strong>7 dias de garantia</strong>.</div>
+  </div>
+</div>
+
+<a href="https://pay.cakto.com.br/csz46yb_589292" class="btn-fixed">📘 Comprar Agora</a>
+
+<footer>
+  <p>© 2025 Manipulação Oculta</p>
+  <p><a href="#" target="_blank">Política de Privacidade</a> | <a href="#" target="_blank">Termos de Uso</a></p>
+</footer>
+
+<script>
+// BOTÃO FIXO MOBILE
+const btnFixed = document.querySelector('.btn-fixed');
+const footer = document.querySelector('footer');
+const isMobile = window.matchMedia("(max-width:768px)").matches;
+if(isMobile){
+  window.addEventListener('scroll', ()=>{
+    const footerTop = footer.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    btnFixed.style.display = (footerTop > windowHeight) ? "block" : "none";
+  });
+} else { btnFixed.style.display="none"; }
+
+// CAPA FADE-IN
+window.addEventListener('load', ()=>{
+  const img = document.querySelector('.book-cover img');
+  setTimeout(()=>{ img.style.opacity = '1'; img.style.transform='scale(1)'; }, 400);
+
+  // PARTICULAS FUMAÇA
+  const smoke = document.getElementById('smoke');
+  const particles = [];
+  for(let i=0;i<40;i++){
+    const p = document.createElement('div'); p.className='particle';
+    p.x = Math.random()*window.innerWidth; p.y = window.innerHeight + Math.random()*100;
+    p.vy = -0.2 - Math.random()*0.3; p.size = 20 + Math.random()*20;
+    p.style.width = p.size+'px'; p.style.height = p.size+'px';
+    p.style.left = p.x+'px'; p.style.top = p.y+'px';
+    smoke.appendChild(p); particles.push(p);
+  }
+
+  function animateSmoke(){
+    particles.forEach(p=>{
+      p.y += p.vy;
+      if(p.y < -50){ p.y = window.innerHeight + Math.random()*50; p.x = Math.random()*window.innerWidth; }
+      p.style.top = p.y+'px';
+      p.style.left = p.x+'px';
+    });
+    requestAnimationFrame(animateSmoke);
+  }
+  animateSmoke();
+});
+</script>
+</body>
+</html>
