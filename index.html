@@ -14,7 +14,9 @@
       background: linear-gradient(135deg, #0d0717, #1a0f2e);
       color: #fff;
     }
-
+header {
+  position: relative;
+}
     header { text-align:center; padding:40px 20px; }
     header h1 { font-size:2.5rem; margin-bottom:10px; }
     header p { font-size:1.2rem; opacity:0.8; }
@@ -221,6 +223,124 @@
       .livro-views img { width:14px; height:14px; }
       #total-visits img { width:18px; height:18px; }
     }
+	/* 🔍 Caixa de pesquisa com animação */
+.search-container {
+  position: absolute;
+  position: fixed;
+  z-index: 1000;
+  top: 15px;
+  right: 19px;
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border-radius: 30px;
+  padding: 5px 10px;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.search-container input {
+  border: none;
+  background: none;
+  color: white;
+  padding: 8px;
+  width: 0;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.search-container.active input {
+  width: 200px;
+  opacity: 1;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Grid de cards */
+.grid-view {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  justify-content: start;
+}
+
+/* ====== LIVRO NO GRID ====== */
+.grid-view .livro {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+}
+
+.grid-view .livro img {
+  width: 150px;
+  height: 220px;
+}
+
+/* ====== LISTA DE LIVROS (GRID VIEW) ====== */
+.library-list.grid-view {
+  display: grid;
+  gap: 50px;
+  justify-content: start; /* cards sempre começando na coluna 1 */
+  padding: 20px;
+}
+
+/* ====== CARD DE VISUALIZAÇÃO DO LIVRO ====== */
+.library-list.grid-view {
+  border-radius: 12px;      /* borda arredondada */
+  padding: 20px;            /* espaço interno */
+  text-align: center;       /* centraliza o conteúdo */
+  box-shadow: 0 0px 1px rgba(0,0,0,0.1);
+  width: 520px;             /* largura fixa do card */
+  justify-self: start;      /* card gruda na esquerda */
+}
+.livro-views {
+ display: none !important;
+ }
+
+/* ====== RESPONSIVIDADE ====== */
+
+/* Desktop: 5 colunas fixas */
+@media (min-width: 1200px) {
+  .library-list.grid-view {
+    grid-template-columns: repeat(4, 220px);
+  }
+}
+
+/* Tablet: 3 colunas proporcionais */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .library-list.grid-view {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Mobile: colunas menores auto-ajustáveis */
+@media (max-width: 767px) {
+  .library-list.grid-view {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+/* ====== IMAGEM DO CARD ====== */
+.library-list.grid-view .livro img {
+  width: 100%;       /* imagem ocupa toda a largura do card */
+  height: 300px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* ====== TEXTO DO CARD ====== */
+.library-list.grid-view .livro-info h2,
+.library-list.grid-view .livro-info p {
+  overflow-wrap: break-word;
+  word-wrap: break-word; /* textos não saem do card */
+}
   </style>
 </head>
 <body>
@@ -228,7 +348,12 @@
     <h1>📚 Biblioteca Online</h1>
     <p>Uma coleção de livros digitais para quem busca crescimento pessoal, motivação e transformação.</p>
   </header>
-
+	<div class="search-container">
+		<input type="text" id="searchBar" placeholder="Pesquisar livros..." />
+		<button id="searchBtn" class="search-btn">
+		<span class="lupa">🔍</span>
+		</button>
+	</div>
   <div class="container">
     <!-- CARROSSEL -->
     <div class="carousel-container" id="carousel-container">
@@ -246,7 +371,7 @@
         <!-- NOVO LIVRO -->
         <div class="carousel-item" data-book="fbi">
           <a href="livros/fbi.html"><img src="livros/img/fbi.png" alt="Manual de Persuasão da FBI"></a>
-        </div>  
+        </div>
          <div class="carousel-item" data-book="influenciar-pessoas">
           <a href="livros/influenciar-pessoas.html"><img src="livros/img/influenciar-pessoas.png" alt="Como fazer amigos e influencair pessoas"></a>
         </div>
@@ -381,10 +506,10 @@
   <footer>
     <p>© 2025 Biblioteca Online</p>
     <p>
-      <a href="https://www.aegea.com.br/politica-de-privacidade-e-protecao-de-dados-da-aegea">Política de Privacidade</a> | 
+      <a href="https://www.aegea.com.br/politica-de-privacidade-e-protecao-de-dados-da-aegea">Política de Privacidade</a> |
       <a href="https://olist.com/seguranca-e-privacidade/termos-de-uso-loja/?parceiro=1-01-35-01&utm_source=google&utm_campaign=paid-google-tiny-generica-always_on-dsa_dinamica-conv-search-null-keyword&utm_medium=cpc&utm_content=dsa_geral-search-search-dco&utm_term=dsa_geral-search-search-dco_00000308&gad_source=1&gad_campaignid
-        =16379307309&gclid=CjwKCAjw_-3GBhAYEiwAjh9fUKKNk-x6Gw1tuwcoVOyTM4xwNEEBMakrnVeFcaAUMfOFNYhc5afijRoCx0wQAvD_BwE">Termos de Uso</a> | 
-      <a href="#">Instagram</a> | 
+        =16379307309&gclid=CjwKCAjw_-3GBhAYEiwAjh9fUKKNk-x6Gw1tuwcoVOyTM4xwNEEBMakrnVeFcaAUMfOFNYhc5afijRoCx0wQAvD_BwE">Termos de Uso</a> |
+      <a href="#">Instagram</a> |
       <a href="https://wa.me/qr/7LPD66PY3ZJ2H1">reclame aqui</a>
     </p>
   </footer>
@@ -503,7 +628,7 @@
         const div=document.createElement('div');
         div.className='admin-book';
         div.innerHTML=`
-          <span>${livro.querySelector('h2').innerText}: 
+          <span>${livro.querySelector('h2').innerText}:
             <span id="count-${key}">0</span>
           </span>
           <input type="number" id="input-${key}" min="0" placeholder="N">
@@ -527,10 +652,57 @@
 
       document.getElementById('resetTotal').onclick = ()=>{ totalRef.set(0); };
     }
+const searchBtn = document.getElementById("searchBtn");
+const searchBar = document.getElementById("searchBar");
+const carousel = document.getElementById("carousel-container");
+const libraryList = document.querySelector(".library-list");
+const searchContainer = document.querySelector(".search-container");
+
+searchBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  searchContainer.classList.toggle("active");
+
+  // alterna grid-view na lista e esconde/mostra o carrossel
+  const isGrid = libraryList.classList.toggle("grid-view");
+  carousel.style.display = isGrid ? "none" : "block";
+
+  // garante que os .livro-views fiquem escondidos (ou reapareçam)
+  document.querySelectorAll('.livro-views').forEach(v => v.style.display = isGrid ? 'none' : '');
+
+  if (isGrid) searchBar.focus();
+  else searchBar.value = '';
+});
+
+// clique fora: volta ao normal
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".search-container")) {
+    searchContainer.classList.remove("active");
+    libraryList.classList.remove("grid-view");
+    carousel.style.display = "block";
+    document.querySelectorAll('.livro-views').forEach(v => v.style.display = '');
+    searchBar.value = '';
+  }
+});
+
+searchBar.addEventListener("input", () => {
+  const termo = searchBar.value.toLowerCase();
+  document.querySelectorAll(".livro").forEach(livro => {
+    const titulo = livro.querySelector("h2").innerText.toLowerCase();
+    livro.style.display = titulo.includes(termo) ? "" : "none";
+  });
+});
+searchBar.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault(); // 🔥 impede recarregar/alterar layout
+  }
+});
+searchIcon.addEventListener("click", () => {
+  container.classList.toggle("grid-view");
+});
+
   </script>
 </body>
 </html>
-
 
 
 
