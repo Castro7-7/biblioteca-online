@@ -888,11 +888,29 @@ searchIcon.addEventListener("click", () => {
     gsap.to(handle, {duration:0.5, rotate:0, opacity:1, delay:0.5});
   }
 });
+	  // ===== FILTRAR LIVROS ENQUANTO DIGITA =====
+searchInput.addEventListener("input", () => {
+  const termo = searchInput.value.toLowerCase().trim();
+  if (termo === "") {
+    restaurarLayout(); // se não tiver nada digitado, volta ao layout normal
+    return;
+  }
+
+  // Filtra os livros cujo título contenha o termo digitado
+  const livrosFiltrados = Array.from(livrosLista).filter(livro => {
+    const titulo = livro.querySelector("h2").innerText.toLowerCase();
+    return titulo.includes(termo);
+  });
+
+  mostrarGrid(livrosFiltrados);
+});
+
 
 </script>
 
 </body>
 </html>
+
 
 
 
