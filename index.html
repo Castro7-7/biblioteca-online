@@ -14,8 +14,12 @@
       background: linear-gradient(135deg, #0d0717, #1a0f2e);
       color: #fff;
     }
-
-    header { text-align:center; padding:40px 20px; }
+	
+header {
+  text-align: center;
+  padding: 40px 20px; /* padding apenas para o cabeçalho */
+}
+    header { text-align:center; padding:20px 20px; }
     header h1 { font-size:2.5rem; margin-bottom:10px; }
     header p { font-size:1.2rem; opacity:0.8; }
 
@@ -221,9 +225,224 @@
       .livro-views img { width:14px; height:14px; }
       #total-visits img { width:18px; height:18px; }
     }
+	/* ===== PESQUISA ===== */
+#search-icon {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  background: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#search-icon svg {
+  stroke: white;       /* cor do ícone */
+  width: 28px;         /* tamanho */
+  height: 28px;
+  transition: stroke 0.3s;
+}
+
+#search-icon:hover svg {
+  stroke: #aaa;        /* muda cor ao passar o mouse */
+}
+
+#search-bar {
+  position: fixed;
+  top: 25px;
+  right: 75px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 30px;
+  overflow: hidden;
+  width: 0;
+  height: 40px;
+  transition: width 0.4s ease;
+  display: flex;
+  align-items: center;
+  z-index: 999;
+}
+#search-bar.active {
+  width: 250px;
+  padding: 0 10px;
+}
+#search-bar input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  padding-left: 10px;
+}
+
+/* ===== MENU DE CATEGORIAS ===== */
+#category-btn {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  background: none;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1000;
+  transition: background 0.3s ease;
+}
+#category-btn:hover {
+  background: #5b21b6;
+}
+
+#category-menu {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 240px;
+  height: 100%;
+  background: rgba(26,15,46,0.97);
+  color: white;
+  padding: 30px 20px;
+  transition: left 0.4s ease;
+  z-index: 999;
+  box-shadow: 3px 0 12px rgba(0,0,0,0.4);
+}
+#category-menu.active {
+  left: 0;
+}
+#category-menu h3 {
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #7c3aed;
+  padding-bottom: 8px;
+}
+#category-menu ul {
+  list-style: none;
+  padding: 0;
+}
+#category-menu li {
+  padding: 10px;
+  margin-bottom: 5px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+#category-menu li:hover {
+  background: #7c3aed;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  #search-bar.active { width: 180px; }
+}
+/* ===== GRID DE LIVROS ===== */
+#search-results {
+  display: none;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* colunas flexíveis */
+  gap: 30px; /* espaço fixo entre cards */
+  padding: 110px 100px; /* padding apenas dentro do grid */
+  justify-items: center; /* centraliza cards horizontalmente */
+  align-items: start; /* cards começam no topo da coluna */
+  animation: fadeIn 0.5s ease;
+}
+
+/* Cards dentro do grid */
+.grid-resultados .card-livro {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 15px;
+  width: 180px; /* largura fixa */
+  height: 300px; /* altura fixa para manter alinhamento */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+}
+.grid-resultados .card-livro img {
+  width: 100%;
+  height: 260px; /* altura fixa da imagem */
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.grid-resultados .card-livro h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+  flex-grow: 1; /* força o título ocupar espaço */
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 900px) {
+  #search-results {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    padding: 20px 0;
+  }
+  .grid-resultados .card-livro {
+    width: 140px;
+    height: 250px;
+  }
+  .grid-resultados .card-livro img {
+    height: 180px;
+  }
+}
+/* Animação */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(15px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
   </style>
+
 </head>
 <body>
+<!-- Ícone de busca fixo -->
+<div id="search-icon">
+  <svg id="icon-svg" width="30" height="30" viewBox="0 0 64 64">
+    <!-- Lupa -->
+    <circle id="lens" cx="27" cy="27" r="16" stroke="white" stroke-width="4" fill="none"/>
+    <line id="handle" x1="41" y1="41" x2="55" y2="55" stroke="white" stroke-width="4"/>
+    <!-- Casinha (inicialmente invisível) -->
+    <polygon id="house" points="16,32 32,16 48,32 48,48 16,48" fill="white" opacity="0"/>
+  </svg>
+</div>
+
+
+
+<!-- Barra de pesquisa -->
+<div id="search-bar">
+  <input type="text" id="search-input" placeholder="Pesquisar livros...">
+</div>
+<!-- Grid de resultados da pesquisa -->
+<div id="search-results" class="grid-resultados"></div>
+
+<!-- Botão e menu de categorias -->
+<div id="category-btn">☰ Categoria</div>
+<div id="category-menu">
+  <h3>Categorias</h3>
+  <ul>
+    <li data-category="todos">Todos</li>
+    <li data-category="motivação">Motivação</li>
+    <li data-category="autoajuda">Autoajuda</li>
+    <li data-category="psicologia">Psicologia</li>
+    <li data-category="manipulação">Manipulação</li>
+    <li data-category="poder">Poder</li>
+    <li data-category="estratégia">Estratégia</li>
+  </ul>
+</div>
+
   <header>
     <h1>📚 Biblioteca Online</h1>
     <p>Uma coleção de livros digitais para quem busca crescimento pessoal, motivação e transformação.</p>
@@ -393,6 +612,8 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<!-- GSAP para animações -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.1/gsap.min.js"></script>
 
   <script>
     // CONFIG FIREBASE
@@ -527,10 +748,133 @@
 
       document.getElementById('resetTotal').onclick = ()=>{ totalRef.set(0); };
     }
-  </script>
+// ===== ELEMENTOS =====
+const searchIcon = document.getElementById("search-icon");
+const searchBar = document.getElementById("search-bar");
+const searchInput = document.getElementById("search-input");
+const livrosLista = document.querySelectorAll(".livro");
+const searchResults = document.getElementById("search-results");
+const carrossel = document.querySelector(".carrossel");
+const categoryBtn = document.getElementById("category-btn");
+const categoryMenu = document.getElementById("category-menu");
+
+// ===== CATEGORIAS =====
+const categorias = {
+  "invisivel": "autoajuda",
+  "potencial": "motivação",
+  "48leis": "poder",
+  "fbi": "psicologia",
+  "influenciar-pessoas": "autoajuda",
+  "poder-manipulacao": "manipulação",
+  "engenharia-social": "manipulação",
+  "manipulacao-oculta": "manipulação",
+  "seducao-maquiavelica": "estratégia"
+};
+
+// ===== FUNÇÃO PARA CRIAR CARDS =====
+function criarGridLivros(lista) {
+  searchResults.innerHTML = "";
+  lista.forEach(livro => {
+    const titulo = livro.querySelector("h2")?.innerText || "Sem título";
+    const imagem = livro.querySelector("img")?.src || "";
+    const card = document.createElement("div");
+    card.classList.add("card-livro");
+    card.innerHTML = `
+      <img src="${imagem}" alt="${titulo}">
+      <h4>${titulo}</h4>
+    `;
+    searchResults.appendChild(card);
+  });
+}
+
+// ===== MOSTRAR GRID =====
+function mostrarGrid(livros) {
+  livrosLista.forEach(l => l.style.display = "none");
+  if (carrossel) carrossel.style.display = "none";
+  searchResults.style.display = "grid";
+  criarGridLivros(livros);
+}
+
+// ===== VOLTAR AO NORMAL =====
+function restaurarLayout() {
+  searchResults.style.display = "none";
+  searchResults.innerHTML = "";
+  livrosLista.forEach(l => l.style.display = "flex");
+  if (carrossel) carrossel.style.display = "block";
+}
+
+// ===== MENU DE CATEGORIAS =====
+categoryBtn.addEventListener("click", () => {
+  categoryMenu.classList.toggle("active");
+});
+document.querySelectorAll("#category-menu li").forEach(item => {
+  item.addEventListener("click", () => {
+    const categoria = item.dataset.category;
+    categoryMenu.classList.remove("active");
+
+    if (categoria === "todos") {
+      mostrarGrid(Array.from(livrosLista)); // mostra todos os livros em grid
+      return;
+    }
+
+    const livrosFiltrados = Array.from(livrosLista).filter(livro => {
+      const key = livro.dataset.book;
+      return categorias[key] === categoria;
+    });
+
+    mostrarGrid(livrosFiltrados);
+  });
+});
+
+// ===== PESQUISA ANIMADA =====
+
+const animatedSVG = `
+<svg width="40" height="40" viewBox="0 0 100 100">
+  <!-- Lupa -->
+  <circle id="lens" cx="40" cy="40" r="20" stroke="white" stroke-width="5" fill="none"/>
+  <line id="handle" x1="55" y1="55" x2="75" y2="75" stroke="white" stroke-width="5"/>
+  <!-- Casinha -->
+  <polygon id="house" points="25,60 50,35 75,60 75,85 25,85" fill="white" scale="0" opacity="0"/>
+</svg>
+`;
+searchIcon.innerHTML = animatedSVG;
+
+let mostrandoPesquisa = false;
+
+searchIcon.addEventListener("click", () => {
+  const lens = document.getElementById("lens");
+  const handle = document.getElementById("handle");
+  const house = document.getElementById("house");
+
+  mostrandoPesquisa = !mostrandoPesquisa;
+
+  if(mostrandoPesquisa){
+    searchBar.classList.add("active");
+    mostrarGrid(Array.from(livrosLista));
+    searchInput.focus();
+
+    // Animação da lupa virando casa
+    gsap.to(lens, {duration: 0.5, scale:0.5, transformOrigin:"50% 50%", opacity:0});
+    gsap.to(handle, {duration: 0.5, rotate: -45, transformOrigin:"50% 50%", opacity:0});
+    gsap.to(house, {duration: 0.5, scale:1, opacity:1, transformOrigin:"50% 50%", delay:0.5});
+    
+  } else {
+    searchBar.classList.remove("active");
+    restaurarLayout();
+    searchInput.value = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // Animação da casa voltando para lupa
+    gsap.to(house, {duration:0.5, scale:0, opacity:0});
+    gsap.to(lens, {duration:0.5, scale:1, opacity:1, delay:0.5});
+    gsap.to(handle, {duration:0.5, rotate:0, opacity:1, delay:0.5});
+  }
+});
+
+</script>
+
 </body>
 </html>
-
 
 
 
