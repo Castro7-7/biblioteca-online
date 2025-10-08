@@ -813,18 +813,22 @@ function restaurarLayout() {
 // ===== MENU DE CATEGORIAS =====
 categoryBtn.addEventListener("click", () => {
   categoryMenu.classList.toggle("active");
-});
-	    // Troca o texto do botão
+
+  // Troca o texto do botão
   if (categoryMenu.classList.contains("active")) {
     categoryBtn.textContent = "<"; // quando aberto, mostrar "<"
   } else {
     categoryBtn.textContent = "☰ Categoria"; // quando fechado, voltar ao normal
   }
 });
+
 document.querySelectorAll("#category-menu li").forEach(item => {
   item.addEventListener("click", () => {
     const categoria = item.dataset.category;
     categoryMenu.classList.remove("active");
+
+    // Volta o botão ao estado normal quando fecha ao clicar em uma categoria
+    categoryBtn.textContent = "☰ Categoria";
 
     if (categoria === "todos") {
       mostrarGrid(Array.from(livrosLista)); // mostra todos os livros em grid
@@ -889,6 +893,7 @@ searchIcon.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
