@@ -783,6 +783,13 @@ function criarGridLivros(lista) {
       <img src="${imagem}" alt="${titulo}">
       <h4>${titulo}</h4>
     `;
+	   const botaoHref = livro.querySelector(".botao")?.href;
+    if (botaoHref) {
+      card.addEventListener("click", () => {
+        window.location.href = botaoHref;
+      });
+    }
+
     searchResults.appendChild(card);
   });
 }
@@ -875,6 +882,7 @@ searchIcon.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
