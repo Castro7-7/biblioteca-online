@@ -814,6 +814,13 @@ function restaurarLayout() {
 categoryBtn.addEventListener("click", () => {
   categoryMenu.classList.toggle("active");
 });
+	    // Troca o texto do botão
+  if (categoryMenu.classList.contains("active")) {
+    categoryBtn.textContent = "<"; // quando aberto, mostrar "<"
+  } else {
+    categoryBtn.textContent = "☰ Categoria"; // quando fechado, voltar ao normal
+  }
+});
 document.querySelectorAll("#category-menu li").forEach(item => {
   item.addEventListener("click", () => {
     const categoria = item.dataset.category;
@@ -882,6 +889,7 @@ searchIcon.addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
 
