@@ -296,7 +296,7 @@ header {
   transition: background 0.3s ease;
 }
 #category-btn:hover {
-  background: none;
+  background: #5b21b6;
 }
 
 #category-menu {
@@ -748,9 +748,6 @@ header {
 
       document.getElementById('resetTotal').onclick = ()=>{ totalRef.set(0); };
     }
-
-
-<script>
 // ===== ELEMENTOS =====
 const searchIcon = document.getElementById("search-icon");
 const searchBar = document.getElementById("search-bar");
@@ -760,9 +757,6 @@ const searchResults = document.getElementById("search-results");
 const carrossel = document.getElementById("carousel-container");
 const categoryBtn = document.getElementById("category-btn");
 const categoryMenu = document.getElementById("category-menu");
-
-// Variável para controlar livros visíveis
-let livrosVisiveis = Array.from(livrosLista);
 
 // ===== CATEGORIAS =====
 const categorias = {
@@ -789,12 +783,13 @@ function criarGridLivros(lista) {
       <img src="${imagem}" alt="${titulo}">
       <h4>${titulo}</h4>
     `;
-    const botaoHref = livro.querySelector(".botao")?.href;
+	   const botaoHref = livro.querySelector(".botao")?.href;
     if (botaoHref) {
       card.addEventListener("click", () => {
         window.location.href = botaoHref;
       });
     }
+
     searchResults.appendChild(card);
   });
 }
@@ -805,9 +800,6 @@ function mostrarGrid(livros) {
   if (carrossel) carrossel.style.display = "none";
   searchResults.style.display = "grid";
   criarGridLivros(livros);
-
-  // Atualiza a lista de livros visíveis
-  livrosVisiveis = livros;
 }
 
 // ===== VOLTAR AO NORMAL =====
@@ -816,24 +808,30 @@ function restaurarLayout() {
   searchResults.innerHTML = "";
   livrosLista.forEach(l => l.style.display = "flex");
   if (carrossel) carrossel.style.display = "block";
-
-  livrosVisiveis = Array.from(livrosLista); // reset
 }
 
 // ===== MENU DE CATEGORIAS =====
 categoryBtn.addEventListener("click", () => {
   categoryMenu.classList.toggle("active");
-  categoryBtn.textContent = categoryMenu.classList.contains("active") ? "<" : "☰ Categoria";
+
+  // Troca o texto do botão
+  if (categoryMenu.classList.contains("active")) {
+    categoryBtn.textContent = "<"; // quando aberto, mostrar "<"
+  } else {
+    categoryBtn.textContent = "☰ Categoria"; // quando fechado, voltar ao normal
+  }
 });
 
 document.querySelectorAll("#category-menu li").forEach(item => {
   item.addEventListener("click", () => {
     const categoria = item.dataset.category;
     categoryMenu.classList.remove("active");
+
+    // Volta o botão ao estado normal quando fecha ao clicar em uma categoria
     categoryBtn.textContent = "☰ Categoria";
 
     if (categoria === "todos") {
-      mostrarGrid(Array.from(livrosLista));
+      mostrarGrid(Array.from(livrosLista)); // mostra todos os livros em grid
       return;
     }
 
@@ -847,13 +845,14 @@ document.querySelectorAll("#category-menu li").forEach(item => {
 });
 
 // ===== PESQUISA ANIMADA =====
+
 const animatedSVG = `
 <svg width="40" height="40" viewBox="0 0 100 100">
   <!-- Lupa -->
-  <circle id="lens" cx="40" cy="40" r="20" stroke="black" stroke-width="5" fill="none"/>
-  <line id="handle" x1="55" y1="55" x2="75" y2="75" stroke="black" stroke-width="5"/>
+  <circle id="lens" cx="40" cy="40" r="20" stroke="white" stroke-width="5" fill="none"/>
+  <line id="handle" x1="55" y1="55" x2="75" y2="75" stroke="white" stroke-width="5"/>
   <!-- Casinha -->
-  <polygon id="house" points="25,60 50,35 75,60 75,85 25,85" fill="black" scale="0" opacity="0"/>
+  <polygon id="house" points="25,60 50,35 75,60 75,85 25,85" fill="white" scale="0" opacity="0"/>
 </svg>
 `;
 searchIcon.innerHTML = animatedSVG;
@@ -869,9 +868,10 @@ searchIcon.addEventListener("click", () => {
 
   if(mostrandoPesquisa){
     searchBar.classList.add("active");
-    mostrarGrid(livrosVisiveis);
+    mostrarGrid(Array.from(livrosLista));
     searchInput.focus();
 
+    // Animação da lupa virando casa
     gsap.to(lens, {duration: 0.5, scale:0.5, transformOrigin:"50% 50%", opacity:0});
     gsap.to(handle, {duration: 0.5, rotate: -45, transformOrigin:"50% 50%", opacity:0});
     gsap.to(house, {duration: 0.5, scale:1, opacity:1, transformOrigin:"50% 50%", delay:0.5});
@@ -882,26 +882,17 @@ searchIcon.addEventListener("click", () => {
     searchInput.value = "";
     window.scrollTo({ top: 0, behavior: "smooth" });
 
+    // Animação da casa voltando para lupa
     gsap.to(house, {duration:0.5, scale:0, opacity:0});
     gsap.to(lens, {duration:0.5, scale:1, opacity:1, delay:0.5});
     gsap.to(handle, {duration:0.5, rotate:0, opacity:1, delay:0.5});
   }
 });
 
-// ===== FILTRAR NA BARRA DE PESQUISA =====
-searchInput.addEventListener("input", () => {
-  const termo = searchInput.value.toLowerCase();
-  const filtrados = livrosVisiveis.filter(livro => {
-    const titulo = livro.querySelector("h2")?.innerText.toLowerCase() || "";
-    return titulo.includes(termo);
-  });
-  criarGridLivros(filtrados);
-});
 </script>
+
 </body>
 </html>
-
-
 
 
 
