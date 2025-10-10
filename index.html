@@ -918,10 +918,11 @@ searchInput.addEventListener("input", () => {
     return;
   }
 
-  // Filtra os livros cujo título contenha o termo digitado
+   // Filtra os livros cujo título ou descrição contém o termo
   const livrosFiltrados = Array.from(livrosLista).filter(livro => {
-    const titulo = livro.querySelector("h2").innerText.toLowerCase();
-    return titulo.includes(termo);
+    const titulo = livro.querySelector("h2")?.innerText.toLowerCase() || "";
+    const descricao = livro.querySelector("p")?.innerText.toLowerCase() || "";
+    return titulo.includes(termo) || descricao.includes(termo);
   });
 
   mostrarGrid(livrosFiltrados);
@@ -932,6 +933,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
