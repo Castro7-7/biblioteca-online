@@ -778,6 +778,8 @@ const searchResults = document.getElementById("search-results");
 const carrossel = document.getElementById("carousel-container");
 const categoryBtn = document.getElementById("category-btn");
 const categoryMenu = document.getElementById("category-menu");
+const header = document.querySelector("header"); // pegue o header uma vez
+
 
 // ===== CATEGORIAS =====
 const categorias = {
@@ -822,16 +824,20 @@ function mostrarGrid(livros) {
   if (carrossel) carrossel.style.display = "none";
   searchResults.style.display = "grid";
   criarGridLivros(livros);
+
+  // esconder header
+  if (header) header.style.display = "none";
 }
 
-// ===== VOLTAR AO NORMAL =====
 function restaurarLayout() {
   searchResults.style.display = "none";
   searchResults.innerHTML = "";
   livrosLista.forEach(l => l.style.display = "flex");
   if (carrossel) carrossel.style.display = "block";
-}
 
+  // mostrar header
+  if (header) header.style.display = "block";
+}
 // ===== MENU DE CATEGORIAS =====
 categoryBtn.addEventListener("click", () => {
   categoryMenu.classList.toggle("active");
@@ -881,7 +887,7 @@ searchIcon.innerHTML = animatedSVG;
 
 let mostrandoPesquisa = false;
 
-searchIcon.addEventListener("click", () => {
+searchIcon.addEventListener("click", () => { 
   const lens = document.getElementById("lens");
   const handle = document.getElementById("handle");
   const house = document.getElementById("house");
@@ -918,7 +924,7 @@ searchInput.addEventListener("input", () => {
     return;
   }
 
-   // Filtra os livros cujo título ou descrição contém o termo
+    // Filtra os livros cujo título ou descrição contém o termo
   const livrosFiltrados = Array.from(livrosLista).filter(livro => {
     const titulo = livro.querySelector("h2")?.innerText.toLowerCase() || "";
     const descricao = livro.querySelector("p")?.innerText.toLowerCase() || "";
@@ -928,39 +934,31 @@ searchInput.addEventListener("input", () => {
   mostrarGrid(livrosFiltrados);
 });
 
+	   searchInput.addEventListener("input", () => {
+  const termo = searchInput.value.toLowerCase().trim();
+  if (termo === "") {
+    restaurarLayout();
+    return;
+  }
+
+  // Filtra os livros cujo título contém o termo
+  const livrosFiltrados = Array.from(livrosLista).filter(livro => {
+    const titulo = livro.querySelector("h2")?.innerText.toLowerCase() || "";
+    return titulo.includes(termo);
+  });
+
+  if (livrosFiltrados.length === 0) {
+    searchResults.innerHTML = `<p style="color:#fff; padding: 170px 0; text-align:center; font-size:1.5rem; grid-column: 1/-1;">📖 Livro não encontrado!</p>`;
+    livrosLista.forEach(l => l.style.display = "none");
+    if (carrossel) carrossel.style.display = "none";
+    searchResults.style.display = "grid";
+  } else {
+    mostrarGrid(livrosFiltrados);
+  }
+});
+
 
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
