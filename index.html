@@ -440,6 +440,7 @@ header {
     <li data-category="manipulação">Manipulação</li>
     <li data-category="poder">Poder</li>
     <li data-category="estratégia">Estratégia</li>
+	<li data-category="Comportamento Humano">Comportamento Humano</li>
   </ul>
 </div>
 
@@ -481,6 +482,12 @@ header {
         <div class="carousel-item" data-book="seduçao-maquiavelica">
           <a href="livros/seducao-maquiavelica.html"><img src="livros/img/seduçao-maquiavelica.png" alt="seduçao maquiavelica"></a>
         </div>
+	    <div class="carousel-item" data-book="o-que-todo-corpo-fala">
+  		  <a href="livros/o-que-todo-corpo-fala.html">
+          <img src="livros/img/o-que-todo-corpo-fala.webp" alt="O Que Todo Corpo Fala">
+          </a>
+        </div>
+
       </div>
       <button class="carousel-btn" id="next">&#10095;</button>
     </div>
@@ -576,6 +583,20 @@ header {
     </div>
       <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
     </div>
+		<!-- O Que Todo Corpo Fala – Joe Navarro -->
+	<div class="livro" data-book="o-que-todo-corpo-fala">
+ 	 <img src="livros/img/o-que-todo-corpo-fala.webp" alt="O Que Todo Corpo Fala">
+ 	 <div class="livro-info">
+     <h2>O Que Todo Corpo Fala – Joe Navarro</h2>
+     <p>Aprenda a decodificar a linguagem corporal, identificar emoções ocultas e dominar a comunicação não verbal para influenciar e compreender melhor as pessoas.</p>
+     <a href="livros/o-que-todo-corpo-fala.html" class="botao">Ver detalhes</a>
+   </div>
+   <div class="livro-views">
+    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
+    <span>0</span>
+      </div>
+	</div>
+
 
     </div>
 
@@ -769,6 +790,7 @@ const categorias = {
   "engenharia-social": "manipulação",
   "manipulacao-oculta": "manipulação",
   "seducao-maquiavelica": "estratégia"
+  "o-que-todo-corpo-fala": "comportamento-humano",
 };
 
 // ===== FUNÇÃO PARA CRIAR CARDS =====
@@ -910,6 +932,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
