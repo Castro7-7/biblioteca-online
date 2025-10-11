@@ -800,20 +800,20 @@ const categoryMenu = document.getElementById("category-menu");
 const header = document.querySelector("header"); // pegue o header uma vez
 
 
-// ===== CATEGORIAS =====
 const categorias = {
-  "invisivel": "autoajuda",
-  "potencial": "motivação",
-  "48leis": "poder",
-  "fbi": "psicologia",
-  "influenciar-pessoas": "autoajuda",
-  "poder-manipulacao": "manipulação",
-  "engenharia-social": "manipulação",
-  "manipulacao-oculta": "manipulação",
-  "seducao-maquiavelica": "estratégia",
-  "o-que-todo-corpo-fala": "Comportamento Humano",
-  "como-convencer-alguem-em-90-segundos":"Comportamento Humano",
+  "invisivel": ["autoajuda"],
+  "potencial": ["motivação"],
+  "48leis": ["poder"],
+  "fbi": ["psicologia"],
+  "influenciar-pessoas": ["autoajuda"],
+  "poder-manipulacao": ["manipulação"],
+  "engenharia-social": ["manipulação"],
+  "manipulacao-oculta": ["manipulação"],
+  "seducao-maquiavelica": ["estratégia"],
+  "o-que-todo-corpo-fala": ["Comportamento Humano"],
+  "como-convencer-alguem-em-90-segundos": ["manipulação", "Comportamento Humano"]
 };
+
 
 // ===== FUNÇÃO PARA CRIAR CARDS =====
 function criarGridLivros(lista) {
@@ -885,7 +885,8 @@ document.querySelectorAll("#category-menu li").forEach(item => {
 
     const livrosFiltrados = Array.from(livrosLista).filter(livro => {
       const key = livro.dataset.book;
-      return categorias[key] === categoria;
+     return categorias[key].includes(categoria);
+
     });
 
     mostrarGrid(livrosFiltrados);
@@ -982,6 +983,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
