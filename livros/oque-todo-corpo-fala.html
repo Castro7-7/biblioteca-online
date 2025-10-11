@@ -26,7 +26,7 @@
     .cta a {display:inline-block; background: linear-gradient(135deg, #6a00ff, #9f5bff); color:#fff; padding:14px 36px; border-radius:10px; text-decoration:none; font-weight:600; box-shadow:0 0 20px rgba(160,100,255,0.3); transition:0.3s;}
     .cta a:hover {background: linear-gradient(135deg, #9f5bff, #6a00ff); transform: scale(1.05);}
 
-   /* LIVROS RECOMENDADOS */
+/* LIVROS RECOMENDADOS */
 .related {
   max-width: 1100px;
   margin: 100px auto;
@@ -40,51 +40,55 @@
 }
 
 .related-grid {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;              /* rolagem lateral no mobile */
-  scroll-snap-type: x mandatory; /* deslize suave */
-  padding-bottom: 10px;
-}
-
-.related-grid::-webkit-scrollbar {
-  height: 6px;
-}
-
-.related-grid::-webkit-scrollbar-thumb {
-  background: #5a4ca8;
-  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* sempre 3 colunas */
+  gap: 20px;
+  justify-items: center;
 }
 
 .book {
-  flex: 0 0 130px;               /* largura fixa tipo capa */
-  background: #151520;
-  border-radius: 8px;
+  width: 100%;
+  max-width: 220px;
+  background: rgba(21, 21, 32, 0.6); /* vidro fosco */
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(100, 100, 150, 0.25);
+  box-shadow: 0 0 15px rgba(100, 100, 150, 0.25);
   transition: 0.3s;
   cursor: pointer;
-  scroll-snap-align: start;
 }
 
 .book:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 18px rgba(160, 120, 255, 0.45);
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(160, 120, 255, 0.4);
 }
 
 .book img {
   width: 100%;
-  height: 190px;           /* formato de capa */
+  height: 180px; /* formato achatado tipo capa */
   object-fit: cover;
-  border-bottom: 2px solid #26223a;
 }
 
 .book p {
   text-align: center;
-  padding: 8px;
-  font-size: 0.8rem;
+  padding: 10px;
+  font-size: 0.85rem;
   color: #d0caff;
 }
+
+/* Evita quebra no mobile */
+@media (max-width: 700px) {
+  .related-grid {
+    grid-template-columns: repeat(3, 1fr); /* força 3 colunas sempre */
+  }
+  .book img {
+    height: 140px; /* ajusta a proporção no celular */
+  }
+  .book p {
+    font-size: 0.7rem;
+  }
+}
+
 
 
     footer {text-align:center; padding:40px; color:#888; font-size:0.9rem;}
@@ -150,6 +154,7 @@
   </footer>
 </body>
 </html>
+
 
 
 
