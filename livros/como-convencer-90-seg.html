@@ -104,53 +104,99 @@
     }
 
     /* ======== RECOMENDADOS ======== */
-    .recomendados {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 25px;
-      margin-top: 30px;
-    }
+.recomendados {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas fixas e simétricas */
+  gap: 25px;
+  margin-top: 30px;
+  justify-items: center;
+}
 
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px;
-      overflow: hidden;
-      transition: 0.3s;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      backdrop-filter: blur(10px);
-    }
+.card {
+  width: 100%;
+  max-width: 240px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  position: relative;
+  cursor: pointer;
+}
 
-    .card:hover {
-      transform: translateY(-6px) scale(1.03);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.5);
-    }
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 60%);
+  pointer-events: none;
+}
 
-    .card img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      display: block;
-    }
+.card:hover {
+  transform: translateY(-6px) scale(1.03);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(160, 120, 255, 0.3);
+}
 
-    .card h3 {
-      margin: 12px 0 0;
-      color: #cbb3ff;
-    }
+.card img {
+  width: 100%;
+  height: 320px; /* proporção realista de capa de livro */
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-    .card p {
-      color: #bbb;
-      margin-bottom: 15px;
-    }
+.card h3 {
+  margin: 12px 0 0;
+  color: #cbb3ff;
+  font-size: 1rem;
+  text-align: center;
+}
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      font-size: 0.9em;
-      color: #999;
-      margin-top: auto;
-    }
+.card p {
+  color: #bbb;
+  margin: 8px 0 15px;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  font-size: 0.9em;
+  color: #999;
+  margin-top: auto;
+}
+
+/* Responsivo — mantém 3 colunas lado a lado mesmo no mobile */
+@media (max-width: 700px) {
+  .recomendados {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+
+  .card {
+    max-width: 200px;
+  }
+
+  .card img {
+    height: 270px;
+  }
+
+  .card h3 {
+    font-size: 0.9rem;
+  }
+
+  .card p {
+    font-size: 0.75rem;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -244,4 +290,5 @@
 
 </body>
 </html>
+
 
