@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Arte de Ler Mentes</title>
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/1946/1946429.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #2a0140, #0c0113);
+      color: #fff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 80px 20px 40px;
+      position: relative;
+    }
+
+    header img {
+      width: 200px;
+      transform: rotate(-8deg);
+      box-shadow: 0 0 25px rgba(149, 0, 255, 0.4);
+      border-radius: 10px;
+      z-index: 2;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-top: 25px;
+      color: #d6a8ff;
+      text-shadow: 0 0 10px #a24cff;
+    }
+
+    .linha-efeito {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(162,76,255,0.15) 0%, transparent 70%);
+      animation: girar 10s linear infinite;
+      transform-origin: center;
+      z-index: 1;
+      filter: blur(100px);
+    }
+
+    @keyframes girar {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(149, 0, 255, 0.2);
+    }
+
+    section {
+      margin-bottom: 35px;
+    }
+
+    h2 {
+      color: #b67cff;
+      margin-bottom: 10px;
+      border-left: 4px solid #a24cff;
+      padding-left: 10px;
+    }
+
+    p, li {
+      color: #e3d8ff;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 15px;
+    }
+
+    ul li::before {
+      content: "✦";
+      color: #a24cff;
+      margin-right: 8px;
+    }
+
+    /* ===== BLOCO FINAL ===== */
+    .compra-section {
+      text-align: center;
+      margin-top: 60px;
+      padding: 40px 20px;
+      background: rgba(162, 76, 255, 0.1);
+      border: 1px solid rgba(162, 76, 255, 0.3);
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(162, 76, 255, 0.2);
+    }
+
+    .frase-gatilho {
+      font-size: 1.1rem;
+      color: #e3d8ff;
+      margin-bottom: 15px;
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    .preco {
+      font-size: 1.6rem;
+      background: linear-gradient(90deg, #a24cff, #d6a8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      text-shadow: 0 0 15px rgba(162, 76, 255, 0.5);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .botao-compra {
+      background: linear-gradient(90deg, #a24cff, #d6a8ff);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      padding: 12px 35px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 15px rgba(162, 76, 255, 0.3);
+    }
+
+    .botao-compra:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(162, 76, 255, 0.5);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      margin-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #b3a5c9;
+      font-size: 0.9rem;
+    }
+
+    footer span {
+      color: #d6a8ff;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="linha-efeito"></div>
+    <img src="https://m.media-amazon.com/images/I/81vWy5G+O0L._AC_UF1000,1000_QL80_.jpg" alt="Capa do Livro A Arte de Ler Mentes">
+    <h1>A Arte de Ler Mentes</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>📘 Sobre o Livro</h2>
+      <p>
+        Escrito por <strong>Henrik Fexeus</strong>, especialista em comunicação e linguagem corporal, 
+        <em>“A Arte de Ler Mentes”</em> revela os segredos por trás da leitura comportamental e das sutis mensagens que as pessoas transmitem sem falar nada.  
+        O autor mostra como interpretar expressões, gestos, tom de voz e microreações para entender o que alguém realmente pensa e sente.
+      </p>
+    </section>
+
+    <section>
+      <h2>🧠 O Que Você Vai Aprender</h2>
+      <ul>
+        <li>Como perceber intenções e emoções ocultas através da linguagem corporal;</li>
+        <li>A importância do tom de voz e das microexpressões no comportamento humano;</li>
+        <li>Técnicas práticas para interpretar gestos, olhares e posturas;</li>
+        <li>Como usar empatia e observação para se comunicar de forma mais eficaz;</li>
+        <li>Como “ler mentes” em situações sociais, profissionais e amorosas.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>✨ Por Que Vale a Pena Ler</h2>
+      <p>
+        Este livro é um manual poderoso para quem deseja entender as pessoas em um nível mais profundo.  
+        Ele ensina a detectar mentiras, intenções e sentimentos disfarçados — habilidades valiosas para o dia a dia, relacionamentos e negócios.
+      </p>
+    </section>
+
+    <section>
+      <h2>📚 Principais Lições</h2>
+      <ul>
+        <li>O corpo nunca mente — ele revela o que as palavras tentam esconder.</li>
+        <li>Observar é mais poderoso que falar.</li>
+        <li>Empatia é a chave para compreender as emoções alheias.</li>
+        <li>A confiança nasce quando você entende e espelha o comportamento do outro.</li>
+      </ul>
+    </section>
+
+    <!-- BLOCO DE COMPRA -->
+    <div class="compra-section">
+      <p class="frase-gatilho">Descubra o que as pessoas pensam antes mesmo de abrirem a boca.</p>
+      <span class="preco">💰 R$ 17,00</span>
+      <button class="botao-compra">🛒 Comprar Agora</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 <span>Biblioteca Online</span> — Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
