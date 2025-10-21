@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>O Homem Mais Rico da Babilônia</title>
+<style>
+:root{
+  --purple-1: #8a2be2;
+  --purple-2: #5d2bd1;
+  --bg-1: #0a0c10;
+  --bg-2: #12141a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: radial-gradient(circle at top, var(--bg-1) 0%, #1a1b20 60%, var(--bg-2) 100%);
+  color: #f5f5f5;
+  position: relative;
+  min-height:100vh;
+}
+
+/* ===== WAVES ===== */
+.waves {position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;}
+.wave {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 140%;
+  height: 48%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  clip-path: ellipse(50% 28% at 50% 50%);
+}
+.wave.wave1 {
+  background: linear-gradient(90deg, rgba(120,100,180,0.35) 0%, rgba(90,70,150,0.25) 100%);
+  animation: wave1Move 50s ease-in-out infinite alternate;
+  z-index: 0;
+  transform-origin: center;
+}
+.wave.wave2 {
+  background: linear-gradient(90deg, rgba(150,130,190,0.25) 0%, rgba(110,100,160,0.2) 100%);
+  animation: wave2Move 60s ease-in-out infinite alternate;
+  transform: translate(-50%, -50%) rotate(15deg);
+  z-index: 0;
+}
+@keyframes wave1Move {
+  0%   { transform: translate(-55%,-50%) rotate(-12deg) scaleX(1); opacity:0.55; }
+  50%  { transform: translate(-45%,-48%) rotate(8deg)  scaleX(1.03); opacity:0.65; }
+  100% { transform: translate(-55%,-52%) rotate(-12deg) scaleX(1); opacity:0.55; }
+}
+@keyframes wave2Move {
+  0%   { transform: translate(-45%,-50%) rotate(12deg) scaleX(1); opacity:0.5; }
+  50%  { transform: translate(-55%,-52%) rotate(-8deg)  scaleX(1.02); opacity:0.6; }
+  100% { transform: translate(-45%,-48%) rotate(12deg) scaleX(1); opacity:0.5; }
+}
+
+/* ===== LINHAS DE INVESTIGAÇÃO ===== */
+.line-bg {position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 1;}
+.line {position: absolute; width:2px; height:100%; background: rgba(155,89,182,0.05); animation: moveLine linear infinite;}
+@keyframes moveLine {0% { transform: translateY(-100%); } 100% { transform: translateY(100%); }}
+/* lento */
+.line {animation-duration: 20s !important;}
+
+/* ===== CONTAINER ===== */
+.container {max-width: 1000px; margin: auto; padding: 40px 20px; text-align: center; position: relative; z-index: 2;}
+h1 {font-size: 2.8em; color: #e6e6e6; margin-bottom: 10px; transition: transform 0.5s;}
+h1:hover { transform: scale(1.03) rotate(-1.5deg); }
+p.subtitle {font-size: 1.1em; margin-bottom: 30px; color: #ccc;}
+
+/* CAPA */
+.book-cover {perspective: 1000px; display: inline-block; margin-bottom: 36px; transform-style: preserve-3d;}
+.book-cover img {width: 300px; max-width: 80vw; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.7); transform: rotateX(90deg); transform-origin: bottom center; transition: transform 1s ease-out, box-shadow 0.3s;}
+.book-cover img:hover {transform: rotateX(0deg) rotateY(-3deg) rotateZ(2deg); box-shadow: 0 20px 60px rgba(120,50,200,0.25);}
+
+/* SEÇÕES */
+.section {text-align: left; padding: 25px; margin-bottom: 30px; background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.03)); border-radius: 10px;}
+.section h2 { color: #bfa0ff; margin-bottom: 12px; }
+ul { list-style: none; padding: 0; margin: 0; }
+ul li { display: flex; align-items: center; padding: 10px 15px; font-size: 1.05em; margin-bottom: 10px; border-left: 5px solid rgba(155,89,182,0.6); border-radius: 6px; background: rgba(0,0,0,0.15); transition: transform 0.18s;}
+ul li span { margin-right: 10px; font-size: 1.3em; }
+ul li:hover { transform: translateX(6px); }
+
+/* BOTÃO */
+.btn-buy {display: inline-block; padding: 14px 28px; background-color: var(--purple-1); color: #fff; font-weight: 700; text-decoration: none; border-radius: 8px; margin-top: 16px; position: relative; overflow: hidden; box-shadow: 0 8px 30px rgba(138,43,226,0.22);}
+.btn-buy::before {content: ""; position: absolute; top:0; left:-75%; width:50%; height:100%; background: rgba(255,255,255,0.18); transform: skewX(-20deg);}
+.btn-buy:hover::before { animation: shine 1s forwards; }
+@keyframes shine { 0%{ left:-75%; } 100%{ left:125%; } }
+
+/* BOTÃO FIXO MOBILE */
+.btn-fixed {display: none; position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); background-color: var(--purple-1); color: #fff; padding: 12px 26px; border-radius: 30px; font-weight: 700; text-decoration: none; z-index: 999; transition: 0.3s;}
+.btn-fixed:hover { transform: translateX(-50%) translateY(-3px); box-shadow:0 0 24px rgba(138,43,226,0.25); }
+@media (max-width:768px){ .btn-fixed{ display:block; } }
+
+footer {background:#121417; text-align:center; padding:18px; margin-top:40px; font-size:0.9em; color:#aaa; border-top: 1px solid rgba(255,255,255,0.02);}
+footer a { color:#bfa0ff; text-decoration:none; margin:0 8px; }
+footer a:hover { text-decoration:underline; }
+
+@media (max-width:600px){ h1{ font-size:1.8em; } .book-cover img{ width: 220px; } .section{ padding:16px; } }
+</style>
+</head>
+<body>
+
+<div class="waves" aria-hidden="true">
+  <div class="wave wave1"></div>
+  <div class="wave wave2"></div>
+</div>
+
+<div class="line-bg" id="line-bg"></div>
+
+<div class="container">
+  <h1>O Homem Mais Rico da Babilônia</h1>
+  <p class="subtitle">Princípios atemporais de riqueza e prosperidade — lições simples para dominar suas finanças.</p>
+
+  <div class="book-cover">
+    <img src="img/babilonia.png" alt="Capa - O Homem Mais Rico da Babilônia">
+  </div>
+
+  <div class="section">
+    <h2>Por que ler este livro?</h2>
+    <ul>
+      <li><span>💰</span> Aprenda hábitos de economia que se mantêm por toda a vida</li>
+      <li><span>📈</span> Entenda como fazer o dinheiro trabalhar para você</li>
+      <li><span>🧭</span> Regras práticas de investimento sem jargões</li>
+      <li><span>📚</span> Lições apresentadas em parábolas fáceis de aplicar</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Para quem é este livro?</h2>
+    <ul>
+      <li><span>👤</span> Quem quer começar a poupar com disciplina</li>
+      <li><span>🎯</span> Jovens que desejam construir patrimônio</li>
+      <li><span>🏦</span> Qualquer pessoa interessada em finanças práticas</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Resumo</h2>
+    <p>Clássico de George S. Clason que usa parábolas na antiga Babilônia para ensinar princípios práticos de poupança, investimento e crescimento patrimonial. Simples, direto e aplicável.</p>
+  </div>
+
+  <div class="section" style="text-align:center;">
+    <p style="font-size:1.2em; font-weight:700; margin-bottom:8px; color:#d1b3ff;">💎 Transforme sua vida financeira hoje</p>
+    <p style="font-size:1.05em; margin-bottom:10px; color:#ddd;">Aprenda as regras básicas que os ricos usam há milhares de anos — aplique-as com disciplina.</p>
+    <p style="margin-bottom:12px;"><strong style="font-size:1.3em;">Por apenas R$ 19,90</strong></p>
+    <a href="#" class="btn-buy">Garanta já o seu exemplar</a>
+    <div style="margin-top:14px; color:#ccc; font-size:0.95em;">
+      Produto entregue via e-mail. Você tem <strong>7 dias de garantia</strong> para solicitar reembolso caso não fique satisfeito.
+    </div>
+  </div>
+</div>
+
+<a href="https://pay.cakto.com.br/mux8e7z_616659" class="btn-fixed">📘 Comprar Agora</a>
+
+<footer>
+  <p>© 2025 O Homem Mais Rico da Babilônia</p>
+  <p>
+    <a href="#" target="_blank">Política de Privacidade</a> | 
+    <a href="#" target="_blank">Termos de Uso</a>
+  </p>
+</footer>
+
+<script>
+const btnFixed = document.querySelector('.btn-fixed');
+const footer = document.querySelector('footer');
+const isMobile = window.matchMedia("(max-width:768px)").matches;
+if(isMobile){
+  window.addEventListener('scroll', ()=>{
+    const footerTop = footer.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    if(footerTop <= windowHeight){ btnFixed.style.display="none"; }
+    else { btnFixed.style.display="block"; }
+  });
+} else { btnFixed.style.display="none"; }
+
+window.addEventListener('load', ()=>{
+  const img = document.querySelector('.book-cover img');
+  if(img) img.style.transform = 'rotateX(0deg) rotateY(-5deg) rotateZ(2deg)';
+});
+
+const lineBg = document.getElementById('line-bg');
+if(lineBg){
+  const linesCount = Math.min(Math.max(Math.floor(window.innerWidth / 40), 12), 30);
+  for(let i=0;i<linesCount;i++){
+    const line = document.createElement('div');
+    line.className = 'line';
+    line.style.left = Math.random()*100 + '%';
+    line.style.animationDuration = 20 + Math.random()*10 + 's'; // mais lento
+    line.style.opacity = (0.03 + Math.random()*0.06).toFixed(3);
+    lineBg.appendChild(line);
+  }
+}
+</script>
+</body>
+</html>
