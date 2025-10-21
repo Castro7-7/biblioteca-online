@@ -442,6 +442,7 @@ header {
     <li data-category="poder">Poder</li>
     <li data-category="estratégia">Estratégia</li>
 	<li data-category="Comportamento Humano">Comportamento Humano</li>
+	<li data-category="estratégia">finanças</li>
   </ul>
 </div>
 
@@ -498,6 +499,12 @@ header {
 	      <img src="livros/img/arte-de-ler-mentes.png" alt="A Arte de Ler Mentes">
  		  </a>
 		</div>
+		<div class="carousel-item" data-book="o-homem-mais-rico-da-babilonia">
+		  <a href="livros/babilonia.html">
+   		 <img src="livros/img/babilonia.png" alt="O Homem Mais Rico da Babilônia – George S. Clason">
+ 		 </a>
+		</div>
+
 
 
 
@@ -633,6 +640,20 @@ header {
     <span>0</span>
   </div>
 </div>
+		<!-- O Homem Mais Rico da Babilônia -->
+<div class="livro" data-book="o-homem-mais-rico-da-babilonia">
+  <img src="livros/img/babilonia.png" alt="O Homem Mais Rico da Babilônia – George S. Clason">
+  <div class="livro-info">
+    <h2>O Homem Mais Rico da Babilônia – George S. Clason</h2>
+    <p>Descubra princípios atemporais de riqueza e prosperidade através de lições simples e práticas para dominar suas finanças.</p>
+    <a href="livros/babilonia.html" class="botao">Ver detalhes</a>
+  </div>
+  <div class="livro-views">
+    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
+    <span>0</span>
+  </div>
+</div>
+
 
 
 
@@ -831,7 +852,8 @@ const categorias = {
   "seducao-maquiavelica": ["estratégia"],
   "o-que-todo-corpo-fala": ["Comportamento Humano"],
   "como-convencer-alguem-em-90-segundos": ["manipulação", "Comportamento Humano"],
-  "a-arte-de-ler-mentes": ["manipulação", "Comportamento Humano"]
+  "a-arte-de-ler-mentes": ["manipulação", "Comportamento Humano"],
+  "o-homem-mais-rico-da-babilonia": ["Finanças", "autoajuda", "estratégia"]
 };
 
 // ===== FUNÇÃO PARA CRIAR CARDS =====
@@ -1002,6 +1024,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
