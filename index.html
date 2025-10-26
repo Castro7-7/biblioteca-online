@@ -63,7 +63,7 @@ header {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(124,58,174,0.8);
+      background: none;
       color: #fff;
       border: none;
       font-size: 2em;
@@ -72,8 +72,8 @@ header {
       border-radius: 5px;
       z-index: 10;
     }
-    #prev { left: 10px; }
-    #next { right: 10px; }
+    #prev { left: 1px; }
+    #next { right: 1px; }
 
     /* LISTA DE LIVROS */
     .container { width:90%; max-width:1000px; margin:30px auto; }
@@ -361,7 +361,7 @@ header {
   border-radius: 12px;
   padding: 15px;
   width: 180px; /* largura fixa */
-  height: 300px; /* altura fixa para manter alinhamento */
+  height: 320px; /* altura fixa para manter alinhamento */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1024,6 +1024,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
