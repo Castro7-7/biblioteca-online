@@ -1129,20 +1129,21 @@ function atualizarPainel(tab = 'resumo') {
         tbody.appendChild(tr);
 
         // Verifica se já há coordenadas salvas, senão busca
-        if (!val.lat || !val.lng) {
-          try {
-            const response = await fetch(`https://ipapi.co/${key.replace('ip_', '')}/json/`);
-            const data = await response.json();
-            if (data.latitude && data.longitude) {
-              db.ref('acessos/' + key).update({ lat: data.latitude, lng: data.longitude });
-              L.marker([data.latitude, data.longitude]).addTo(map).bindPopup(`${key}<br>${val.count} acessos`);
-            }
-          } catch (e) {
-            console.error('Erro ao buscar localização:', e);
-          }
-        } else {
-          L.marker([val.lat, val.lng]).addTo(map).bindPopup(`${key}<br>${val.count} acessos`);
-        }
+        if (!val.latitude || !val.longitude) {
+  try {
+    const response = await fetch(`https://ipapi.co/${key.replace('ip_', '')}/json/`);
+    const data = await response.json();
+    if (data.latitude && data.longitude) {
+      db.ref('acessos/' + key).update({ latitude: data.latitude, longitude: data.longitude });
+      L.marker([data.latitude, data.longitude]).addTo(map).bindPopup(`${key}<br>${val.count} acessos`);
+    }
+  } catch (e) {
+    console.error('Erro ao buscar localização:', e);
+  }
+} else {
+  L.marker([val.latitude, val.longitude]).addTo(map).bindPopup(`${key}<br>${val.count} acessos`);
+}
+
       });
     });
   }
@@ -1378,4 +1379,5 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
