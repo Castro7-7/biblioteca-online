@@ -1079,9 +1079,11 @@ function atualizarPainel(tab = 'resumo') {
 
       if (c.ref) {
         db.ref(c.ref).once('value', snap => {
-          if (c.ref === 'books') card.querySelector('p').innerText = Object.keys(snap.val() || {}).length;
-          else if (c.ref === 'acessos') card.querySelector('p').innerText = Object.keys(snap.val() || {}).length;
-          else card.querySelector('p').innerText = snap.val() || 0;
+          if (c.ref === 'books' || c.ref === 'acessos') {
+            card.querySelector('p').innerText = Object.keys(snap.val() || {}).length;
+          } else {
+            card.querySelector('p').innerText = snap.val() || 0;
+          }
         });
       } else {
         function updateTime() {
@@ -1101,7 +1103,7 @@ function atualizarPainel(tab = 'resumo') {
     tabContent.appendChild(tabela);
     const tbody = tabela.querySelector('tbody');
 
-    db.ref('books').once('value', snap => {
+    db.ref('books').once('value').then(snap => {
       const livros = snap.val() || {};
       Object.entries(livros).forEach(([livro, count]) => {
         const tr = document.createElement('tr');
@@ -1120,7 +1122,7 @@ function atualizarPainel(tab = 'resumo') {
     const ctx = document.getElementById('graficoCanvas').getContext('2d');
     const topDiv = document.getElementById('top3Livros');
 
-    db.ref('books').once('value', snap => {
+    db.ref('books').once('value').then(snap => {
       const livros = snap.val() || {};
       const nomes = Object.keys(livros);
       const valores = Object.values(livros);
@@ -1145,68 +1147,68 @@ function atualizarPainel(tab = 'resumo') {
     });
   }
 
-/** ---------------- ACESSOS ---------------- **/
-if (tab === 'acessos') {
-  tabContent.innerHTML = `
-    <div id="map" style="height:400px;margin-bottom:20px;"></div>
-    <table>
-      <thead>
-        <tr>
-          <th>IP/ID</th>
-          <th>Último acesso</th>
-          <th>Contagem</th>
-          <th>Dispositivo</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  `;
-  const tbody = tabContent.querySelector('tbody');
+  /** ---------------- ACESSOS ---------------- **/
+  if (tab === 'acessos') {
+    tabContent.innerHTML = `
+      <div id="map" style="height:400px;margin-bottom:20px;"></div>
+      <table>
+        <thead>
+          <tr>
+            <th>IP/ID</th>
+            <th>Último acesso</th>
+            <th>Contagem</th>
+            <th>Dispositivo</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    `;
+    const tbody = tabContent.querySelector('tbody');
 
-  db.ref('acessos').orderByChild('lastSeen').limitToLast(50).once('value', snap => {
-    const acessos = snap.val() || {};
-    const ordenados = Object.entries(acessos).sort((a, b) => b[1].lastSeen - a[1].lastSeen);
+    db.ref('acessos').orderByChild('lastSeen').limitToLast(50).once('value').then(async snap => {
+      const acessos = snap.val() || {};
+      const ordenados = Object.entries(acessos).sort((a, b) => b[1].lastSeen - a[1].lastSeen);
 
-    // Inicializar mapa
-    const map = L.map('map').setView([0, 0], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '' }).addTo(map);
+      // Inicializar mapa
+      const map = L.map('map').setView([0, 0], 2);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '' }).addTo(map);
 
-    ordenados.forEach(async ([key, val]) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${key}</td>
-        <td>${new Date(val.lastSeen).toLocaleString()}</td>
-        <td>${val.count}</td>
-        <td>${(val.deviceType || 'Desconhecido')} / ${(val.deviceName || '')}</td>
-      `;
-      tbody.appendChild(tr);
+      for (const [key, val] of ordenados) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${key}</td>
+          <td>${new Date(val.lastSeen).toLocaleString()}</td>
+          <td>${val.count}</td>
+          <td>${(val.deviceType || 'Desconhecido')} / ${(val.deviceName || '')}</td>
+        `;
+        tbody.appendChild(tr);
 
-      // Pegar coordenadas
-      let latitude = val.latitude || null;
-      let longitude = val.longitude || null;
+        // Coordenadas
+        let latitude = val.latitude || null;
+        let longitude = val.longitude || null;
 
-      if (!latitude || !longitude) {
-        try {
-          const response = await fetch(`https://ipapi.co/${key.replace('ip_', '')}/json/`);
-          const data = await response.json();
-          latitude = data.latitude || null;
-          longitude = data.longitude || null;
+        if (!latitude || !longitude) {
+          try {
+            const response = await fetch(`https://ipapi.co/${key.replace('ip_', '')}/json/`);
+            const data = await response.json();
+            latitude = data.latitude || null;
+            longitude = data.longitude || null;
 
-          if (latitude && longitude) {
-            db.ref('acessos/' + key).update({ latitude, longitude });
-            L.marker([latitude, longitude]).addTo(map)
-              .bindPopup(`${key}<br>${val.count} acessos<br>${(val.deviceType || '')} / ${(val.deviceName || '')}`);
+            if (latitude && longitude) {
+              await db.ref('acessos/' + key).update({ latitude, longitude });
+            }
+          } catch (e) {
+            console.error('Erro ao buscar localização:', e);
           }
-        } catch (e) {
-          console.error('Erro ao buscar localização:', e);
         }
-      } else {
-        // Já tem coordenadas
-        L.marker([latitude, longitude]).addTo(map)
-          .bindPopup(`${key}<br>${val.count} acessos<br>${(val.deviceType || '')} / ${(val.deviceName || '')}`);
+
+        if (latitude && longitude) {
+          L.marker([latitude, longitude]).addTo(map)
+            .bindPopup(`${key}<br>${val.count} acessos<br>${(val.deviceType || '')} / ${(val.deviceName || '')}`);
+        }
       }
     });
-  });
+  }
 }
 
     // CARROSSEL
@@ -1439,6 +1441,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
