@@ -825,61 +825,110 @@ header h2 {
 </footer>
 
   <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <!-- GSAP para animações -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.1/gsap.min.js"></script>
 
-  <script>
-    // CONFIG FIREBASE
-    const firebaseConfig = {
-      apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
-      authDomain: "biblioteca-b73c3.firebaseapp.com",
-      databaseURL: "https://biblioteca-b73c3-default-rtdb.firebaseio.com",
-      projectId: "biblioteca-b73c3",
-      storageBucket: "biblioteca-b73c3.firebasestorage.app",
-      messagingSenderId: "19441912897",
-      appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
-      measurementId: "G-1FPNRPMM9R"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const auth = firebase.auth();
+<script>
+  // CONFIG FIREBASE
+  const firebaseConfig = {
+    apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
+    authDomain: "biblioteca-b73c3.firebaseapp.com",
+    databaseURL: "https://biblioteca-b73c3-default-rtdb.firebaseio.com",
+    projectId: "biblioteca-b73c3",
+    storageBucket: "biblioteca-b73c3.firebasestorage.app",
+    messagingSenderId: "19441912897",
+    appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
+    measurementId: "G-1FPNRPMM9R"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const auth = firebase.auth();
 
-    // CONTADOR TOTAL
-    const totalVisitsEl = document.getElementById('totalVisits');
-    const totalRef = db.ref('totalVisits');
-    totalRef.once('value', snap => { if (!snap.val()) totalRef.set(0); });
-    totalRef.on('value', snap => { totalVisitsEl.innerText = snap.val() || 0; });
+  // ------------------------------
+  // CONTADOR TOTAL
+  const totalVisitsEl = document.getElementById('totalVisits');
+  const totalRef = db.ref('totalVisits');
+  totalRef.once('value', snap => { if (!snap.val()) totalRef.set(0); });
+  totalRef.on('value', snap => { totalVisitsEl.innerText = snap.val() || 0; });
 
-    if (!sessionStorage.getItem("visited")) {
-      totalRef.transaction(current => (current || 0) + 1);
-      sessionStorage.setItem("visited", "true");
-    }
+  if (!sessionStorage.getItem("visited")) {
+    totalRef.transaction(current => (current || 0) + 1);
+    sessionStorage.setItem("visited", "true");
+  }
 
-    // LIVROS
-    const livros = document.querySelectorAll('.livro');
-    livros.forEach(livro => {
-      const key = livro.dataset.book;
-      const ref = db.ref('books/' + key);
-      ref.once('value', snap => { if (!snap.val()) ref.set(0); });
-      const span = livro.querySelector('.livro-views span');
-      ref.on('value', snap => { span.innerText = snap.val() || 0; });
+  // ------------------------------
+  // CONTADOR DE LIVROS
+  const livros = document.querySelectorAll('.livro');
+  livros.forEach(livro => {
+    const key = livro.dataset.book;
+    const ref = db.ref('books/' + key);
+    ref.once('value', snap => { if (!snap.val()) ref.set(0); });
+    const span = livro.querySelector('.livro-views span');
+    ref.on('value', snap => { span.innerText = snap.val() || 0; });
 
-      const link = livro.querySelector('.botao');
-      const href = link.getAttribute("href");
+    const link = livro.querySelector('.botao');
+    const href = link.getAttribute("href");
 
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        ref.transaction(current => (current || 0) + 1, () => {
-          livro.classList.add('flash');
-          setTimeout(() => livro.classList.remove('flash'), 3500);
-          totalRef.transaction(current => (current || 0) + 1);
-          window.location = href;
-        });
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      ref.transaction(current => (current || 0) + 1, () => {
+        livro.classList.add('flash');
+        setTimeout(() => livro.classList.remove('flash'), 3500);
+        totalRef.transaction(current => (current || 0) + 1);
+        window.location = href;
       });
     });
+  });
+
+  // ------------------------------
+  // REGISTRO DISCRETO DE ACESSOS (IP + User-Agent)
+  if (!sessionStorage.getItem("ipLogged")) {
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        const ip = data.ip;
+
+        // hash simples do IP
+        function hashIp(s){
+          let h=0;
+          for(let i=0;i<s.length;i++){
+            h=(h<<5)-h+s.charCodeAt(i);
+            h|=0;
+          }
+          return "ip_"+Math.abs(h);
+        }
+
+        const ipHash = hashIp(ip);
+        const ua = navigator.userAgent;
+
+        const ref = db.ref('acessos/' + ipHash);
+        ref.once('value').then(snap => {
+          const MIN_INTERVAL = 10*60*1000; // 10 minutos
+          if (!snap.exists()) {
+            ref.set({
+              firstSeen: Date.now(),
+              lastSeen: Date.now(),
+              ua: ua,
+              count: 1
+            });
+          } else {
+            const data = snap.val();
+            const lastSeen = data.lastSeen || 0;
+            if (Date.now() - lastSeen > MIN_INTERVAL) {
+              ref.update({
+                lastSeen: Date.now(),
+                count: data.count + 1
+              });
+            }
+          }
+        });
+      });
+
+    sessionStorage.setItem("ipLogged", "true");
+  }
 
     // CARROSSEL
     const track = document.getElementById('carousel-track');
@@ -1159,6 +1208,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
