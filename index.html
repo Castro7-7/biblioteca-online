@@ -925,8 +925,9 @@ header h2 {
     });
   });
 // ------------------------------
+
 // ------------------------------
-// REGISTRO DISCRETO DE ACESSOS (IP + User-Agent + Localização aproximada por IP)
+// REGISTRO DISCRETO DE ACESSOS (IP + User-Agent + Localização aproximada por IP + Dispositivo)
 if (!sessionStorage.getItem("ipLogged")) {
   fetch('https://api.ipify.org?format=json')
     .then(res => res.json())
@@ -947,6 +948,28 @@ if (!sessionStorage.getItem("ipLogged")) {
       const ua = navigator.userAgent;
       const ref = db.ref('acessos/' + ipHash);
 
+      // Função para detectar tipo e nome do dispositivo
+      function detectarDispositivo() {
+        let tipo = "PC";
+        let nome = "Desconhecido";
+
+        if (/Mobi|Android/i.test(ua)) tipo = "Mobile";
+        else if (/iPad|Tablet/i.test(ua)) tipo = "Tablet";
+
+        if (/iPhone/i.test(ua)) nome = "iPhone";
+        else if (/iPad/i.test(ua)) nome = "iPad";
+        else if (/Android/i.test(ua)) {
+          const match = ua.match(/Android\s[\d\.]+;\s([^)]+)/);
+          nome = match ? match[1].trim() : "Android";
+        } else {
+          nome = "PC";
+        }
+
+        return { tipo, nome };
+      }
+
+      const dispositivo = detectarDispositivo();
+
       // função para salvar no banco
       const salvarDados = (latitude, longitude) => {
         ref.once('value').then(snap => {
@@ -959,7 +982,9 @@ if (!sessionStorage.getItem("ipLogged")) {
               ip: ip,
               count: 1,
               latitude: latitude || null,
-              longitude: longitude || null
+              longitude: longitude || null,
+              deviceType: dispositivo.tipo,
+              deviceName: dispositivo.nome
             });
           } else {
             const data = snap.val();
@@ -969,12 +994,33 @@ if (!sessionStorage.getItem("ipLogged")) {
                 lastSeen: Date.now(),
                 count: data.count + 1,
                 latitude: latitude || data.latitude || null,
-                longitude: longitude || data.longitude || null
+                longitude: longitude || data.longitude || null,
+                deviceType: dispositivo.tipo,
+                deviceName: dispositivo.nome
               });
             }
           }
         });
       };
+
+      // pegar localização aproximada pelo IP
+      fetch(`https://ipapi.co/${ip}/json/`)
+        .then(res => res.json())
+        .then(loc => {
+          const latitude = loc.latitude || null;
+          const longitude = loc.longitude || null;
+          salvarDados(latitude, longitude);
+        })
+        .catch(err => {
+          console.warn("Erro ao obter localização por IP:", err);
+          salvarDados(null, null);
+        });
+
+    });
+
+  sessionStorage.setItem("ipLogged", "true");
+}
+
 
       // pegar localização aproximada pelo IP
       fetch(`https://ipapi.co/${ip}/json/`)
@@ -1379,5 +1425,6 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
