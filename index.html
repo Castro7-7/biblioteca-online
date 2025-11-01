@@ -1145,7 +1145,7 @@ function atualizarPainel(tab = 'resumo') {
     });
   }
 
- /** ---------------- ACESSOS ---------------- **/
+/** ---------------- ACESSOS ---------------- **/
 if (tab === 'acessos') {
   tabContent.innerHTML = `
     <div id="map" style="height:400px;margin-bottom:20px;"></div>
@@ -1181,20 +1181,20 @@ if (tab === 'acessos') {
       `;
       tbody.appendChild(tr);
 
-      // Determinar coordenadas para o marcador
-      let lat = val.latitude || val.lat || null;
-      let lng = val.longitude || val.lng || null;
+      // Pegar coordenadas
+      let latitude = val.latitude || null;
+      let longitude = val.longitude || null;
 
-      if (!lat || !lng) {
-        // Busca localização aproximada pelo IP se não tiver
+      if (!latitude || !longitude) {
         try {
           const response = await fetch(`https://ipapi.co/${key.replace('ip_', '')}/json/`);
           const data = await response.json();
-          lat = data.latitude || null;
-          lng = data.longitude || null;
-          if (lat && lng) {
-            db.ref('acessos/' + key).update({ latitude: lat, longitude: lng });
-            L.marker([lat, lng]).addTo(map)
+          latitude = data.latitude || null;
+          longitude = data.longitude || null;
+
+          if (latitude && longitude) {
+            db.ref('acessos/' + key).update({ latitude, longitude });
+            L.marker([latitude, longitude]).addTo(map)
               .bindPopup(`${key}<br>${val.count} acessos<br>${(val.deviceType || '')} / ${(val.deviceName || '')}`);
           }
         } catch (e) {
@@ -1202,13 +1202,12 @@ if (tab === 'acessos') {
         }
       } else {
         // Já tem coordenadas
-        L.marker([lat, lng]).addTo(map)
+        L.marker([latitude, longitude]).addTo(map)
           .bindPopup(`${key}<br>${val.count} acessos<br>${(val.deviceType || '')} / ${(val.deviceName || '')}`);
       }
     });
   });
 }
-
 
     // CARROSSEL
     const track = document.getElementById('carousel-track');
@@ -1440,6 +1439,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
