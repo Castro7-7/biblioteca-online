@@ -929,115 +929,108 @@ header h2 {
 // ------------------------------
 // REGISTRO DISCRETO DE ACESSOS (IP + User-Agent + Localização aproximada por IP + Dispositivo)
 if (!sessionStorage.getItem("ipLogged")) {
-  fetch('https://api.ipify.org?format=json')
-    .then(res => res.json())
-    .then(data => {
-      const ip = data.ip;
 
-      // hash simples do IP
-      function hashIp(s) {
-        let h = 0;
-        for (let i = 0; i < s.length; i++) {
-          h = (h << 5) - h + s.charCodeAt(i);
-          h |= 0;
-        }
-        return "ip_" + Math.abs(h);
-      }
+  const acessosRef = db.ref('acessos');
 
-      const ipHash = hashIp(ip);
-      const ua = navigator.userAgent;
-      const ref = db.ref('acessos/' + ipHash);
+  // Garantir que a árvore 'acessos' exista
+  acessosRef.once('value').then(snap => {
+    if (!snap.exists()) {
+      acessosRef.set({}); // cria a árvore vazia
+    }
+  }).finally(() => {
 
-      // Função para detectar tipo e nome do dispositivo
-      function detectarDispositivo() {
-        let tipo = "PC";
-        let nome = "Desconhecido";
+    // Pegar IP público
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        const ip = data.ip;
 
-        if (/Mobi|Android/i.test(ua)) tipo = "Mobile";
-        else if (/iPad|Tablet/i.test(ua)) tipo = "Tablet";
-
-        if (/iPhone/i.test(ua)) nome = "iPhone";
-        else if (/iPad/i.test(ua)) nome = "iPad";
-        else if (/Android/i.test(ua)) {
-          const match = ua.match(/Android\s[\d\.]+;\s([^)]+)/);
-          nome = match ? match[1].trim() : "Android";
-        } else {
-          nome = "PC";
+        // hash simples do IP
+        function hashIp(s) {
+          let h = 0;
+          for (let i = 0; i < s.length; i++) {
+            h = (h << 5) - h + s.charCodeAt(i);
+            h |= 0;
+          }
+          return "ip_" + Math.abs(h);
         }
 
-        return { tipo, nome };
-      }
+        const ipHash = hashIp(ip);
+        const ua = navigator.userAgent;
+        const ref = db.ref('acessos/' + ipHash);
 
-      const dispositivo = detectarDispositivo();
+        // Função para detectar tipo e nome do dispositivo
+        function detectarDispositivo() {
+          let tipo = "PC";
+          let nome = "Desconhecido";
 
-      // função para salvar no banco
-      const salvarDados = (latitude, longitude) => {
-        ref.once('value').then(snap => {
-          const MIN_INTERVAL = 10 * 60 * 1000; // 10 minutos
-          if (!snap.exists()) {
-            ref.set({
-              firstSeen: Date.now(),
-              lastSeen: Date.now(),
-              ua: ua,
-              ip: ip,
-              count: 1,
-              latitude: latitude || null,
-              longitude: longitude || null,
-              deviceType: dispositivo.tipo,
-              deviceName: dispositivo.nome
-            });
+          if (/Mobi|Android/i.test(ua)) tipo = "Mobile";
+          else if (/iPad|Tablet/i.test(ua)) tipo = "Tablet";
+
+          if (/iPhone/i.test(ua)) nome = "iPhone";
+          else if (/iPad/i.test(ua)) nome = "iPad";
+          else if (/Android/i.test(ua)) {
+            const match = ua.match(/Android\s[\d\.]+;\s([^)]+)/);
+            nome = match ? match[1].trim() : "Android";
           } else {
-            const data = snap.val();
-            const lastSeen = data.lastSeen || 0;
-            if (Date.now() - lastSeen > MIN_INTERVAL) {
-              ref.update({
+            nome = "PC";
+          }
+
+          return { tipo, nome };
+        }
+
+        const dispositivo = detectarDispositivo();
+
+        // função para salvar no banco
+        const salvarDados = (latitude, longitude) => {
+          ref.once('value').then(snap => {
+            const MIN_INTERVAL = 10 * 60 * 1000; // 10 minutos
+            if (!snap.exists()) {
+              ref.set({
+                firstSeen: Date.now(),
                 lastSeen: Date.now(),
-                count: data.count + 1,
-                latitude: latitude || data.latitude || null,
-                longitude: longitude || data.longitude || null,
+                ua: ua,
+                ip: ip,
+                count: 1,
+                latitude: latitude || null,
+                longitude: longitude || null,
                 deviceType: dispositivo.tipo,
                 deviceName: dispositivo.nome
               });
+            } else {
+              const data = snap.val();
+              const lastSeen = data.lastSeen || 0;
+              if (Date.now() - lastSeen > MIN_INTERVAL) {
+                ref.update({
+                  lastSeen: Date.now(),
+                  count: data.count + 1,
+                  latitude: latitude || data.latitude || null,
+                  longitude: longitude || data.longitude || null,
+                  deviceType: dispositivo.tipo,
+                  deviceName: dispositivo.nome
+                });
+              }
             }
-          }
-        });
-      };
+          });
+        };
 
-      // pegar localização aproximada pelo IP
-      fetch(`https://ipapi.co/${ip}/json/`)
-        .then(res => res.json())
-        .then(loc => {
-          const latitude = loc.latitude || null;
-          const longitude = loc.longitude || null;
-          salvarDados(latitude, longitude);
-        })
-        .catch(err => {
-          console.warn("Erro ao obter localização por IP:", err);
-          salvarDados(null, null);
-        });
+        // pegar localização aproximada pelo IP
+        fetch(`https://ipapi.co/${ip}/json/`)
+          .then(res => res.json())
+          .then(loc => {
+            const latitude = loc.latitude || null;
+            const longitude = loc.longitude || null;
+            salvarDados(latitude, longitude);
+          })
+          .catch(err => {
+            console.warn("Erro ao obter localização por IP:", err);
+            salvarDados(null, null);
+          });
 
-    });
+      });
 
-  sessionStorage.setItem("ipLogged", "true");
-}
-
-
-      // pegar localização aproximada pelo IP
-      fetch(`https://ipapi.co/${ip}/json/`)
-        .then(res => res.json())
-        .then(loc => {
-          const latitude = loc.latitude || null;
-          const longitude = loc.longitude || null;
-          salvarDados(latitude, longitude);
-        })
-        .catch(err => {
-          console.warn("Erro ao obter localização por IP:", err);
-          salvarDados(null, null);
-        });
-
-    });
-
-  sessionStorage.setItem("ipLogged", "true");
+    sessionStorage.setItem("ipLogged", "true");
+  });
 }
 
   
@@ -1425,6 +1418,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
