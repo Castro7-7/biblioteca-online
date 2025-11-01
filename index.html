@@ -1032,158 +1032,68 @@ if (!sessionStorage.getItem("ipLogged")) {
   });
 }
 
-  
-const painel = document.getElementById('painelAdmin');
-const tabContent = document.getElementById('tabContent');
-const abas = painel.querySelectorAll('.tabs button');
+/** ---------------- ACESSOS ---------------- **/
+if (tab === 'acessos') {
+  tabContent.innerHTML = `
+    <div id="map" style="height:400px;margin-bottom:20px;"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>IP/ID</th>
+          <th>Último acesso</th>
+          <th>Contagem</th>
+          <th>Dispositivo</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  `;
+  const tbody = tabContent.querySelector('tbody');
 
-// Controle de abas
-abas.forEach(btn => {
-  btn.addEventListener('click', () => {
-    abas.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    atualizarPainel(btn.dataset.tab);
-  });
-});
+  db.ref('acessos').orderByChild('lastSeen').limitToLast(50).once('value', snap => {
+    const acessos = snap.val() || {};
+    const ordenados = Object.entries(acessos).sort((a, b) => b[1].lastSeen - a[1].lastSeen);
 
-// Atalho Ctrl + Shift + V para abrir/fechar painel
-document.addEventListener('keydown', e => {
-  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'v') {
-    painel.style.display = (painel.style.display === 'none' || painel.style.display === '') ? 'block' : 'none';
-    if (painel.style.display === 'block') atualizarPainel('resumo');
-  }
-});
+    // Inicializar mapa
+    const map = L.map('map').setView([0, 0], 2);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '' }).addTo(map);
 
-// Função principal de atualização do painel
-function atualizarPainel(tab = 'resumo') {
-  tabContent.innerHTML = '';
+    ordenados.forEach(async ([key, val]) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${key}</td>
+        <td>${new Date(val.lastSeen).toLocaleString()}</td>
+        <td>${val.count}</td>
+        <td>${(val.deviceType || 'Desconhecido')} / ${(val.deviceName || '')}</td>
+      `;
+      tbody.appendChild(tr);
 
-  /** ---------------- RESUMO ---------------- **/
-  if (tab === 'resumo') {
-    const resumoDiv = document.createElement('div');
-    resumoDiv.classList.add('resumo-cards');
-    tabContent.appendChild(resumoDiv);
+      // Determinar coordenadas para o marcador
+      let lat = val.latitude || val.lat || null;
+      let lng = val.longitude || val.lng || null;
 
-    const cards = [
-      { title: 'Total Visitas', ref: 'totalVisits', value: 0 },
-      { title: 'Total Livros', ref: 'books', value: 0 },
-      { title: 'Total IPs', ref: 'acessos', value: 0 },
-      { title: 'Data/Hora', ref: null, value: '' }
-    ];
-
-    cards.forEach(c => {
-      const card = document.createElement('div');
-      card.classList.add('card');
-      card.innerHTML = `<h3>${c.title}</h3><p>${c.value}</p>`;
-      resumoDiv.appendChild(card);
-
-      if (c.ref) {
-        db.ref(c.ref).once('value', snap => {
-          if (c.ref === 'books') card.querySelector('p').innerText = Object.keys(snap.val() || {}).length;
-          else if (c.ref === 'acessos') card.querySelector('p').innerText = Object.keys(snap.val() || {}).length;
-          else card.querySelector('p').innerText = snap.val() || 0;
-        });
-      } else {
-        function updateTime() {
-          const agora = new Date();
-          card.querySelector('p').innerText = agora.toLocaleString();
+      if (!lat || !lng) {
+        // Busca localização aproximada pelo IP se não tiver
+        try {
+          const response = await fetch(`https://ipapi.co/${key.replace('ip_', '')}/json/`);
+          const data = await response.json();
+          lat = data.latitude || null;
+          lng = data.longitude || null;
+          if (lat && lng) {
+            db.ref('acessos/' + key).update({ latitude: lat, longitude: lng });
+            L.marker([lat, lng]).addTo(map)
+              .bindPopup(`${key}<br>${val.count} acessos<br>${(val.deviceType || '')} / ${(val.deviceName || '')}`);
+          }
+        } catch (e) {
+          console.error('Erro ao buscar localização:', e);
         }
-        updateTime();
-        setInterval(updateTime, 1000);
+      } else {
+        // Já tem coordenadas
+        L.marker([lat, lng]).addTo(map)
+          .bindPopup(`${key}<br>${val.count} acessos<br>${(val.deviceType || '')} / ${(val.deviceName || '')}`);
       }
     });
-  }
-
-  /** ---------------- LIVROS ---------------- **/
-  if (tab === 'livros') {
-    const tabela = document.createElement('table');
-    tabela.innerHTML = `<thead><tr><th>Livro</th><th>Visitas</th></tr></thead><tbody></tbody>`;
-    tabContent.appendChild(tabela);
-    const tbody = tabela.querySelector('tbody');
-
-    db.ref('books').once('value', snap => {
-      const livros = snap.val() || {};
-      Object.entries(livros).forEach(([livro, count]) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${livro}</td><td>${count}</td>`;
-        tbody.appendChild(tr);
-      });
-    });
-  }
-
-  /** ---------------- GRAFICOS ---------------- **/
-  if (tab === 'grafico') {
-    tabContent.innerHTML = `
-      <canvas id="graficoCanvas" style="height:400px;"></canvas>
-      <div id="top3Livros" style="margin-top:10px;"></div>
-    `;
-    const ctx = document.getElementById('graficoCanvas').getContext('2d');
-    const topDiv = document.getElementById('top3Livros');
-
-    db.ref('books').once('value', snap => {
-      const livros = snap.val() || {};
-      const nomes = Object.keys(livros);
-      const valores = Object.values(livros);
-
-      const top3 = Object.entries(livros).sort((a, b) => b[1] - a[1]).slice(0, 3);
-      topDiv.innerHTML = `<h4>Top 3 livros mais acessados:</h4><ol>${top3.map(([l, c]) => `<li>${l}: ${c}</li>`).join('')}</ol>`;
-
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: nomes,
-          datasets: [{
-            label: 'Visitas por Livro',
-            data: valores,
-            backgroundColor: 'rgba(0,191,255,0.7)',
-            borderColor: 'rgba(0,191,255,1)',
-            borderWidth: 1
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
-      });
-    });
-  }
-
-  /** ---------------- ACESSOS ---------------- **/
-  if (tab === 'acessos') {
-    tabContent.innerHTML = `
-      <div id="map" style="height:400px;margin-bottom:20px;"></div>
-      <table><thead><tr><th>IP/ID</th><th>Último acesso</th><th>Contagem</th></tr></thead><tbody></tbody></table>
-    `;
-    const tbody = tabContent.querySelector('tbody');
-
-    db.ref('acessos').orderByChild('lastSeen').limitToLast(50).once('value', snap => {
-      const acessos = snap.val() || {};
-      const ordenados = Object.entries(acessos).sort((a, b) => b[1].lastSeen - a[1].lastSeen);
-
-      // Inicializar mapa
-      const map = L.map('map').setView([0, 0], 2);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '' }).addTo(map);
-
-      ordenados.forEach(async ([key, val]) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${key}</td><td>${new Date(val.lastSeen).toLocaleString()}</td><td>${val.count}</td>`;
-        tbody.appendChild(tr);
-
-        // Verifica se já há coordenadas salvas, senão busca
-       if (!val.latitude || !val.longitude) {
-          try {
-            const response = await fetch(`https://ipapi.co/${key.replace('ip_', '')}/json/`);
-            const data = await response.json();
-            if (data.latitude && data.longitude) {
-              db.ref('acessos/' + key).update({ lat: data.latitude, lng: data.longitude });
-              L.marker([data.latitude, data.longitude]).addTo(map).bindPopup(`${key}<br>${val.count} acessos`);
-            }
-          } catch (e) {
-            console.error('Erro ao buscar localização:', e);
-          }
-        } else {
-          L.marker([val.lat, val.lng]).addTo(map).bindPopup(`${key}<br>${val.count} acessos`);
-        }
-      });
-    });
-  }
+  });
 }
 
     // CARROSSEL
@@ -1416,3 +1326,4 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
