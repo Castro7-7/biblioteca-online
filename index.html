@@ -925,67 +925,110 @@ header h2 {
     });
   });
 // ------------------------------
-/** ---------------- ACESSOS ---------------- **/
-if (tab === 'acessos') {
-  tabContent.innerHTML = `
-    <div id="map" style="height:400px;margin-bottom:20px;"></div>
-    <table>
-      <thead>
-        <tr>
-          <th>IP/ID</th>
-          <th>Último acesso</th>
-          <th>Contagem</th>
-          <th>Dispositivo</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  `;
-  const tbody = tabContent.querySelector('tbody');
+// ------------------------------
+// REGISTRO DISCRETO DE ACESSOS (IP + User-Agent + Localização aproximada por IP + Dispositivo)
+if (!sessionStorage.getItem("ipLogged")) {
 
-  db.ref('acessos').orderByChild('lastSeen').limitToLast(50).once('value', snap => {
-    const acessos = snap.val() || {};
-    const ordenados = Object.entries(acessos).sort((a, b) => b[1].lastSeen - a[1].lastSeen);
+  const acessosRef = db.ref('acessos');
 
-    // Inicializar mapa
-    const map = L.map('map').setView([0, 0], 2);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '' }).addTo(map);
+  // Garantir que a árvore 'acessos' exista
+  acessosRef.once('value').then(snap => {
+    if (!snap.exists()) {
+      acessosRef.set({}); // cria a árvore vazia
+    }
+  }).finally(() => {
 
-    ordenados.forEach(async ([key, val]) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${key}</td>
-        <td>${new Date(val.lastSeen).toLocaleString()}</td>
-        <td>${val.count}</td>
-        <td>${(val.deviceType || 'Desconhecido')} / ${(val.deviceName || '')}</td>
-      `;
-      tbody.appendChild(tr);
+    // Pegar IP público
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        const ip = data.ip;
 
-      // Determinar coordenadas
-      let lat = val.latitude || val.lat || null;
-      let lng = val.longitude || val.lng || null;
-
-      if (!lat || !lng) {
-        try {
-          const response = await fetch(`https://ipapi.co/${key.replace('ip_', '')}/json/`);
-          const data = await response.json();
-          lat = data.latitude || null;
-          lng = data.longitude || null;
-
-          if (lat && lng) {
-            db.ref('acessos/' + key).update({ latitude: lat, longitude: lng });
-            L.marker([lat, lng]).addTo(map)
-              .bindPopup(`${key}<br>${val.count} acessos<br>${(val.deviceType || '')} / ${(val.deviceName || '')}`);
+        // hash simples do IP
+        function hashIp(s) {
+          let h = 0;
+          for (let i = 0; i < s.length; i++) {
+            h = (h << 5) - h + s.charCodeAt(i);
+            h |= 0;
           }
-        } catch (e) {
-          console.error('Erro ao buscar localização:', e);
+          return "ip_" + Math.abs(h);
         }
-      } else {
-        // Já tem coordenadas
-        L.marker([lat, lng]).addTo(map)
-          .bindPopup(`${key}<br>${val.count} acessos<br>${(val.deviceType || '')} / ${(val.deviceName || '')}`);
-      }
-    });
+
+        const ipHash = hashIp(ip);
+        const ua = navigator.userAgent;
+        const ref = db.ref('acessos/' + ipHash);
+
+        // Função para detectar tipo e nome do dispositivo
+        function detectarDispositivo() {
+          let tipo = "PC";
+          let nome = "Desconhecido";
+
+          if (/Mobi|Android/i.test(ua)) tipo = "Mobile";
+          else if (/iPad|Tablet/i.test(ua)) tipo = "Tablet";
+
+          if (/iPhone/i.test(ua)) nome = "iPhone";
+          else if (/iPad/i.test(ua)) nome = "iPad";
+          else if (/Android/i.test(ua)) {
+            const match = ua.match(/Android\s[\d\.]+;\s([^)]+)/);
+            nome = match ? match[1].trim() : "Android";
+          } else {
+            nome = "PC";
+          }
+
+          return { tipo, nome };
+        }
+
+        const dispositivo = detectarDispositivo();
+
+        // função para salvar no banco
+        const salvarDados = (latitude, longitude) => {
+          ref.once('value').then(snap => {
+            const MIN_INTERVAL = 10 * 60 * 1000; // 10 minutos
+            if (!snap.exists()) {
+              ref.set({
+                firstSeen: Date.now(),
+                lastSeen: Date.now(),
+                ua: ua,
+                ip: ip,
+                count: 1,
+                latitude: latitude || null,
+                longitude: longitude || null,
+                deviceType: dispositivo.tipo,
+                deviceName: dispositivo.nome
+              });
+            } else {
+              const data = snap.val();
+              const lastSeen = data.lastSeen || 0;
+              if (Date.now() - lastSeen > MIN_INTERVAL) {
+                ref.update({
+                  lastSeen: Date.now(),
+                  count: data.count + 1,
+                  latitude: latitude || data.latitude || null,
+                  longitude: longitude || data.longitude || null,
+                  deviceType: dispositivo.tipo,
+                  deviceName: dispositivo.nome
+                });
+              }
+            }
+          });
+        };
+
+        // pegar localização aproximada pelo IP
+        fetch(`https://ipapi.co/${ip}/json/`)
+          .then(res => res.json())
+          .then(loc => {
+            const latitude = loc.latitude || null;
+            const longitude = loc.longitude || null;
+            salvarDados(latitude, longitude);
+          })
+          .catch(err => {
+            console.warn("Erro ao obter localização por IP:", err);
+            salvarDados(null, null);
+          });
+
+      });
+
+    sessionStorage.setItem("ipLogged", "true");
   });
 }
 
@@ -1397,6 +1440,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
