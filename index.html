@@ -250,74 +250,113 @@ header h2 {
     }
     #total-visits img { width:24px; height:24px; }
 
-    /* Painel admin hacker */
-    #adminPanel {
-      position:fixed;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-      background:#0d0d0d;
-      padding:20px;
-      border-radius:12px;
-      z-index:999;
-      color:#0f0;
-      display:none;
-      max-height:80vh;
-      overflow-y:auto;
-      width:90%;
-      max-width:500px;
-      box-shadow: 0 0 20px #00ff00, 0 0 40px #0f0, 0 0 60px #0f0;
-      border: 2px solid #0f0;
-      animation: pulseBorder 2s infinite;
-    }
-    @keyframes pulseBorder {
-      0%,100% { box-shadow: 0 0 20px #00ff00, 0 0 40px #0f0, 0 0 60px #0f0; }
-      50% { box-shadow: 0 0 40px #ff0000, 0 0 60px #ff0, 0 0 80px #0ff; }
-    }
-    #adminPanel h2 { text-align:center; margin-bottom:15px; }
-    .admin-book {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:10px;
-      background:rgba(0,255,0,0.1);
-      padding:8px 10px;
-      border-radius:8px;
-    }
-    .admin-book span { font-weight:bold; }
-    .admin-book input {
-      width:50px;
-      margin-left:5px;
-      padding:2px 4px;
-      border-radius:4px;
-      border:1px solid #0f0;
-      background:#000;
-      color:#0f0;
-      text-align:center;
-    }
-    .admin-book button {
-      background:#0f0;
-      border:none;
-      color:black;
-      padding:4px 8px;
-      border-radius:5px;
-      cursor:pointer;
-      margin-left:4px;
-      font-weight:bold;
-      transition: all 0.3s;
-    }
-    .admin-book button:hover { background:#ff0; color:#000; }
-    #closeAdmin {
-      position:absolute;
-      top:10px;
-      right:15px;
-      background:#0f0;
-      color:black;
-      padding:4px 8px;
-      border:none;
-      border-radius:5px;
-      cursor:pointer;
-    }
+#painelAdmin {
+  display: none;
+  position: fixed;
+  top: 5%;
+  right: 5%;
+  width: 90%;
+  max-width: 1000px;
+  height: 90%;
+  background: rgba(30, 30, 30, 0.95);
+  color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Abas */
+#painelAdmin .tabs {
+  display: flex;
+  justify-content: space-around;
+  background: rgba(40,40,40,0.95);
+  border-bottom: 1px solid #555;
+}
+#painelAdmin .tabs button {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  background: transparent;
+  color: #aaa;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 15px;
+}
+#painelAdmin .tabs button:hover {
+  color: #00bfff;
+}
+#painelAdmin .tabs button.active {
+  color: #00bfff;
+  border-bottom: 3px solid #00bfff;
+}
+
+/* Conteúdo das abas */
+#painelAdmin .tab-content {
+  padding: 15px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Cards de estatísticas */
+.dashboard-cards {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dashboard-card {
+  flex: 1;
+  min-width: 180px;
+  background: rgba(50,50,50,0.9);
+  padding: 12px 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+.dashboard-card h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #00bfff;
+}
+.dashboard-card p {
+  margin: 5px 0 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Tabelas */
+#painelAdmin table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+}
+#painelAdmin th, #painelAdmin td {
+  padding: 7px;
+  border: 1px solid #444;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* Gráficos */
+#painelAdmin canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+/* Mapa */
+#mapaAcessos {
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+}
+
 
     /* RODAPÉ */
     footer { background:#1a0f2e; text-align:center; padding:25px 20px; margin-top:50px; color:#aaa; }
@@ -641,9 +680,6 @@ header h2 {
  		 </a>
 		</div>
 
-
-
-
       </div>
       <button class="carousel-btn" id="next">&#10095;</button>
     </div>
@@ -791,8 +827,18 @@ header h2 {
 </div>
 
 
+<div id="painelAdmin" style="display:none;">
+  <!-- Abas -->
+  <div class="tabs">
+    <button class="active" data-tab="resumo">Resumo</button>
+    <button data-tab="livros">Livros</button>
+    <button data-tab="grafico">Gráficos</button>
+    <button data-tab="acessos">Acessos</button>
+  </div>
 
-
+  <!-- Conteúdo das abas -->
+  <div class="tab-content" id="tabContent"></div>
+</div>
 
     </div>
 
@@ -800,16 +846,6 @@ header h2 {
     <div id="total-visits">
       <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
       <span id="totalVisits">0</span>
-    </div>
-  </div>
-
-  <!-- Painel Admin -->
-  <div id="adminPanel">
-    <button id="closeAdmin">Fechar</button>
-    <h2>PAINEL ADMIN</h2>
-    <div id="adminBooks"></div>
-    <div style="margin-top:15px; text-align:center;">
-      <button id="resetTotal">Zerar total do site</button>
     </div>
   </div>
 
@@ -830,6 +866,12 @@ header h2 {
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <!-- GSAP para animações -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.1/gsap.min.js"></script>
+	<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
   // CONFIG FIREBASE
@@ -882,37 +924,42 @@ header h2 {
       });
     });
   });
+// ------------------------------
+// REGISTRO DISCRETO DE ACESSOS (IP + User-Agent + Localização)
+if (!sessionStorage.getItem("ipLogged")) {
+  // Pega IP público
+  fetch('https://api.ipify.org?format=json')
+    .then(res => res.json())
+    .then(data => {
+      const ip = data.ip;
 
-  // ------------------------------
-  // REGISTRO DISCRETO DE ACESSOS (IP + User-Agent)
-  if (!sessionStorage.getItem("ipLogged")) {
-    fetch('https://api.ipify.org?format=json')
-      .then(res => res.json())
-      .then(data => {
-        const ip = data.ip;
-
-        // hash simples do IP
-        function hashIp(s){
-          let h=0;
-          for(let i=0;i<s.length;i++){
-            h=(h<<5)-h+s.charCodeAt(i);
-            h|=0;
-          }
-          return "ip_"+Math.abs(h);
+      // hash simples do IP
+      function hashIp(s) {
+        let h = 0;
+        for (let i = 0; i < s.length; i++) {
+          h = (h << 5) - h + s.charCodeAt(i);
+          h |= 0;
         }
+        return "ip_" + Math.abs(h);
+      }
 
-        const ipHash = hashIp(ip);
-        const ua = navigator.userAgent;
+      const ipHash = hashIp(ip);
+      const ua = navigator.userAgent;
+      const ref = db.ref('acessos/' + ipHash);
 
-        const ref = db.ref('acessos/' + ipHash);
+      // função para salvar no banco
+      const salvarDados = (latitude, longitude) => {
         ref.once('value').then(snap => {
-          const MIN_INTERVAL = 10*60*1000; // 10 minutos
+          const MIN_INTERVAL = 10 * 60 * 1000; // 10 minutos
           if (!snap.exists()) {
             ref.set({
               firstSeen: Date.now(),
               lastSeen: Date.now(),
               ua: ua,
-              count: 1
+              ip: ip,
+              count: 1,
+              latitude: latitude || null,
+              longitude: longitude || null
             });
           } else {
             const data = snap.val();
@@ -920,15 +967,189 @@ header h2 {
             if (Date.now() - lastSeen > MIN_INTERVAL) {
               ref.update({
                 lastSeen: Date.now(),
-                count: data.count + 1
+                count: data.count + 1,
+                latitude: latitude || data.latitude || null,
+                longitude: longitude || data.longitude || null
               });
             }
           }
         });
-      });
+      };
 
-    sessionStorage.setItem("ipLogged", "true");
+      // tenta pegar geolocalização do navegador
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const { latitude, longitude } = position.coords;
+            salvarDados(latitude, longitude);
+          },
+          error => {
+            console.warn("Geolocalização negada ou indisponível:", error);
+            salvarDados(null, null); // salva sem localização
+          },
+          { timeout: 5000 }
+        );
+      } else {
+        salvarDados(null, null); // sem suporte a geolocalização
+      }
+    });
+
+  sessionStorage.setItem("ipLogged", "true");
+}
+
+  
+const painel = document.getElementById('painelAdmin');
+const tabContent = document.getElementById('tabContent');
+const abas = painel.querySelectorAll('.tabs button');
+
+// Controle de abas
+abas.forEach(btn => {
+  btn.addEventListener('click', () => {
+    abas.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    atualizarPainel(btn.dataset.tab);
+  });
+});
+
+// Atalho Ctrl + Shift + V para abrir/fechar painel
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'v') {
+    painel.style.display = (painel.style.display === 'none' || painel.style.display === '') ? 'block' : 'none';
+    if (painel.style.display === 'block') atualizarPainel('resumo');
   }
+});
+
+// Função principal de atualização do painel
+function atualizarPainel(tab = 'resumo') {
+  tabContent.innerHTML = '';
+
+  /** ---------------- RESUMO ---------------- **/
+  if (tab === 'resumo') {
+    const resumoDiv = document.createElement('div');
+    resumoDiv.classList.add('resumo-cards');
+    tabContent.appendChild(resumoDiv);
+
+    const cards = [
+      { title: 'Total Visitas', ref: 'totalVisits', value: 0 },
+      { title: 'Total Livros', ref: 'books', value: 0 },
+      { title: 'Total IPs', ref: 'acessos', value: 0 },
+      { title: 'Data/Hora', ref: null, value: '' }
+    ];
+
+    cards.forEach(c => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.innerHTML = `<h3>${c.title}</h3><p>${c.value}</p>`;
+      resumoDiv.appendChild(card);
+
+      if (c.ref) {
+        db.ref(c.ref).once('value', snap => {
+          if (c.ref === 'books') card.querySelector('p').innerText = Object.keys(snap.val() || {}).length;
+          else if (c.ref === 'acessos') card.querySelector('p').innerText = Object.keys(snap.val() || {}).length;
+          else card.querySelector('p').innerText = snap.val() || 0;
+        });
+      } else {
+        function updateTime() {
+          const agora = new Date();
+          card.querySelector('p').innerText = agora.toLocaleString();
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+      }
+    });
+  }
+
+  /** ---------------- LIVROS ---------------- **/
+  if (tab === 'livros') {
+    const tabela = document.createElement('table');
+    tabela.innerHTML = `<thead><tr><th>Livro</th><th>Visitas</th></tr></thead><tbody></tbody>`;
+    tabContent.appendChild(tabela);
+    const tbody = tabela.querySelector('tbody');
+
+    db.ref('books').once('value', snap => {
+      const livros = snap.val() || {};
+      Object.entries(livros).forEach(([livro, count]) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${livro}</td><td>${count}</td>`;
+        tbody.appendChild(tr);
+      });
+    });
+  }
+
+  /** ---------------- GRAFICOS ---------------- **/
+  if (tab === 'grafico') {
+    tabContent.innerHTML = `
+      <canvas id="graficoCanvas" style="height:400px;"></canvas>
+      <div id="top3Livros" style="margin-top:10px;"></div>
+    `;
+    const ctx = document.getElementById('graficoCanvas').getContext('2d');
+    const topDiv = document.getElementById('top3Livros');
+
+    db.ref('books').once('value', snap => {
+      const livros = snap.val() || {};
+      const nomes = Object.keys(livros);
+      const valores = Object.values(livros);
+
+      const top3 = Object.entries(livros).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      topDiv.innerHTML = `<h4>Top 3 livros mais acessados:</h4><ol>${top3.map(([l, c]) => `<li>${l}: ${c}</li>`).join('')}</ol>`;
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: nomes,
+          datasets: [{
+            label: 'Visitas por Livro',
+            data: valores,
+            backgroundColor: 'rgba(0,191,255,0.7)',
+            borderColor: 'rgba(0,191,255,1)',
+            borderWidth: 1
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+      });
+    });
+  }
+
+  /** ---------------- ACESSOS ---------------- **/
+  if (tab === 'acessos') {
+    tabContent.innerHTML = `
+      <div id="map" style="height:400px;margin-bottom:20px;"></div>
+      <table><thead><tr><th>IP/ID</th><th>Último acesso</th><th>Contagem</th></tr></thead><tbody></tbody></table>
+    `;
+    const tbody = tabContent.querySelector('tbody');
+
+    db.ref('acessos').orderByChild('lastSeen').limitToLast(50).once('value', snap => {
+      const acessos = snap.val() || {};
+      const ordenados = Object.entries(acessos).sort((a, b) => b[1].lastSeen - a[1].lastSeen);
+
+      // Inicializar mapa
+      const map = L.map('map').setView([0, 0], 2);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '' }).addTo(map);
+
+      ordenados.forEach(async ([key, val]) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${key}</td><td>${new Date(val.lastSeen).toLocaleString()}</td><td>${val.count}</td>`;
+        tbody.appendChild(tr);
+
+        // Verifica se já há coordenadas salvas, senão busca
+        if (!val.lat || !val.lng) {
+          try {
+            const response = await fetch(`https://ipapi.co/${key.replace('ip_', '')}/json/`);
+            const data = await response.json();
+            if (data.latitude && data.longitude) {
+              db.ref('acessos/' + key).update({ lat: data.latitude, lng: data.longitude });
+              L.marker([data.latitude, data.longitude]).addTo(map).bindPopup(`${key}<br>${val.count} acessos`);
+            }
+          } catch (e) {
+            console.error('Erro ao buscar localização:', e);
+          }
+        } else {
+          L.marker([val.lat, val.lng]).addTo(map).bindPopup(`${key}<br>${val.count} acessos`);
+        }
+      });
+    });
+  }
+}
 
     // CARROSSEL
     const track = document.getElementById('carousel-track');
@@ -964,55 +1185,7 @@ header h2 {
     setInterval(()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); },4000);
     updateCarousel();
 
-    // PAINEL ADMIN
-    const adminPanel = document.getElementById('adminPanel');
-    document.getElementById('closeAdmin').addEventListener('click', ()=>{ adminPanel.style.display='none'; });
 
-    document.addEventListener('keydown', e => {
-      if(e.altKey && e.shiftKey && e.key.toLowerCase()=='a'){
-        if(!auth.currentUser){
-          const email = prompt('Digite seu e-mail de admin:');
-          const password = prompt('Digite sua senha de admin:');
-          auth.signInWithEmailAndPassword(email,password)
-          .then(()=>{ adminPanel.style.display='block'; loadAdminPanel(); })
-          .catch(()=>alert('E-mail ou senha incorretos'));
-        } else { adminPanel.style.display='block'; loadAdminPanel(); }
-      }
-    });
-
-    function loadAdminPanel(){
-      const adminBooks = document.getElementById('adminBooks');
-      adminBooks.innerHTML='';
-      livros.forEach(livro=>{
-        const key=livro.dataset.book;
-        const ref=db.ref('books/'+key);
-        const div=document.createElement('div');
-        div.className='admin-book';
-        div.innerHTML=`
-          <span>${livro.querySelector('h2').innerText}: 
-            <span id="count-${key}">0</span>
-          </span>
-          <input type="number" id="input-${key}" min="0" placeholder="N">
-          <button id="inc-${key}">+</button>
-          <button id="dec-${key}">-</button>
-          <button id="set-${key}">Set</button>
-          <button id="reset-${key}">Zerar</button>
-        `;
-        adminBooks.appendChild(div);
-
-        ref.on('value', snap=>{ div.querySelector('#count-'+key).innerText = snap.val() || 0; });
-
-        div.querySelector('#inc-'+key).addEventListener('click', ()=>{ ref.transaction(c => (c||0)+1); });
-        div.querySelector('#dec-'+key).addEventListener('click', ()=>{ ref.transaction(c => (c||0)-1); });
-        div.querySelector('#reset-'+key).addEventListener('click', ()=>{ ref.set(0); });
-        div.querySelector('#set-'+key).addEventListener('click', ()=>{
-          const val = parseInt(div.querySelector('#input-'+key).value);
-          if(!isNaN(val)) ref.set(val);
-        });
-      });
-
-      document.getElementById('resetTotal').onclick = ()=>{ totalRef.set(0); };
-    }
 // ===== ELEMENTOS =====
 const searchIcon = document.getElementById("search-icon");
 const searchBar = document.getElementById("search-bar");
@@ -1208,27 +1381,3 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
