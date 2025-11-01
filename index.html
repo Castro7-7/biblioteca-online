@@ -925,9 +925,9 @@ header h2 {
     });
   });
 // ------------------------------
-// REGISTRO DISCRETO DE ACESSOS (IP + User-Agent + Localização)
+// ------------------------------
+// REGISTRO DISCRETO DE ACESSOS (IP + User-Agent + Localização aproximada por IP)
 if (!sessionStorage.getItem("ipLogged")) {
-  // Pega IP público
   fetch('https://api.ipify.org?format=json')
     .then(res => res.json())
     .then(data => {
@@ -976,22 +976,19 @@ if (!sessionStorage.getItem("ipLogged")) {
         });
       };
 
-      // tenta pegar geolocalização do navegador
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            const { latitude, longitude } = position.coords;
-            salvarDados(latitude, longitude);
-          },
-          error => {
-            console.warn("Geolocalização negada ou indisponível:", error);
-            salvarDados(null, null); // salva sem localização
-          },
-          { timeout: 5000 }
-        );
-      } else {
-        salvarDados(null, null); // sem suporte a geolocalização
-      }
+      // pegar localização aproximada pelo IP
+      fetch(`https://ipapi.co/${ip}/json/`)
+        .then(res => res.json())
+        .then(loc => {
+          const latitude = loc.latitude || null;
+          const longitude = loc.longitude || null;
+          salvarDados(latitude, longitude);
+        })
+        .catch(err => {
+          console.warn("Erro ao obter localização por IP:", err);
+          salvarDados(null, null);
+        });
+
     });
 
   sessionStorage.setItem("ipLogged", "true");
@@ -1381,3 +1378,4 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
