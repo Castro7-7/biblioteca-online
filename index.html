@@ -1053,8 +1053,7 @@ if (!sessionStorage.getItem("ipLogged")) {
     sessionStorage.setItem("ipLogged", "true");
   });
 }
-
-  
+ 
 const painel = document.getElementById('painelAdmin');
 const tabContent = document.getElementById('tabContent');
 const abas = painel.querySelectorAll('.tabs button');
@@ -1169,21 +1168,35 @@ function atualizarPainel(tab = 'resumo') {
     });
   }
 
-  /** ---------------- ACESSOS ---------------- **/
-  if (tab === 'acessos') {
-    tabContent.innerHTML = `
-      <div id="map" style="height:400px;margin-bottom:20px;"></div>
-      <table>
-        <thead>
-          <tr>
-            <th>IP/ID</th>
-            <th>Último acesso</th>
-            <th>Contagem</th>
-            <th>Dispositivo</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+/** ---------------- ACESSOS ---------------- **/
+if (tab === 'acessos') {
+  tabContent.innerHTML = `
+    <div style="display:flex;flex-direction:row;gap:20px;height:400px;width:100%;">
+
+      <!-- MAPA -->
+      <div style="flex:1;background:#1a1a1a;border-radius:12px;overflow:hidden;box-shadow:0 0 10px rgba(0,0,0,0.3);">
+        <div id="map" style="height:100%;width:100%;"></div>
+      </div>
+
+      <!-- LISTA -->
+      <div style="flex:1;background:#121212;border-radius:12px;box-shadow:0 0 10px rgba(0,0,0,0.3);overflow:hidden;display:flex;flex-direction:column;">
+        <h3 style="color:#c0a3ff;text-align:center;padding:10px;margin:0;border-bottom:1px solid rgba(255,255,255,0.1);font-weight:500;">Registros de Acesso</h3>
+        <div style="flex:1;overflow-y:auto;">
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th style="padding:8px 10px;text-align:center;color:#d7b8ff;font-size:14px;background:rgba(128,0,255,0.2);">IP / ID</th>
+                <th style="padding:8px 10px;text-align:center;color:#d7b8ff;font-size:14px;background:rgba(128,0,255,0.2);">Último acesso</th>
+                <th style="padding:8px 10px;text-align:center;color:#d7b8ff;font-size:14px;background:rgba(128,0,255,0.2);">Contagem</th>
+                <th style="padding:8px 10px;text-align:center;color:#d7b8ff;font-size:14px;background:rgba(128,0,255,0.2);">Dispositivo</th>
+              </tr>
+            </thead>
+            <tbody style="color:#eee;font-size:14px;text-align:center;"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
     `;
     const tbody = tabContent.querySelector('tbody');
 
