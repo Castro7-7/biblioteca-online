@@ -958,24 +958,46 @@ if (!sessionStorage.getItem("ipLogged")) {
         const ua = navigator.userAgent;
         const ref = db.ref('acessos/' + ipHash);
 
-        // Função para detectar tipo e nome do dispositivo
+        // 🔧 Função melhorada para detectar tipo e nome do dispositivo (com ícones)
         function detectarDispositivo() {
           let tipo = "PC";
           let nome = "Desconhecido";
+          let icone = "💻";
 
-          if (/Mobi|Android/i.test(ua)) tipo = "Mobile";
-          else if (/iPad|Tablet/i.test(ua)) tipo = "Tablet";
-
-          if (/iPhone/i.test(ua)) nome = "iPhone";
-          else if (/iPad/i.test(ua)) nome = "iPad";
-          else if (/Android/i.test(ua)) {
-            const match = ua.match(/Android\s[\d\.]+;\s([^)]+)/);
-            nome = match ? match[1].trim() : "Android";
-          } else {
-            nome = "PC";
+          if (/Mobi|Android/i.test(ua)) {
+            tipo = "Mobile";
+            icone = "📱";
+          } else if (/iPad|Tablet/i.test(ua)) {
+            tipo = "Tablet";
+            icone = "📟";
           }
 
-          return { tipo, nome };
+          if (/iPhone/i.test(ua)) {
+            nome = "iPhone";
+            icone = "🍎";
+          } else if (/iPad/i.test(ua)) {
+            nome = "iPad";
+            icone = "📟";
+          } else if (/Android/i.test(ua)) {
+            // Captura o modelo corretamente entre "Android ...; <modelo>"
+            const match = ua.match(/Android\s[\d\.]+;\s*([^;)]*)/i);
+            nome = match ? match[1].trim().replace(/Build.*/i, "").trim() : "Android";
+          } else if (/Windows/i.test(ua)) {
+            nome = "Windows PC";
+            icone = "💻";
+          } else if (/Macintosh|Mac OS/i.test(ua)) {
+            nome = "Mac";
+            icone = "🍎";
+          } else if (/Linux/i.test(ua)) {
+            nome = "Linux";
+            icone = "🐧";
+          }
+
+          // Evitar nomes curtos ou bugados tipo "K"
+          if (nome.length <= 2 || nome === "K") nome = "Android (modelo não identificado)";
+
+          const nomeFormatado = `${icone} ${tipo} / ${nome}`;
+          return { tipo, nome: nomeFormatado };
         }
 
         const dispositivo = detectarDispositivo();
@@ -1441,6 +1463,7 @@ searchInput.addEventListener("input", () => {
 
 </body>
 </html>
+
 
 
 
