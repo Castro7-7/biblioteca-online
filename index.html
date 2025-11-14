@@ -14,7 +14,7 @@
 
 <!-- SEO TÉCNICO -->
 <link rel="canonical" href="https://castro7-7.github.io/biblioteca-online/">
-<meta name="theme-color" content="#4B0082"> <!-- roxo escuro elegante -->
+
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- OPEN GRAPH (Facebook, WhatsApp, Instagram) -->
@@ -39,17 +39,28 @@
 
   <title>Biblioteca Online</title>
   <style>
-html, body {
+ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   overflow-x: hidden;
   font-family: 'Arial', sans-serif;
   color: #fff;
-  background: #1b0f2e; /* cor base roxo dark */
-  position: relative; 
-  z-index: -1;
+
+  /* Fallback */
+  background: #350085;
+
+  /* Radial Gradient */
+  background: radial-gradient(circle, #350085 0%, #000000 100%);
+
+  /* Compatibilidade */
+  background: -webkit-radial-gradient(circle, #350085 0%, #000000 100%);
+  background: -moz-radial-gradient(circle, #350085 0%, #000000 100%);
+  background: -o-radial-gradient(circle, #350085 0%, #000000 100%);
+
+  position: relative;
 }
+
 
 header {
   text-align: center;
@@ -177,13 +188,23 @@ header h2 {
     #next { right: 1px; }
 
     /* LISTA DE LIVROS */
-    .container { width:90%; max-width:1000px; margin:30px auto; }
+      .container {
+        width: 100%;
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 0 20px;
+        border: 2px solid red;
+
+      }
+
+
     .library-list { display:flex; flex-direction:column; gap:20px; }
     .livro {
       display:flex;
-	  background: rgba(128, 90, 200, 0.1);
+	    background: rgba(80, 0, 160, 0.22);
       border-radius:16px;
       padding:15px;
+      padding-right: 1px;
       width:100%;
       min-height:160px;
       align-items:flex-start;
