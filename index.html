@@ -187,13 +187,12 @@ header h2 {
     #prev { left: 1px; }
     #next { right: 1px; }
 
-    /* LISTA DE LIVROS */
-      .container {
-        width: 100%;
-        max-width: 1000px;
-        margin: 30px auto;
-        padding-right: 200px !important;
-      }
+   .container {
+  width: min(100% - 30px, 1000px);
+  margin: 30px auto;
+  padding: 20px 30px 0px 5px;
+  box-sizing: border-box;
+}
 
 
     .library-list { display:flex; flex-direction:column; gap:20px; }
@@ -511,7 +510,7 @@ header h2 {
   display: none;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 30px;
-  padding: 110px 100px;
+  padding: 110px 20px;
   justify-items: center;
   align-items: start;
   animation: fadeIn 0.5s ease;
