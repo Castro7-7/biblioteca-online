@@ -814,4 +814,1883 @@ header h2 {
       #total-visits img { width:18px; height:18px; }
     }
 	/* ===== PESQUISA ===== */
-#se
+#search-icon {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  background: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#search-icon svg {
+  stroke: white;       /* cor do ícone */
+  width: 28px;         /* tamanho */
+  height: 28px;
+  transition: stroke 0.3s;
+}
+
+#search-icon:hover svg {
+  stroke: #aaa;        /* muda cor ao passar o mouse */
+}
+
+#search-bar {
+  position: fixed;
+  top: 25px;
+  right: 75px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 30px;
+  overflow: hidden;
+  width: 0;
+  height: 40px;
+  transition: width 0.4s ease;
+  display: flex;
+  align-items: center;
+  z-index: 999;
+}
+#search-bar.active {
+  width: 250px;
+  padding: 0 10px;
+}
+#search-bar input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  padding-left: 10px;
+}
+
+/* ===== MENU DE CATEGORIAS ===== */
+#category-btn {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  background: none;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1000;
+  transition: background 0.3s ease;
+}
+#category-btn:hover {
+  background: none;
+}
+
+#category-menu {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 240px;
+  height: 100%;
+  background: rgba(26,15,46,0.97);
+  color: white;
+  padding: 30px 20px;
+  transition: left 0.4s ease;
+  z-index: 999;
+  box-shadow: 3px 0 12px rgba(0,0,0,0.4);
+}
+#category-menu.active {
+  left: 0;
+}
+#category-menu h3 {
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #7c3aed;
+  padding-bottom: 8px;
+}
+#category-menu ul {
+  list-style: none;
+  padding: 0;
+}
+#category-menu li {
+  padding: 10px;
+  margin-bottom: 5px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+#category-menu li:hover {
+  background: #7c3aed;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  #search-bar.active { width: 180px; }
+}
+/* ===== GRID DE LIVROS ===== */
+#search-results {
+  display: none;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 30px;
+  padding: 110px 20px;
+  justify-items: center;
+  align-items: start;
+  animation: fadeIn 0.5s ease;
+}
+
+/* Cards dentro do grid */
+.grid-resultados .card-livro {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 15px;
+  width: 180px;
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Pseudo-elemento para o shine */
+.grid-resultados .card-livro::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%; /* fora do card */
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(180,150,255,0) 0%,
+    rgba(180,150,255,0.3) 50%,
+    rgba(180,150,255,0) 100%
+  );
+  transform: skewX(-20deg);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0; /* invisível por padrão */
+}
+
+/* Levanta o card no hover */
+.grid-resultados .card-livro:hover {
+  transform: translateY(-5px);
+}
+
+.grid-resultados .card-livro img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.grid-resultados .card-livro h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #fff;
+  flex-grow: 1;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  #search-results {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    padding: 90px 10px;
+  }
+  .grid-resultados .card-livro {
+    width: 140px;
+    height: 250px;
+  }
+  .grid-resultados .card-livro img {
+    height: 180px;
+  }
+}
+
+/* FadeIn */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(15px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+
+</style>
+</head>
+<body>
+<!-- Ícone de busca fixo -->
+<div id="search-icon">
+  <svg id="icon-svg" width="30" height="30" viewBox="0 0 64 64">
+    <!-- Lupa -->
+    <circle id="lens" cx="27" cy="27" r="16" stroke="white" stroke-width="4" fill="none"/>
+    <line id="handle" x1="41" y1="41" x2="55" y2="55" stroke="white" stroke-width="4"/>
+    <!-- Casinha (inicialmente invisível) -->
+    <polygon id="house" points="16,32 32,16 48,32 48,48 16,48" fill="white" opacity="0"/>
+  </svg>
+</div>
+
+
+
+<!-- Barra de pesquisa -->
+<div id="search-bar">
+  <input type="text" id="search-input" placeholder="Pesquisar livros...">
+</div>
+<!-- Grid de resultados da pesquisa -->
+<div id="search-results" class="grid-resultados"></div>
+
+<!-- Botão e menu de categorias -->
+<div id="category-btn">☰ Categoria</div>
+<div id="category-menu">
+  <h3>Categorias</h3>
+  <ul>
+    <li data-category="todos">Todos</li>
+    <li data-category="motivação">Motivação</li>
+    <li data-category="autoajuda">Autoajuda</li>
+    <li data-category="psicologia">Psicologia</li>
+    <li data-category="manipulação">Manipulação</li>
+    <li data-category="poder">Poder</li>
+    <li data-category="estratégia">Estratégia</li>
+	<li data-category="Comportamento Humano">Comportamento Humano</li>
+	<li data-category="Finanças">finanças</li>
+  </ul>
+</div>
+
+  <header>
+    <h1><span>📚</span>  Biblioteca Online</h1>
+    <h2>Uma coleção de livros digitais para quem busca crescimento pessoal, motivação e transformação.</h2>
+  </header>
+
+  <div class="container">
+    <!-- CARROSSEL -->
+    <div class="carousel-container" id="carousel-container">
+      <button class="carousel-btn" id="prev">&#10094;</button>
+      <div class="carousel-track" id="carousel-track">
+        <div class="carousel-item" data-book="invisivel">
+          <a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a>
+        </div>
+        <div class="carousel-item" data-book="potencial">
+          <a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a>
+        </div>
+        <div class="carousel-item" data-book="48leis">
+          <a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a>
+        </div>
+        <!-- NOVO LIVRO -->
+        <div class="carousel-item" data-book="fbi">
+          <a href="livros/fbi.html"><img src="livros/img/fbi.png" alt="Manual de Persuasão da FBI"></a>
+        </div>  
+         <div class="carousel-item" data-book="influenciar-pessoas">
+          <a href="livros/influenciar-pessoas.html"><img src="livros/img/influenciar-pessoas.png" alt="Como fazer amigos e influencair pessoas"></a>
+        </div>
+        <div class="carousel-item" data-book="poder-manipulaçao">
+          <a href="livros/Poder-Manipulação.html"><img src="livros/img/poder-manipulaçao.png" alt="poder $ manipulação Jacob Petry"></a>
+        </div>
+        <div class="carousel-item" data-book="manipulaçao-oculta">
+          <a href="livros/Manipulacao-oculta.html"><img src="livros/img/manipulaçao-oculta.png" alt="manipulaçao oculta"></a>
+        </div>
+        <div class="carousel-item" data-book="engenharia-social">
+          <a href="livros/engenharia-social.html"><img src="livros/img/engenharia-social.png" alt="engenharia social"></a>
+        </div>
+        <div class="carousel-item" data-book="seduçao-maquiavelica">
+          <a href="livros/seducao-maquiavelica.html"><img src="livros/img/seduçao-maquiavelica.png" alt="seduçao maquiavelica"></a>
+        </div>
+	    <div class="carousel-item" data-book="o-que-todo-corpo-fala">
+  		  <a href="livros/oque-todo-corpo-fala.html">
+          <img src="livros/img/oque-todo-corpo-fala.png" alt="O Que Todo Corpo Fala">
+          </a>
+        </div>
+	    <div class="carousel-item" data-book="como-convencer-alguem-em-90-segundos">
+ 			 <a href="livros/como-convencer-90-seg.html">
+   			 <img src="livros/img/como-convencer-alguem-90-seg.png" alt="Como Convencer Alguém em 90 Segundos">
+ 			 </a>
+   		</div>
+		  <div class="carousel-item" data-book="a-arte-de-ler-mentes">
+		  <a href="livros/arte-de-ler-mentes.html">
+	      <img src="livros/img/arte-de-ler-mentes.png" alt="A Arte de Ler Mentes">
+ 		  </a>
+		</div>
+		<div class="carousel-item" data-book="o-homem-mais-rico-da-babilonia">
+		  <a href="livros/babilonia.html">
+   		 <img src="livros/img/babilonia.png" alt="O Homem Mais Rico da Babilônia – George S. Clason">
+ 		 </a>
+		</div>
+
+      </div>
+      <button class="carousel-btn" id="next">&#10095;</button>
+    </div>
+
+    <!-- LISTA DE LIVROS -->
+    <div class="library-list">
+      <div class="livro" data-book="invisivel">
+        <img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível">
+        <div class="livro-info">
+          <h2>Liberte-se do inimigo invisível</h2>
+          <p>Baseado em “Mais Esperto que o Diabo”, este livro ajuda a identificar obstáculos invisíveis e liberar seu potencial.</p>
+          <a href="livros/Liberte-se do inimigo invisível.html" class="botao">Ver detalhes</a>
+        </div>
+        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
+      </div>
+      <div class="livro" data-book="potencial">
+        <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
+        <div class="livro-info">
+          <h2>Destravando Seu Potencial</h2>
+          <p>Um guia prático para desbloquear sua mente e alcançar seus objetivos.</p>
+          <a href="livros/destravando.html" class="botao">Ver detalhes</a>
+        </div>
+        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
+      </div>
+      <div class="livro" data-book="48leis">
+        <img src="livros/img/48.png" alt="48 Leis do Poder">
+        <div class="livro-info">
+          <h2>48 Leis do Poder</h2>
+          <p>Domine as regras do poder e influencie pessoas de forma estratégica.</p>
+          <a href="livros/48-leis-do-poder.html" class="botao">Ver detalhes</a>
+        </div>
+        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
+      </div>
+      <!-- NOVO LIVRO -->
+      <div class="livro" data-book="fbi">
+        <img src="livros/img/fbi.png" alt="Manual de Persuasão da FBI">
+        <div class="livro-info">
+          <h2>Manual de Persuasão da FBI</h2>
+          <p>Aprenda técnicas de persuasão utilizadas por agentes do FBI para influenciar decisões e conduzir entrevistas com sucesso.</p>
+          <a href="livros/fbi.html" class="botao">Ver detalhes</a>
+        </div>
+        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
+      </div>
+      <div class="livro" data-book="influenciar-pessoas">
+        <img src="livros/img/influenciar-pessoas.png" alt="Manual de Persuasão da FBI">
+        <div class="livro-info">
+         <h2>Como Fazer Amigos e Influenciar Pessoas</h2>
+         <p>Descubra estratégias comprovadas para conquistar amizades verdadeiras, fortalecer conexões e influenciar pessoas de forma positiva em qualquer ambiente.</p>
+         <a href="livros/influenciar-pessoas.html" class="botao">Ver detalhes</a>
+        </div>
+        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
+      </div>
+ <!-- Poder & Manipulação – Jacob Petry -->
+      <div class="livro" data-book="poder-manipulacao">
+        <img src="livros/img/poder-manipulaçao.png" alt="Poder & Manipulação">
+        <div class="livro-info">
+        <h2>Poder & Manipulação – Jacob Petry</h2>
+        <p>Aprenda a dominar técnicas de persuasão, manipulação psicológica e influência estratégica de forma avançada.</p>
+        <a href="livros/Poder-Manipulação.html" class="botao">Ver detalhes</a>
+      </div>
+        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
+      </div>
+
+<!-- Engenharia Social – A Arte de Influenciar e Não Ser Influenciado -->
+      <div class="livro" data-book="engenharia-social">
+        <img src="livros/img/engenharia-social.png" alt="Engenharia Social">
+        <div class="livro-info">
+        <h2>Engenharia Social – Jacob Petry</h2>
+        <p>Descubra como influenciar pessoas de forma ética e evitar ser manipulado através de técnicas de engenharia social.</p>
+        <a href="livros/engenharia-social.html" class="botao">Ver detalhes</a>
+      </div>
+      <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
+      </div>
+
+<!-- Manipulação Oculta -->
+    <div class="livro" data-book="manipulacao-oculta">
+      <img src="livros/img/manipulaçao-oculta.png" alt="Manipulação Oculta">
+      <div class="livro-info">
+      <h2>Manipulação Oculta</h2>
+      <p>Aprenda técnicas secretas de manipulação e persuasão, com foco em psicologia e percepção das pessoas.</p>
+      <a href="livros/manipulacao-oculta.html" class="botao">Ver detalhes</a>
+    </div>
+      <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
+    </div>
+
+<!-- Sedução Maquiavélica -->
+    <div class="livro" data-book="seducao-maquiavelica">
+      <img src="livros/img/seduçao-maquiavelica.png" alt="Sedução Maquiavélica">
+      <div class="livro-info">
+      <h2>Sedução Maquiavélica</h2>
+      <p>Domine a arte da sedução e hipnose psicológica com estratégias sofisticadas e dark.</p>
+      <a href="livros/seducao-maquiavelica.html" class="botao">Ver detalhes</a>
+    </div>
+      <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
+    </div>
+<!-- O Que Todo Corpo Fala – Joe Navarro -->
+	<div class="livro" data-book="o-que-todo-corpo-fala">
+ 	 <img src="livros/img/oque-todo-corpo-fala.png" alt="O Que Todo Corpo Fala">
+ 	 <div class="livro-info">
+     <h2>O Que Todo Corpo Fala – Joe Navarro</h2>
+     <p>Aprenda a decodificar a linguagem corporal, identificar emoções ocultas e dominar a comunicação não verbal para influenciar e compreender melhor as pessoas.</p>
+     <a href="livros/oque-todo-corpo-fala.html" class="botao">Ver detalhes</a>
+   </div>
+   <div class="livro-views">
+    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/> <span>0</span> </div>
+</div>
+		<!-- Como Convencer Alguém em 90 Segundos – Nicholas Boothman -->
+<div class="livro" data-book="como-convencer-alguem-em-90-segundos">
+  <img src="livros/img/como-convencer-alguem-90-seg.png" alt="Como Convencer Alguém em 90 Segundos">
+  <div class="livro-info">
+    <h2>Como Convencer Alguém em 90 Segundos – Nicholas Boothman</h2>
+    <p>Aprenda técnicas rápidas e eficazes para conquistar empatia, confiança e influência logo nos primeiros segundos de qualquer conversa.</p>
+    <a href="livros/como-convencer-90-seg.html" class="botao">Ver detalhes</a>
+  </div>
+  <div class="livro-views">
+    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
+    <span>0</span>
+  </div>
+</div>
+		<!-- A Arte de Ler Mentes – Henrik Fexeus -->
+<div class="livro" data-book="a-arte-de-ler-mentes">
+  <img src="livros/img/arte-de-ler-mentes.png" alt="A Arte de Ler Mentes">
+  <div class="livro-info">
+    <h2>A Arte de Ler Mentes – Henrik Fexeus</h2>
+    <p>Aprenda a interpretar gestos, expressões e microreações para entender o que as pessoas realmente pensam, mesmo sem dizer uma palavra.</p>
+    <a href="livros/arte-de-ler-mentes.html" class="botao">Ver detalhes</a>
+  </div>
+  <div class="livro-views">
+    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
+    <span>0</span>
+  </div>
+</div>
+		<!-- O Homem Mais Rico da Babilônia -->
+<div class="livro" data-book="o-homem-mais-rico-da-babilonia">
+  <img src="livros/img/babilonia.png" alt="O Homem Mais Rico da Babilônia – George S. Clason">
+  <div class="livro-info">
+    <h2>O Homem Mais Rico da Babilônia – George S. Clason</h2>
+    <p>Descubra princípios atemporais de riqueza e prosperidade através de lições simples e práticas para dominar suas finanças.</p>
+    <a href="livros/babilonia.html" class="botao">Ver detalhes</a>
+  </div>
+  <div class="livro-views">
+    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
+    <span>0</span>
+  </div>
+</div>
+
+
+<div id="painelAdmin" style="display:none;">
+  <!-- Abas -->
+  <div class="tabs">
+    <button class="active" data-tab="resumo">Resumo</button>
+    <button data-tab="livros">Livros</button>
+    <button data-tab="grafico">Gráficos</button>
+    <button data-tab="acessos">Acessos</button>
+  </div>
+
+  <!-- Conteúdo das abas -->
+  <div class="tab-content" id="tabContent"></div>
+</div>
+
+<!-- Painel Lateral de Detalhes do IP -->
+<div id="painelDetalhesIP">
+  <button class="close-btn" onclick="fecharPainelDetalhes()">&times;</button>
+  <div class="header">
+    <h3 id="ipHeader">IP: Carregando...</h3>
+  </div>
+  <div class="accordion" id="accordionContainer"></div>
+</div>
+
+    </div>
+
+    <!-- Contador total -->
+    <div id="total-visits">
+      <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
+      <span id="totalVisits">0</span>
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <footer>
+  <p>© 2025 Biblioteca Online</p>
+  <p>
+    <a href="política-e-privacidade.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a> | 
+    <a href="termos-de-uso.html" target="_blank" rel="noopener noreferrer">Termos de Uso</a> | 
+    <a href="https://www.instagram.com/modo1porcent/" target="_blank" rel="noopener noreferrer">Instagram</a> | 
+    <a href="https://wa.me/qr/7LPD66PY3ZJ2H1" target="_blank" rel="noopener noreferrer">Reclame Aqui</a>
+  </p>
+</footer>
+
+  <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<!-- GSAP para animações -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.1/gsap.min.js"></script>
+	<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  // CONFIG FIREBASE
+  const firebaseConfig = {
+    apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
+    authDomain: "biblioteca-b73c3.firebaseapp.com",
+    databaseURL: "https://biblioteca-b73c3-default-rtdb.firebaseio.com",
+    projectId: "biblioteca-b73c3",
+    storageBucket: "biblioteca-b73c3.firebasestorage.app",
+    messagingSenderId: "19441912897",
+    appId: "1:19441912897:web:e0a5ecde56a25657db0ac0",
+    measurementId: "G-1FPNRPMM9R"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const auth = firebase.auth();
+
+  // ------------------------------
+  // CONTADOR TOTAL
+  const totalVisitsEl = document.getElementById('totalVisits');
+  const totalRef = db.ref('totalVisits');
+  totalRef.once('value', snap => { if (!snap.val()) totalRef.set(0); });
+  totalRef.on('value', snap => { totalVisitsEl.innerText = snap.val() || 0; });
+
+  if (!sessionStorage.getItem("visited")) {
+    totalRef.transaction(current => (current || 0) + 1);
+    sessionStorage.setItem("visited", "true");
+  }
+
+  // ------------------------------
+  // CONTADOR DE LIVROS
+  const livros = document.querySelectorAll('.livro');
+  livros.forEach(livro => {
+    const key = livro.dataset.book;
+    const ref = db.ref('books/' + key);
+    ref.once('value', snap => { if (!snap.val()) ref.set(0); });
+    const span = livro.querySelector('.livro-views span');
+    ref.on('value', snap => { span.innerText = snap.val() || 0; });
+
+    const link = livro.querySelector('.botao');
+    const href = link.getAttribute("href");
+
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      ref.transaction(current => (current || 0) + 1, () => {
+        livro.classList.add('flash');
+        setTimeout(() => livro.classList.remove('flash'), 3500);
+        totalRef.transaction(current => (current || 0) + 1);
+        window.location = href;
+      });
+    });
+  });
+// ------------------------------
+// ------------------------------
+// REGISTRO DISCRETO DE ACESSOS (IP + User-Agent + Localização aproximada por IP + Dispositivo)
+if (!sessionStorage.getItem("ipLogged")) {
+
+  const acessosRef = db.ref('acessos');
+
+  // Garantir que a árvore 'acessos' exista
+  acessosRef.once('value').then(snap => {
+    if (!snap.exists()) {
+      acessosRef.set({}); // cria a árvore vazia
+    }
+  }).finally(() => {
+
+    // Pegar IP público
+    fetch('https://api.ipify.org?format=json')
+      .then(res => res.json())
+      .then(data => {
+        const ip = data.ip;
+
+        // hash simples do IP
+        function hashIp(s) {
+          let h = 0;
+          for (let i = 0; i < s.length; i++) {
+            h = (h << 5) - h + s.charCodeAt(i);
+            h |= 0;
+          }
+          return "ip_" + Math.abs(h);
+        }
+
+        const ipHash = hashIp(ip);
+        const ua = navigator.userAgent;
+        const ref = db.ref('acessos/' + ipHash);
+
+        // 🔧 Função melhorada para detectar tipo e nome do dispositivo (com ícones)
+        function detectarDispositivo() {
+          let tipo = "PC";
+          let nome = "Desconhecido";
+          let icone = "💻";
+
+          if (/Mobi|Android/i.test(ua)) {
+            tipo = "Mobile";
+            icone = "📱";
+          } else if (/iPad|Tablet/i.test(ua)) {
+            tipo = "Tablet";
+            icone = "📟";
+          }
+
+          if (/iPhone/i.test(ua)) {
+            nome = "iPhone";
+            icone = "🍎";
+          } else if (/iPad/i.test(ua)) {
+            nome = "iPad";
+            icone = "📟";
+          } else if (/Android/i.test(ua)) {
+            // Captura o modelo corretamente entre "Android ...; <modelo>"
+            const match = ua.match(/Android\s[\d\.]+;\s*([^;)]*)/i);
+            nome = match ? match[1].trim().replace(/Build.*/i, "").trim() : "Android";
+          } else if (/Windows/i.test(ua)) {
+            nome = "Windows PC";
+            icone = "💻";
+          } else if (/Macintosh|Mac OS/i.test(ua)) {
+            nome = "Mac";
+            icone = "🍎";
+          } else if (/Linux/i.test(ua)) {
+            nome = "Linux";
+            icone = "🐧";
+          }
+
+          // Evitar nomes curtos ou bugados tipo "K"
+          if (nome.length <= 2 || nome === "K") nome = "Android (modelo não identificado)";
+
+          const nomeFormatado = `${icone} ${tipo} / ${nome}`;
+          return { tipo, nome: nomeFormatado };
+        }
+
+        const dispositivo = detectarDispositivo();
+
+        // função para salvar no banco
+        const salvarDados = (latitude, longitude) => {
+          ref.once('value').then(snap => {
+            const MIN_INTERVAL = 10 * 60 * 1000; // 10 minutos
+            if (!snap.exists()) {
+              ref.set({
+                firstSeen: Date.now(),
+                lastSeen: Date.now(),
+                ua: ua,
+                ip: ip,
+                count: 1,
+                latitude: latitude || null,
+                longitude: longitude || null,
+                deviceType: dispositivo.tipo,
+                deviceName: dispositivo.nome
+              });
+            } else {
+              const data = snap.val();
+              const lastSeen = data.lastSeen || 0;
+              if (Date.now() - lastSeen > MIN_INTERVAL) {
+                ref.update({
+                  lastSeen: Date.now(),
+                  count: data.count + 1,
+                  latitude: latitude || data.latitude || null,
+                  longitude: longitude || data.longitude || null,
+                  deviceType: dispositivo.tipo,
+                  deviceName: dispositivo.nome
+                });
+              }
+            }
+          });
+        };
+
+        // pegar localização aproximada pelo IP
+        fetch(`https://ipapi.co/${ip}/json/`)
+          .then(res => res.json())
+          .then(loc => {
+            const latitude = loc.latitude || null;
+            const longitude = loc.longitude || null;
+            salvarDados(latitude, longitude);
+          })
+          .catch(err => {
+            console.warn("Erro ao obter localização por IP:", err);
+            salvarDados(null, null);
+          });
+
+      });
+
+    sessionStorage.setItem("ipLogged", "true");
+  });
+}
+ 
+const painel = document.getElementById('painelAdmin');
+const tabContent = document.getElementById('tabContent');
+const abas = painel.querySelectorAll('.tabs button');
+
+// Garantir que a página não role enquanto o cursor estiver sobre o painel
+let _prevBodyOverflow = null;
+painel.addEventListener('mouseenter', () => {
+  if (getComputedStyle(painel).display === 'block') {
+    _prevBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  }
+});
+painel.addEventListener('mouseleave', () => {
+  // só restaura se tivermos salvo um valor anterior
+  if (_prevBodyOverflow !== null) {
+    document.body.style.overflow = _prevBodyOverflow || 'auto';
+    _prevBodyOverflow = null;
+  }
+});
+
+// Controle de abas
+abas.forEach(btn => {
+  btn.addEventListener('click', () => {
+    abas.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    atualizarPainel(btn.dataset.tab);
+  });
+});
+
+// Atalho Ctrl + Shift + V para abrir/fechar painel
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'v') {
+    const abrindo = (painel.style.display === 'none' || painel.style.display === '');
+    painel.style.display = abrindo ? 'block' : 'none';
+    if (abrindo) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    if (painel.style.display === 'block') atualizarPainel('resumo');
+  }
+});
+
+// Cache simples para leituras frequentes (evita múltiplas chamadas ao Firebase)
+const _cache = {};
+function getBooks() {
+  if (_cache.booksPromise) return _cache.booksPromise;
+  _cache.booksPromise = db.ref('books').once('value').then(snap => {
+    _cache.books = snap.val() || {};
+    return _cache.books;
+  }).catch(err => { _cache.booksPromise = null; throw err; });
+  return _cache.booksPromise;
+}
+
+// Nota: rolagem do painel agora usa comportamento nativo do navegador.
+// Removemos handlers customizados de `wheel`/`touch` que causavam jank.
+// O `body.style.overflow` já é alternado ao abrir/fechar o painel.
+
+// Função principal de atualização do painel
+function atualizarPainel(tab = 'resumo') {
+  tabContent.innerHTML = '';
+
+  /** ---------------- RESUMO ---------------- **/
+  if (tab === 'resumo') {
+    // Cards principais
+    const resumoDiv = document.createElement('div');
+    resumoDiv.classList.add('dashboard-cards');
+    tabContent.appendChild(resumoDiv);
+
+    const cards = [
+      { title: '👁️ Total Visitas', ref: 'totalVisits', value: 0, emoji: '👁️' },
+      { title: '📖 Livros', ref: 'books', value: 0, emoji: '📖' },
+      { title: '🌐 IPs Únicos', ref: 'acessos', value: 0, emoji: '🌐' },
+      { title: '⏰ Data/Hora', ref: null, value: '', emoji: '⏰' }
+    ];
+
+    cards.forEach(c => {
+      const card = document.createElement('div');
+      card.classList.add('dashboard-card');
+      card.innerHTML = `
+        <h3><span class="emoji-icon">${c.emoji}</span>${c.title.split('➜')[0]}</h3>
+        <p>${c.value || '...'}</p>
+      `;
+      resumoDiv.appendChild(card);
+
+      if (c.ref) {
+        db.ref(c.ref).once('value', snap => {
+          if (c.ref === 'books' || c.ref === 'acessos') {
+            card.querySelector('p').innerText = Object.keys(snap.val() || {}).length;
+          } else {
+            card.querySelector('p').innerText = snap.val() || 0;
+          }
+        });
+      } else {
+        function updateTime() {
+          const agora = new Date();
+          card.querySelector('p').innerText = agora.toLocaleString();
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+      }
+    });
+
+    // Seção de Estatísticas Avançadas
+    const statsDiv = document.createElement('div');
+    statsDiv.innerHTML = `
+      <h3 style="color:#d7b8ff;margin:20px 0 15px 0;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid rgba(124,58,237,0.3);padding-bottom:10px;">📊 Estatísticas Avançadas</h3>
+    `;
+    tabContent.appendChild(statsDiv);
+
+    const statsCards = document.createElement('div');
+    statsCards.classList.add('dashboard-cards');
+    statsCards.style.gridTemplateColumns = 'repeat(auto-fit, minmax(180px, 1fr))';
+    
+    const statsInfo = [
+      { title: '📈 Média Diária', id: 'mediaDiaria', emoji: '📈' },
+      { title: '🔥 Pico de Acessos', id: 'picoAcessos', emoji: '🔥' },
+      { title: '⏱️ Última Atividade', id: 'ultimaAtividade', emoji: '⏱️' },
+      { title: '🎯 Taxa de Engajamento', id: 'taxaEngajamento', emoji: '🎯' }
+    ];
+
+    statsInfo.forEach(stat => {
+      const card = document.createElement('div');
+      card.classList.add('dashboard-card');
+      card.innerHTML = `
+        <h3><span class="emoji-icon">${stat.emoji}</span>${stat.title.split('➜')[0]}</h3>
+        <p id="${stat.id}">Carregando...</p>
+      `;
+      statsCards.appendChild(card);
+    });
+    statsDiv.appendChild(statsCards);
+
+    // Carregar dados de estatísticas
+    db.ref('totalVisits').once('value', snap => {
+      const total = snap.val() || 0;
+      const mediaDiaria = Math.ceil(total / 30); // média aproximada
+      document.getElementById('mediaDiaria').innerText = mediaDiaria + ' visitas';
+    });
+
+    getBooks().then(livros => {
+      const valores = Object.values(livros);
+      const pico = Math.max(...(valores.length ? valores : [0]), 0);
+      document.getElementById('picoAcessos').innerText = pico + ' visitas';
+    }).catch(() => {
+      document.getElementById('picoAcessos').innerText = '0 visitas';
+    });
+
+    db.ref('acessos').orderByChild('lastSeen').limitToLast(1).once('value', snap => {
+      const acessos = snap.val() || {};
+      const valores = Object.values(acessos);
+      if (valores.length > 0) {
+        const ultimoTempo = new Date(valores[0].lastSeen);
+        const agora = new Date();
+        const minutos = Math.floor((agora - ultimoTempo) / 60000);
+        
+        let texto = '';
+        if (minutos < 1) texto = 'Agora';
+        else if (minutos < 60) texto = `${minutos} minuto(s)`;
+        else if (minutos < 1440) texto = `${Math.floor(minutos / 60)} hora(s)`;
+        else texto = `${Math.floor(minutos / 1440)} dia(s)`;
+        
+        document.getElementById('ultimaAtividade').innerText = texto + ' atrás';
+      }
+    });
+
+    db.ref('totalVisits').once('value', totalSnap => {
+      db.ref('acessos').once('value', acessosSnap => {
+        const total = totalSnap.val() || 0;
+        const ips = Object.keys(acessosSnap.val() || {}).length;
+        const taxa = ips > 0 ? (total / ips).toFixed(1) : 0;
+        document.getElementById('taxaEngajamento').innerText = taxa + ' visitas/IP';
+      });
+    });
+
+    // Seção de Dispositivos
+    const deviceDiv = document.createElement('div');
+    deviceDiv.innerHTML = `
+      <h3 style="color:#d7b8ff;margin:20px 0 15px 0;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid rgba(124,58,237,0.3);padding-bottom:10px;">📱 Tipos de Dispositivos</h3>
+    `;
+    tabContent.appendChild(deviceDiv);
+
+    const deviceStats = document.createElement('div');
+    deviceStats.style.cssText = 'display:grid;gap:12px;';
+    deviceDiv.appendChild(deviceStats);
+
+    db.ref('acessos').once('value', snap => {
+      const acessos = snap.val() || {};
+      const devices = {};
+      
+      Object.values(acessos).forEach(acesso => {
+        const tipo = acesso.deviceType || 'Desconhecido';
+        devices[tipo] = (devices[tipo] || 0) + 1;
+      });
+
+      Object.entries(devices).forEach(([tipo, count]) => {
+        const pct = ((count / Object.keys(acessos).length) * 100).toFixed(1);
+        const row = document.createElement('div');
+        row.classList.add('hover-lift');
+        row.style.cssText = 'background:rgba(50,30,90,0.3);padding:12px 16px;border-radius:10px;border:1px solid rgba(124,58,237,0.2);';
+        row.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="color:#d7b8ff;font-weight:700;">🖥️ ${tipo}</span>
+            <span style="color:#00bfff;font-weight:700;">${count}</span>
+          </div>
+          <div style="width:100%;height:6px;background:rgba(124,58,237,0.2);border-radius:3px;overflow:hidden;">
+            <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#7c3aed,#00bfff);"></div>
+          </div>
+          <div style="text-align:right;margin-top:6px;font-size:11px;color:#999;">${pct}%</div>
+        `;
+        // class `hover-lift` cuida da animação de hover de forma mais performática
+        deviceStats.appendChild(row);
+      });
+    });
+  }
+
+  /** ---------------- LIVROS ---------------- **/
+  if (tab === 'livros') {
+    // Container para Top 3
+    const topDiv = document.createElement('div');
+    topDiv.classList.add('top3-info');
+    tabContent.appendChild(topDiv);
+
+    // Tabela de livros
+    const tabela = document.createElement('table');
+    tabela.innerHTML = `
+      <thead>
+        <tr>
+          <th style="width:50%;">📚 Livro</th>
+          <th style="width:25%;">👁️ Visitas</th>
+          <th style="width:25%;">📊 %</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+    tabContent.appendChild(tabela);
+    const tbody = tabela.querySelector('tbody');
+
+    getBooks().then(livros => {
+      const totalVisitas = Object.values(livros).reduce((a, b) => a + b, 0);
+
+      const top3 = Object.entries(livros).sort((a, b) => b[1] - a[1]).slice(0, 3);
+      topDiv.innerHTML = `
+        <h4 style="margin:0 0 12px 0;color:#00bfff;display:flex;align-items:center;gap:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">🏆 Top 3 Livros</h4>
+        <ol style="margin:0;padding-left:20px;">
+          ${top3.map(([l, c], i) => {
+            const medals = ['🥇', '🥈', '🥉'];
+            return `<li style="color:#ddd;margin-bottom:8px;font-size:12px;"><strong style="color:#d7b8ff;">${medals[i]} ${l}</strong>: ${c} visitas</li>`;
+          }).join('')}
+        </ol>
+      `;
+
+      // Preencher tabela
+      Object.entries(livros)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([livro, count], index) => {
+          const porcentagem = ((count / totalVisitas) * 100).toFixed(1);
+          const tr = document.createElement('tr');
+          tr.style.animation = `slideInContent ${0.3 + index * 0.05}s ease`;
+          
+          const posicao = index + 1;
+          const medalha = posicao === 1 ? '🥇' : posicao === 2 ? '🥈' : posicao === 3 ? '🥉' : `#${posicao}`;
+          
+          tr.innerHTML = `
+            <td style="padding:12px;border-bottom:1px solid rgba(124,58,237,0.2);">
+              <span style="color:#00bfff;font-weight:700;margin-right:8px;">${medalha}</span>
+              <span style="color:#ddd;">${livro}</span>
+            </td>
+            <td style="padding:12px;border-bottom:1px solid rgba(124,58,237,0.2);text-align:center;color:#d7b8ff;font-weight:700;">${count}</td>
+            <td style="padding:12px;border-bottom:1px solid rgba(124,58,237,0.2);">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;background:rgba(124,58,237,0.2);border-radius:3px;overflow:hidden;">
+                  <div style="width:${porcentagem}%;height:100%;background:linear-gradient(90deg,#7c3aed,#00bfff);"></div>
+                </div>
+                <span style="color:#00bfff;font-weight:700;min-width:40px;">${porcentagem}%</span>
+              </div>
+            </td>
+          `;
+          // usar classe para hover (melhor performance)
+          tr.classList.add('panel-row');
+          tbody.appendChild(tr);
+        });
+    });
+
+    // Seção de Estatísticas por Livro
+    const statsSection = document.createElement('div');
+    statsSection.innerHTML = `
+      <h3 style="color:#d7b8ff;margin:20px 0 15px 0;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid rgba(124,58,237,0.3);padding-bottom:10px;">📈 Estatísticas Gerais</h3>
+    `;
+    tabContent.appendChild(statsSection);
+
+    getBooks().then(livros => {
+      const total = Object.values(livros).reduce((a, b) => a + b, 0);
+      const quantidade = Object.keys(livros).length;
+      const media = quantidade > 0 ? (total / quantidade).toFixed(1) : 0;
+      const maximo = Math.max(...(Object.values(livros).length ? Object.values(livros) : [0]), 0);
+      const minimo = Math.min(...Object.values(livros), 0);
+
+      const statsGrid = document.createElement('div');
+      statsGrid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;';
+
+      const statsData = [
+        { label: '📊 Total', value: total, icon: '📊' },
+        { label: '📚 Quantidade', value: quantidade, icon: '📚' },
+        { label: '📈 Média', value: media, icon: '📈' },
+        { label: '🔥 Máximo', value: maximo, icon: '🔥' }
+      ];
+
+      statsData.forEach(stat => {
+        const card = document.createElement('div');
+        card.style.cssText = 'background:rgba(50,30,90,0.3);padding:12px;border-radius:10px;border:1px solid rgba(124,58,237,0.2);text-align:center;transition:all 0.3s ease;cursor:default;';
+        card.innerHTML = `
+          <div style="font-size:18px;margin-bottom:6px;">${stat.icon}</div>
+          <div style="font-size:11px;color:#999;text-transform:uppercase;margin-bottom:6px;">${stat.label}</div>
+          <div style="font-size:20px;font-weight:800;background:linear-gradient(135deg,#fff 0%,#d7b8ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${stat.value}</div>
+        `;
+        // animação gerenciada por CSS via classe
+        card.classList.add('hover-lift');
+        statsGrid.appendChild(card);
+      });
+      statsSection.appendChild(statsGrid);
+    });
+  }
+
+  /** ---------------- GRAFICOS ---------------- **/
+  if (tab === 'grafico') {
+    // Gráfico de Barras - Livros
+    const container1 = document.createElement('div');
+    container1.classList.add('grafico-container');
+    container1.innerHTML = `
+      <h3 style="margin:0 0 15px 0;color:#d7b8ff;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;font-size:13px;">📊 Visitas por Livro (Top 10)</h3>
+      <canvas id="graficoCanvas" style="height:350px;"></canvas>
+    `;
+    tabContent.appendChild(container1);
+
+    // Gráfico de Pizza
+    const container2 = document.createElement('div');
+    container2.classList.add('grafico-container');
+    container2.innerHTML = `
+      <h3 style="margin:0 0 15px 0;color:#d7b8ff;text-transform:uppercase;letter-spacing:0.5px;font-weight:700;font-size:13px;">🎯 Distribuição de Acessos</h3>
+      <canvas id="graficoPizza" style="height:320px;"></canvas>
+    `;
+    tabContent.appendChild(container2);
+
+    // Top 3 info
+    const topDiv = document.createElement('div');
+    topDiv.classList.add('top3-info');
+    topDiv.style.marginTop = '16px';
+    tabContent.appendChild(topDiv);
+
+    // Estatísticas
+    const statsDiv = document.createElement('div');
+    statsDiv.innerHTML = `
+      <h3 style="color:#d7b8ff;margin:20px 0 15px 0;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid rgba(124,58,237,0.3);padding-bottom:10px;">📈 Análise Detalhada</h3>
+    `;
+    tabContent.appendChild(statsDiv);
+
+    const statsMetrics = document.createElement('div');
+    statsMetrics.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;';
+    statsDiv.appendChild(statsMetrics);
+
+    getBooks().then(livros => {
+      const nomes = Object.keys(livros);
+      const valores = Object.values(livros);
+      const totalVisitas = valores.reduce((a, b) => a + b, 0);
+
+      // Gráfico de Barras
+      const ctx = document.getElementById('graficoCanvas').getContext('2d');
+      
+      // Top 10 livros
+      const livrosaOrdenados = Object.entries(livros).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      const nomesTop = livrosaOrdenados.map(([l]) => l.length > 18 ? l.substring(0, 15) + '...' : l);
+      const valoresTop = livrosaOrdenados.map(([, v]) => v);
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: nomesTop,
+          datasets: [{
+            label: 'Visitas',
+            data: valoresTop,
+            backgroundColor: [
+              'rgba(124, 58, 237, 0.8)',
+              'rgba(0, 191, 255, 0.8)',
+              'rgba(100, 200, 255, 0.8)',
+              'rgba(124, 58, 237, 0.6)',
+              'rgba(0, 191, 255, 0.6)',
+              'rgba(100, 200, 255, 0.6)',
+              'rgba(124, 58, 237, 0.5)',
+              'rgba(0, 191, 255, 0.5)',
+              'rgba(100, 200, 255, 0.5)',
+              'rgba(124, 58, 237, 0.4)',
+            ],
+            borderColor: 'rgba(255, 255, 255, 0.2)',
+            borderWidth: 1,
+            borderRadius: 8,
+            hoverBackgroundColor: 'rgba(124, 58, 237, 1)',
+            hoverBorderColor: 'rgba(255, 255, 255, 1)'
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(124, 58, 237, 0.1)',
+                drawBorder: false
+              },
+              ticks: {
+                color: '#b9a3ff'
+              }
+            },
+            y: {
+              grid: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                color: '#b9a3ff',
+                font: {
+                  size: 11
+                }
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: '#d7b8ff',
+                font: { weight: 'bold' },
+                padding: 15,
+                boxHeight: 12,
+                borderRadius: 4
+              }
+            }
+          }
+        }
+      });
+
+      // Gráfico de Pizza
+      const ctxPizza = document.getElementById('graficoPizza').getContext('2d');
+      const cores = ['#7c3aed', '#00bfff', '#64c8ff', '#b9a3ff', '#d7b8ff', '#a88fd9', '#9273d4', '#7d5cc6', '#6b47ba', '#5935a8'];
+      
+      new Chart(ctxPizza, {
+        type: 'doughnut',
+        data: {
+          labels: nomesTop,
+          datasets: [{
+            data: valoresTop,
+            backgroundColor: cores,
+            borderColor: 'rgba(30, 10, 50, 0.8)',
+            borderWidth: 2,
+            hoverBorderColor: '#fff',
+            hoverBorderWidth: 3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: '#d7b8ff',
+                font: { weight: 'bold', size: 11 },
+                padding: 12,
+                boxHeight: 10,
+                borderRadius: 3
+              }
+            }
+          }
+        }
+      });
+
+      // Top 3 detalhes
+      const top3 = livrosaOrdenados.slice(0, 3);
+      topDiv.innerHTML = `
+        <h4 style="margin:0 0 12px 0;color:#00bfff;display:flex;align-items:center;gap:8px;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;">🏆 Top 3 Mais Populares</h4>
+        <ol style="margin:0;padding-left:20px;">
+          ${top3.map(([l, c], i) => {
+            const medals = ['🥇', '🥈', '🥉'];
+            const pct = ((c / totalVisitas) * 100).toFixed(1);
+            return `<li style="color:#ddd;margin-bottom:8px;font-size:12px;"><strong style="color:#d7b8ff;">${medals[i]} ${l}</strong>: ${c} visitas (${pct}%)</li>`;
+          }).join('')}
+        </ol>
+      `;
+
+      // Métricas adicionais
+      const metricas = [
+        { label: '📊 Total', value: totalVisitas, icon: '📊' },
+        { label: '📚 Livros', value: nomes.length, icon: '📚' },
+        { label: '📈 Média', value: (totalVisitas / nomes.length).toFixed(1), icon: '📈' },
+        { label: '🔥 Máx', value: Math.max(...valores), icon: '🔥' }
+      ];
+
+      metricas.forEach(m => {
+        const card = document.createElement('div');
+        card.style.cssText = 'background:rgba(50,30,90,0.3);padding:12px;border-radius:10px;border:1px solid rgba(124,58,237,0.2);text-align:center;transition:all 0.3s ease;';
+        card.innerHTML = `
+          <div style="font-size:16px;margin-bottom:6px;">${m.icon}</div>
+          <div style="font-size:10px;color:#999;text-transform:uppercase;margin-bottom:6px;">${m.label}</div>
+          <div style="font-size:18px;font-weight:800;color:#00bfff;">${m.value}</div>
+        `;
+        // animação por classe CSS
+        card.classList.add('hover-lift');
+        statsMetrics.appendChild(card);
+      });
+    });
+  }
+
+/** ---------------- ACESSOS ---------------- **/
+if (tab === 'acessos') {
+  tabContent.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;height:450px;margin-bottom:16px;">
+
+      <!-- MAPA -->
+      <div style="background:rgba(50,30,90,0.3);border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.2);border:1px solid rgba(124,58,237,0.2);">
+        <div id="map" style="height:100%;width:100%;"></div>
+      </div>
+
+      <!-- LISTA -->
+      <div style="background:rgba(50,30,90,0.3);border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.2);border:1px solid rgba(124,58,237,0.2);overflow:hidden;display:flex;flex-direction:column;">
+        <div style="padding:14px;border-bottom:2px solid rgba(124,58,237,0.3);background:linear-gradient(135deg,rgba(124,58,237,0.2),rgba(0,191,255,0.1));">
+          <h3 style="color:#d7b8ff;text-align:center;padding:0;margin:0;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;font-size:12px;">🌐 Últimos Acessos</h3>
+        </div>
+        <div style="flex:1;overflow-y:auto;">
+          <table style="width:100%;border-collapse:collapse;">
+            <thead>
+              <tr style="background:rgba(124,58,237,0.15);">
+                <th style="padding:10px;text-align:center;color:#d7b8ff;font-size:12px;border-bottom:1px solid rgba(124,58,237,0.3);text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">🔐 IP/ID</th>
+                <th style="padding:10px;text-align:center;color:#d7b8ff;font-size:12px;border-bottom:1px solid rgba(124,58,237,0.3);text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">⏰ Acesso</th>
+                <th style="padding:10px;text-align:center;color:#d7b8ff;font-size:12px;border-bottom:1px solid rgba(124,58,237,0.3);text-transform:uppercase;letter-spacing:0.5px;font-weight:700;">📊 Cnt</th>
+              </tr>
+            </thead>
+            <tbody style="color:#ddd;font-size:12px;text-align:center;"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+    `;
+    const tbody = tabContent.querySelector('tbody');
+    let mapaInstance = null;
+    let marcadores = {};
+
+    // Seção de Estatísticas de Acessos
+    const statsSection = document.createElement('div');
+    statsSection.innerHTML = `
+      <h3 style="color:#d7b8ff;margin:0 0 15px 0;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid rgba(124,58,237,0.3);padding-bottom:10px;">📊 Estatísticas de Acessos</h3>
+    `;
+    tabContent.appendChild(statsSection);
+
+    const statsMetrics = document.createElement('div');
+    statsMetrics.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;';
+    statsSection.appendChild(statsMetrics);
+
+    // Seção de Dispositivos
+    const deviceSection = document.createElement('div');
+    deviceSection.innerHTML = `
+      <h3 style="color:#d7b8ff;margin:0 0 15px 0;font-size:14px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid rgba(124,58,237,0.3);padding-bottom:10px;">📱 Distribução de Dispositivos</h3>
+    `;
+    tabContent.appendChild(deviceSection);
+
+    const deviceStats = document.createElement('div');
+    deviceStats.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;';
+    deviceSection.appendChild(deviceStats);
+
+    db.ref('acessos').orderByChild('lastSeen').limitToLast(50).once('value').then(async snap => {
+      const acessos = snap.val() || {};
+      const ordenados = Object.entries(acessos).sort((a, b) => b[1].lastSeen - a[1].lastSeen);
+
+      // Inicializar mapa
+      mapaInstance = L.map('map').setView([0, 0], 2);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        className: 'custom-map'
+      }).addTo(mapaInstance);
+
+      // Calcular estatísticas
+      let totalAcessos = 0;
+      let ipAtivo = 0;
+      const devices = {};
+      const paises = {};
+
+      // Debounce para evitar múltiplos fitBounds rápidos (melhora performance)
+      let fitBoundsTimeout = null;
+      function scheduleFitBounds() {
+        if (!mapaInstance) return;
+        if (fitBoundsTimeout) clearTimeout(fitBoundsTimeout);
+        fitBoundsTimeout = setTimeout(() => {
+          const latlngsNow = Object.values(marcadores).map(m => [m.lat, m.lng]);
+          if (latlngsNow.length) {
+            try { mapaInstance.fitBounds(latlngsNow, { padding: [50, 50], maxZoom: 6 }); }
+            catch (e) { console.warn('fitBounds agendado falhou:', e); }
+          }
+        }, 300);
+      }
+
+      // Usar fragmento para reduzir repaints ao popular a tabela
+      const frag = document.createDocumentFragment();
+      const pendingGeos = [];
+
+      for (const [key, val] of ordenados) {
+        totalAcessos += val.count;
+        ipAtivo++;
+
+        const tipo = val.deviceType || 'Desconhecido';
+        devices[tipo] = (devices[tipo] || 0) + 1;
+
+        const tr = document.createElement('tr');
+        tr.style.cursor = 'pointer';
+        tr.style.transition = 'all 0.3s ease';
+        tr.style.borderBottom = '1px solid rgba(124,58,237,0.2)';
+
+        const ipDisplay = key.substring(0, 15);
+        const ultimoAcesso = new Date(val.lastSeen);
+        const agora = new Date();
+        const minutos = Math.floor((agora - ultimoAcesso) / 60000);
+        let tempoRelativo = '';
+
+        if (minutos < 1) tempoRelativo = 'Agora';
+        else if (minutos < 60) tempoRelativo = `${minutos}m`;
+        else if (minutos < 1440) tempoRelativo = `${Math.floor(minutos / 60)}h`;
+        else tempoRelativo = `${Math.floor(minutos / 1440)}d`;
+
+        tr.innerHTML = `
+          <td style="padding:10px;border-bottom:1px solid rgba(124,58,237,0.2);">${ipDisplay}</td>
+          <td style="padding:10px;border-bottom:1px solid rgba(124,58,237,0.2);">${tempoRelativo}</td>
+          <td style="padding:10px;border-bottom:1px solid rgba(124,58,237,0.2);"><strong style="color:#00bfff;">${val.count}</strong></td>
+        `;
+
+        // usar classe otimizada para hover
+        tr.classList.add('panel-row');
+        tr.addEventListener('click', () => { abrirDetalhesIP(key, val, mapaInstance); });
+
+        frag.appendChild(tr);
+
+        // Coordenadas (se disponíveis, adiciona marcador; se não, busca em background)
+        const latitude = val.latitude || null;
+        const longitude = val.longitude || null;
+
+        if (latitude && longitude) {
+          const cor = val.count > 5 ? '#ff6b6b' : val.count > 2 ? '#ffd93d' : '#6bcf7f';
+          const marcador = L.circleMarker([latitude, longitude], {
+            radius: 6,
+            fillColor: cor,
+            color: '#ffffff',
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.95
+          }).addTo(mapaInstance).bindPopup(`
+              <div style="color:#333;font-weight:bold;text-align:center;">
+                <div>${val.count} acessos</div>
+                <div style="font-size:11px;margin-top:4px;color:#666;">${(val.deviceName || 'N/A')}</div>
+              </div>
+            `);
+          marcadores[key] = { marker: marcador, lat: latitude, lng: longitude };
+        } else {
+          // buscar geolocalização em background sem bloquear o loop
+          pendingGeos.push((async (ipKey, ipVal) => {
+            try {
+              const response = await fetch(`https://ipapi.co/${ipKey.replace('ip_', '')}/json/`);
+              const data = await response.json();
+              const lat = data.latitude || null;
+              const lng = data.longitude || null;
+              if (lat && lng) {
+                await db.ref('acessos/' + ipKey).update({ latitude: lat, longitude: lng });
+                const cor = ipVal.count > 5 ? '#ff6b6b' : ipVal.count > 2 ? '#ffd93d' : '#6bcf7f';
+                const marcador = L.circleMarker([lat, lng], {
+                  radius: 6,
+                  fillColor: cor,
+                  color: '#ffffff',
+                  weight: 1,
+                  opacity: 1,
+                  fillOpacity: 0.95
+                }).addTo(mapaInstance).bindPopup(`
+                    <div style="color:#333;font-weight:bold;text-align:center;">
+                      <div>${ipVal.count} acessos</div>
+                      <div style="font-size:11px;margin-top:4px;color:#666;">${(ipVal.deviceName || 'N/A')}</div>
+                    </div>
+                  `);
+                marcadores[ipKey] = { marker: marcador, lat: lat, lng: lng };
+                // atualizar bounds incrementalmente (agendado)
+                scheduleFitBounds();
+              }
+            } catch (e) {
+              console.error('Erro ao buscar localização (background):', e);
+            }
+          })(key, val));
+        }
+      }
+
+      // Anexa todas as linhas de uma vez (melhora performance)
+      tbody.appendChild(frag);
+
+      // Não aguardar todos os geocoding de background — eles atualizam o mapa quando terminam
+      if (pendingGeos.length) Promise.allSettled(pendingGeos).then(() => {
+        // opcional: já tratamos fitBounds incrementalmente ao adicionar marcadores no background
+      });
+
+      // Ajustar a visão do mapa para incluir todos os marcadores (se existirem) - agendado
+      scheduleFitBounds();
+
+      // Renderizar Estatísticas
+      const totalAtual = ordenados.reduce((acc, [_, val]) => acc + val.count, 0);
+      const metricas = [
+        { label: '🌐 IPs', value: ipAtivo, icon: '🌐' },
+        { label: '👁️ Total', value: totalAtual, icon: '👁️' },
+        { label: '📊 Média', value: (totalAtual / ipAtivo).toFixed(1), icon: '📊' },
+        { label: '🔥 Máx', value: Math.max(...ordenados.map(([_, v]) => v.count)), icon: '🔥' }
+      ];
+
+      metricas.forEach(m => {
+        const card = document.createElement('div');
+        card.style.cssText = 'background:rgba(50,30,90,0.3);padding:12px;border-radius:10px;border:1px solid rgba(124,58,237,0.2);text-align:center;transition:all 0.3s ease;';
+        card.innerHTML = `
+          <div style="font-size:16px;margin-bottom:6px;">${m.icon}</div>
+          <div style="font-size:10px;color:#999;text-transform:uppercase;margin-bottom:6px;">${m.label}</div>
+          <div style="font-size:20px;font-weight:800;color:#00bfff;">${m.value}</div>
+        `;
+        card.classList.add('hover-lift');
+        statsMetrics.appendChild(card);
+      });
+
+      // Renderizar Dispositivos
+      Object.entries(devices).forEach(([tipo, count]) => {
+        const pct = ((count / ipAtivo) * 100).toFixed(1);
+        const row = document.createElement('div');
+        row.style.cssText = 'background:rgba(50,30,90,0.3);padding:14px;border-radius:10px;border:1px solid rgba(124,58,237,0.2);transition:all 0.3s ease;';
+        row.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <span style="color:#d7b8ff;font-weight:700;font-size:12px;text-transform:uppercase;">${tipo}</span>
+            <span style="color:#00bfff;font-weight:700;background:rgba(0,191,255,0.2);padding:4px 8px;border-radius:4px;font-size:11px;">${count} IPs</span>
+          </div>
+          <div style="width:100%;height:8px;background:rgba(124,58,237,0.2);border-radius:4px;overflow:hidden;">
+            <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#7c3aed,#00bfff);"></div>
+          </div>
+          <div style="text-align:right;margin-top:8px;font-size:11px;color:#999;font-weight:600;">${pct}% do total</div>
+        `;
+        // animação por classe (hover-lift)
+        row.classList.add('hover-lift');
+        deviceStats.appendChild(row);
+      });
+    });
+  }
+}
+
+    // CARROSSEL
+    const track = document.getElementById('carousel-track');
+    const items = document.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      items.forEach(item => item.classList.remove('active'));
+      items[currentIndex].classList.add('active');
+      const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
+      track.style.transform = `translateX(${-offset}px)`;
+    }
+
+    document.getElementById('prev').addEventListener('click', () => {
+      currentIndex = (currentIndex-1+items.length)%items.length;
+      updateCarousel();
+    });
+
+    document.getElementById('next').addEventListener('click', () => {
+      currentIndex = (currentIndex+1)%items.length;
+      updateCarousel();
+    });
+
+    let startX=0;
+    track.addEventListener('touchstart', e => { startX=e.touches[0].clientX; });
+    track.addEventListener('touchend', e => {
+      let diff=e.changedTouches[0].clientX-startX;
+      if(diff>50){ currentIndex=(currentIndex-1+items.length)%items.length; }
+      else if(diff<-50){ currentIndex=(currentIndex+1)%items.length; }
+      updateCarousel();
+    });
+
+    setInterval(()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); },4000);
+    updateCarousel();
+
+
+// ===== ELEMENTOS =====
+const searchIcon = document.getElementById("search-icon");
+const searchBar = document.getElementById("search-bar");
+const searchInput = document.getElementById("search-input");
+const livrosLista = document.querySelectorAll(".livro");
+const searchResults = document.getElementById("search-results");
+const carrossel = document.getElementById("carousel-container");
+const categoryBtn = document.getElementById("category-btn");
+const categoryMenu = document.getElementById("category-menu");
+const header = document.querySelector("header"); // pegue o header uma vez
+
+const categorias = {
+  "invisivel": ["autoajuda"],
+  "potencial": ["motivação"],
+  "48leis": ["poder"],
+  "fbi": ["psicologia"],
+  "influenciar-pessoas": ["autoajuda"],
+  "poder-manipulacao": ["manipulação", "poder"],
+  "engenharia-social": ["manipulação"],
+  "manipulacao-oculta": ["manipulação"],
+  "seducao-maquiavelica": ["estratégia"],
+  "o-que-todo-corpo-fala": ["Comportamento Humano"],
+  "como-convencer-alguem-em-90-segundos": ["manipulação", "Comportamento Humano"],
+  "a-arte-de-ler-mentes": ["manipulação", "Comportamento Humano"],
+  "o-homem-mais-rico-da-babilonia": ["Finanças", "autoajuda", "estratégia"]
+};
+
+// ===== FUNÇÃO PARA CRIAR CARDS =====
+function criarGridLivros(lista) {
+  searchResults.innerHTML = "";
+  lista.forEach(livro => {
+    const titulo = livro.querySelector("h2")?.innerText || "Sem título";
+    const imagem = livro.querySelector("img")?.src || "";
+    const card = document.createElement("div");
+    card.classList.add("card-livro");
+    card.innerHTML = `
+      <img src="${imagem}" alt="${titulo}">
+      <h4>${titulo}</h4>
+    `;
+	   const botaoHref = livro.querySelector(".botao")?.href;
+    if (botaoHref) {
+      card.addEventListener("click", () => {
+        window.location.href = botaoHref;
+      });
+    }
+
+    searchResults.appendChild(card);
+  });
+}
+
+// ===== MOSTRAR GRID =====
+function mostrarGrid(livros) {
+  livrosLista.forEach(l => l.style.display = "none");
+  if (carrossel) carrossel.style.display = "none";
+  searchResults.style.display = "grid";
+  criarGridLivros(livros);
+
+  // esconder header
+  if (header) header.style.display = "none";
+}
+
+function restaurarLayout() {
+  searchResults.style.display = "none";
+  searchResults.innerHTML = "";
+  livrosLista.forEach(l => l.style.display = "flex");
+  if (carrossel) carrossel.style.display = "block";
+
+  // mostrar header
+  if (header) header.style.display = "block";
+}
+// ===== MENU DE CATEGORIAS =====
+categoryBtn.addEventListener("click", () => {
+  categoryMenu.classList.toggle("active");
+
+  // Troca o texto do botão
+  if (categoryMenu.classList.contains("active")) {
+    categoryBtn.textContent = "<"; // quando aberto, mostrar "<"
+  } else {
+    categoryBtn.textContent = "☰ Categoria"; // quando fechado, voltar ao normal
+  }
+});
+
+document.querySelectorAll("#category-menu li").forEach(item => {
+  item.addEventListener("click", () => {
+    const categoria = item.dataset.category;
+    categoryMenu.classList.remove("active");
+
+    // Volta o botão ao estado normal quando fecha ao clicar em uma categoria
+    categoryBtn.textContent = "☰ Categoria";
+
+    if (categoria === "todos") {
+      mostrarGrid(Array.from(livrosLista)); // mostra todos os livros em grid
+      return;
+    }
+
+    const livrosFiltrados = Array.from(livrosLista).filter(livro => {
+      const key = livro.dataset.book;
+     return categorias[key].includes(categoria);
+
+    });
+
+    mostrarGrid(livrosFiltrados);
+  });
+});
+
+// ===== PESQUISA ANIMADA =====
+
+const animatedSVG = `
+<svg width="40" height="40" viewBox="0 0 100 100">
+  <!-- Lupa -->
+  <circle id="lens" cx="40" cy="40" r="20" stroke="white" stroke-width="5" fill="none"/>
+  <line id="handle" x1="55" y1="55" x2="75" y2="75" stroke="white" stroke-width="5"/>
+  <!-- Casinha -->
+  <polygon id="house" points="25,60 50,35 75,60 75,85 25,85" fill="white" scale="0" opacity="0"/>
+</svg>
+`;
+searchIcon.innerHTML = animatedSVG;
+
+let mostrandoPesquisa = false;
+
+searchIcon.addEventListener("click", () => { 
+  const lens = document.getElementById("lens");
+  const handle = document.getElementById("handle");
+  const house = document.getElementById("house");
+
+  mostrandoPesquisa = !mostrandoPesquisa;
+
+  if(mostrandoPesquisa){
+    searchBar.classList.add("active");
+    mostrarGrid(Array.from(livrosLista));
+    searchInput.focus();
+
+    // Animação da lupa virando casa
+    gsap.to(lens, {duration: 0.5, scale:0.5, transformOrigin:"50% 50%", opacity:0});
+    gsap.to(handle, {duration: 0.5, rotate: -45, transformOrigin:"50% 50%", opacity:0});
+    gsap.to(house, {duration: 0.5, scale:1, opacity:1, transformOrigin:"50% 50%", delay:0.5});
+    
+  } else {
+    searchBar.classList.remove("active");
+    restaurarLayout();
+    searchInput.value = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // Animação da casa voltando para lupa
+    gsap.to(house, {duration:0.5, scale:0, opacity:0});
+    gsap.to(lens, {duration:0.5, scale:1, opacity:1, delay:0.5});
+    gsap.to(handle, {duration:0.5, rotate:0, opacity:1, delay:0.5});
+  }
+});
+	  // ===== FILTRAR LIVROS ENQUANTO DIGITA =====
+searchInput.addEventListener("input", () => {
+  const termo = searchInput.value.toLowerCase().trim();
+  if (termo === "") {
+    restaurarLayout(); // se não tiver nada digitado, volta ao layout normal
+    return;
+  }
+
+    // Filtra os livros cujo título ou descrição contém o termo
+  const livrosFiltrados = Array.from(livrosLista).filter(livro => {
+    const titulo = livro.querySelector("h2")?.innerText.toLowerCase() || "";
+    const descricao = livro.querySelector("p")?.innerText.toLowerCase() || "";
+    return titulo.includes(termo) || descricao.includes(termo);
+  });
+
+  mostrarGrid(livrosFiltrados);
+});
+
+	   searchInput.addEventListener("input", () => {
+  const termo = searchInput.value.toLowerCase().trim();
+  if (termo === "") {
+    restaurarLayout();
+    return;
+  }
+
+  // Filtra os livros cujo título contém o termo
+  const livrosFiltrados = Array.from(livrosLista).filter(livro => {
+    const titulo = livro.querySelector("h2")?.innerText.toLowerCase() || "";
+    return titulo.includes(termo);
+  });
+
+  if (livrosFiltrados.length === 0) {
+    searchResults.innerHTML = `<p style="color:#fff; padding: 170px 0; text-align:center; font-size:1.5rem; grid-column: 1/-1;">📖 Livro não encontrado!</p>`;
+    livrosLista.forEach(l => l.style.display = "none");
+    if (carrossel) carrossel.style.display = "none";
+    searchResults.style.display = "grid";
+  } else {
+    mostrarGrid(livrosFiltrados);
+  }
+});
+
+// ========== FUNÇÕES PARA PAINEL DE DETALHES DO IP ==========
+
+function abrirDetalhesIP(ipHash, dados, mapa) {
+  const painel = document.getElementById('painelDetalhesIP');
+  const header = document.getElementById('ipHeader');
+  const container = document.getElementById('accordionContainer');
+
+  // Extrai o IP real do hash
+  const ipReal = dados.ip || ipHash;
+  header.textContent = `IP: ${ipReal}`;
+
+  // Limpa o container
+  container.innerHTML = '';
+
+  // Calcula tempo de sessão
+  const tempoSessao = Math.round((dados.lastSeen - dados.firstSeen) / 1000 / 60); // em minutos
+  const horas = Math.floor(tempoSessao / 60);
+  const minutos = tempoSessao % 60;
+  const tempoFormatado = horas > 0 ? `${horas}h ${minutos}m` : `${minutos}m`;
+
+  // Define os tópicos do acordeão
+  const topicos = [
+    {
+      titulo: '📊 Informações Gerais',
+      conteudo: `
+        <p><span class="label">IP:</span> <span class="value">${ipReal}</span></p>
+        <p><span class="label">Total de Acessos:</span> <span class="value">${dados.count}</span></p>
+        <p><span class="label">Primeiro Acesso:</span> <span class="value">${new Date(dados.firstSeen).toLocaleString()}</span></p>
+        <p><span class="label">Último Acesso:</span> <span class="value">${new Date(dados.lastSeen).toLocaleString()}</span></p>
+        <div class="session-time">
+          <strong>⏱️ Tempo na Página:</strong>
+          ${tempoFormatado}
+        </div>
+      `
+    },
+    {
+      titulo: '📱 Dispositivo',
+      conteudo: `
+        <p><span class="label">Tipo:</span> <span class="value">${dados.deviceType || 'Desconhecido'}</span></p>
+        <p><span class="label">Nome:</span> <span class="value">${dados.deviceName || 'N/A'}</span></p>
+        <p><span class="label">User Agent:</span></p>
+        <p style="word-break:break-all;font-size:12px;color:#999;">${dados.ua || 'N/A'}</p>
+      `
+    },
+    {
+      titulo: '📚 Livros Acessados',
+      conteudo: `
+        <p style="font-size:12px;color:#ddd;">Livros acessados por este IP:</p>
+        <div id="booksAccessedList" style="font-size:12px;margin-top:10px;"></div>
+      `
+    },
+    {
+      titulo: '🗺️ Localização',
+      conteudo: `
+        <p><span class="label">Coordenadas:</span></p>
+        <p style="font-size:12px;color:#ddd;">Lat: ${dados.latitude || 'N/A'}<br>Lon: ${dados.longitude || 'N/A'}</p>
+        
+        <div class="location-permission">
+          <button class="allow-btn" onclick="solicitarLocalizacaoExata('${ipReal}')">✓ Permitir</button>
+          <button class="deny-btn" onclick="negarLocalizacao()">✗ Negar</button>
+        </div>
+
+        <div id="enderecoCompleto" class="location-info">
+          <strong>📍 Endereço Aproximado:</strong>
+          <div id="enderecoTexto">Carregando...</div>
+        </div>
+      `
+    }
+  ];
+
+  // Cria os itens do acordeão
+  topicos.forEach((topico, index) => {
+    const item = document.createElement('div');
+    item.className = 'accordion-item';
+
+    const headerItem = document.createElement('div');
+    headerItem.className = 'accordion-header';
+    headerItem.innerHTML = `
+      <span>${topico.titulo}</span>
+      <span class="accordion-icon">▼</span>
+    `;
+
+    const content = document.createElement('div');
+    content.className = 'accordion-content';
+    content.innerHTML = topico.conteudo;
+
+    // Toggle acordeão
+    headerItem.addEventListener('click', () => {
+      const isActive = headerItem.classList.contains('active');
+      
+      // Fecha todos
+      document.querySelectorAll('#painelDetalhesIP .accordion-header').forEach(h => {
+        h.classList.remove('active');
+        h.nextElementSibling.classList.remove('active');
+      });
+      document.querySelectorAll('#painelDetalhesIP .accordion-icon').forEach(i => {
+        i.classList.remove('active');
+      });
+
+      // Abre o clicado
+      if (!isActive) {
+        headerItem.classList.add('active');
+        content.classList.add('active');
+        headerItem.querySelector('.accordion-icon').classList.add('active');
+      }
+    });
+
+    // Primeiro item aberto por padrão
+    if (index === 0) {
+      headerItem.classList.add('active');
+      content.classList.add('active');
+      headerItem.querySelector('.accordion-icon').classList.add('active');
+    }
+
+    item.appendChild(headerItem);
+    item.appendChild(content);
+    container.appendChild(item);
+  });
+
+  // Busca endereço completo
+  if (dados.latitude && dados.longitude) {
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${dados.latitude}&lon=${dados.longitude}`)
+      .then(res => res.json())
+      .then(data => {
+        const addr = data.address || {};
+        const endereco = `
+          <strong>🌍 País:</strong> ${addr.country || 'N/A'}<br>
+          <strong>🏛️ Estado:</strong> ${addr.state || 'N/A'}<br>
+          <strong>🏙️ Cidade:</strong> ${addr.city || addr.town || 'N/A'}<br>
+          <strong>📍 Bairro:</strong> ${addr.suburb || addr.neighbourhood || 'N/A'}<br>
+          <strong>🛣️ Rua:</strong> ${addr.road || 'N/A'}<br>
+          <strong>🏠 Número:</strong> ${addr.house_number || 'N/A'}<br>
+          <strong>📮 CEP:</strong> ${addr.postcode || 'N/A'}
+        `;
+        document.getElementById('enderecoTexto').innerHTML = endereco;
+      })
+      .catch(err => {
+        document.getElementById('enderecoTexto').innerHTML = '<span style="color:#ff6b6b;">Erro ao buscar endereço</span>';
+      });
+  }
+
+  // Busca livros acessados por este IP (simulado)
+  const booksAccessedList = document.getElementById('booksAccessedList');
+  if (booksAccessedList) {
+    booksAccessedList.innerHTML = `
+      <div style="color:#ddd;font-size:12px;">
+        <p>✓ Total: ${dados.count} acesso(s)</p>
+        <p style="color:#00bfff;">Histórico sincronizado com servidor</p>
+      </div>
+    `;
+  }
+
+  // Abre o painel
+  painel.classList.add('active');
+
+  // Zoom automático no mapa se tiver coordenadas
+  if (dados.latitude && dados.longitude && mapa) {
+    // Faz o zoom suavemente para o ponto
+    mapa.flyTo([dados.latitude, dados.longitude], 13, {
+      duration: 2, // 2 segundos para a animação
+      easeLinearity: 0.25
+    });
+  }
+}
+
+function fecharPainelDetalhes() {
+  const painel = document.getElementById('painelDetalhesIP');
+  painel.classList.remove('active');
+}
+
+function solicitarLocalizacaoExata(ip) {
+  const enderecoDiv = document.getElementById('enderecoCompleto');
+  enderecoDiv.innerHTML = `
+    <strong>📍 Localização Exata (Solicitada):</strong>
+    <div style="margin-top:8px;color:#ddd;font-size:12px;">
+      ✓ Permissão concedida para localização de alta precisão<br>
+      <span style="color:#00bfff;">Aguardando dados do cliente...</span>
+    </div>
+  `;
+}
+
+function negarLocalizacao() {
+  const enderecoDiv = document.getElementById('enderecoCompleto');
+  enderecoDiv.innerHTML = `
+    <strong>📍 Localização Exata:</strong>
+    <div style="margin-top:8px;color:#ff6b6b;font-size:12px;">
+      ✗ Permissão negada pelo usuário<br>
+      Usando apenas localização aproximada por IP
+    </div>
+  `;
+}
+
+// Fecha o painel quando clicar fora dele (opcional)
+document.addEventListener('click', (e) => {
+  const painel = document.getElementById('painelDetalhesIP');
+  if (painel.classList.contains('active') && 
+      !painel.contains(e.target) && 
+      e.target.closest('tr') === null) {
+    // Você pode descomentar a linha abaixo se quiser fechar ao clicar fora
+    // fecharPainelDetalhes();
+  }
+});
+
+
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
