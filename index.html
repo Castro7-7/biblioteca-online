@@ -37,8 +37,348 @@
 
 <!-- ===================================================================== -->
 
-  <title>Biblioteca Online</title>
+  <!-- título alternativo removido (já definido acima) -->
   <style>
+/* ===== TELA DE CARREGAMENTO ===== */
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #350085 0%, #000000 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  flex-direction: column;
+  gap: 30px;
+  opacity: 1;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+  visibility: visible;
+}
+
+.loader-container.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Variáveis de cores personalizadas para o livro */
+.loader-book-wrapper {
+  --hue: 260;
+  --bg: hsl(var(--hue),10%,90%);
+  --fg: hsl(var(--hue),10%,10%);
+  --primary: #7c3aed;
+  --primary-l: #23023f;
+  --primary-d: #5b21b6;
+  --white: hsl(var(--hue),10%,100%);
+  --white-d: hsl(var(--hue),10%,45%);
+}
+
+.book,
+.book__pg-shadow,
+.book__pg {
+  animation: cover 7s ease-in-out infinite;
+}
+
+.book {
+  background-color: var(--primary-l);
+  border-radius: 0.25em;
+  box-shadow:
+    0 0.25em 0.5em hsla(0,0%,0%,0.3),
+    0 0 0 0.25em var(--primary) inset;
+  padding: 0.25em;
+  perspective: 37.5em;
+  position: relative;
+  width: 8em;
+  height: 6em;
+  transform: translate3d(0,0,0);
+  transform-style: preserve-3d;
+}
+
+.book__pg-shadow,
+.book__pg {
+  position: absolute;
+  right: 0.25em;
+  width: calc(50% - 0.25em);
+}
+
+.book__pg-shadow {
+  animation-name: shadow;
+  background-image: linear-gradient(-45deg,hsla(0,0%,0%,0) 50%,hsla(0,0%,0%,0.3) 50%);
+  filter: blur(0.25em);
+  top: calc(100% - 0.25em);
+  height: 3.75em;
+  transform: scaleY(0);
+  transform-origin: 0% 0%;
+}
+
+.book__pg {
+  animation-name: pg1;
+  background-color: var(--white);
+  background-image: linear-gradient(90deg,hsl(var(--hue),10%,90%) 12.5%,hsla(var(--hue),10%,90%,0) 12.5%);
+  height: calc(100% - 0.5em);
+  transform-origin: 0% 50%;
+}
+
+.book__pg--2,
+.book__pg--3,
+.book__pg--4 {
+  background-image:
+    repeating-linear-gradient(hsl(var(--hue),10%,10%) 0 0.125em,hsla(var(--hue),10%,10%,0) 0.125em 0.5em),
+    linear-gradient(90deg,hsla(var(--hue),10%,90%,0) 87.5%,hsl(var(--hue),10%,90%));
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2.5em 4.125em, 100% 100%;
+}
+
+.book__pg--2 {
+  animation-name: pg2;
+}
+
+.book__pg--3 {
+  animation-name: pg3;
+}
+
+.book__pg--4 {
+  animation-name: pg4;
+}
+
+.book__pg--5 {
+  animation-name: pg5;
+}
+
+@keyframes cover {
+  from, 5%, 45%, 55%, 95%, to {
+    animation-timing-function: ease-out;
+    background-color: var(--primary-l);
+  }
+  10%, 40%, 60%, 90% {
+    animation-timing-function: ease-in;
+    background-color: var(--primary-d);
+  }
+}
+
+@keyframes shadow {
+  from, 10.01%, 20.01%, 30.01%, 40.01% {
+    animation-timing-function: ease-in;
+    transform: translate3d(0,0,1px) scaleY(0) rotateY(0);
+  }
+  5%, 15%, 25%, 35%, 45%, 55%, 65%, 75%, 85%, 95% {
+    animation-timing-function: ease-out;
+    transform: translate3d(0,0,1px) scaleY(0.2) rotateY(-90deg);
+  }
+  10%, 20%, 30%, 40%, 50%, to {
+    animation-timing-function: ease-out;
+    transform: translate3d(0,0,1px) scaleY(0) rotateY(-180deg);
+  }
+  50.01%, 60.01%, 70.01%, 80.01%, 90.01% {
+    animation-timing-function: ease-in;
+    transform: translate3d(0,0,1px) scaleY(0) rotateY(-180deg);
+  }
+  60%, 70%, 80%, 90%, to {
+    animation-timing-function: ease-out;
+    transform: translate3d(0,0,1px) scaleY(0) rotateY(0);
+  }
+}
+
+@keyframes pg1 {
+  from, to {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-0.4deg);
+  }
+  10%, 15% {
+    animation-timing-function: ease-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-180deg);
+  }
+  20%, 80% {
+    animation-timing-function: ease-in;
+    background-color: var(--white-d);
+    transform: translate3d(0,0,1px) rotateY(-180deg);
+  }
+  85%, 90% {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-180deg);
+  }
+}
+
+@keyframes pg2 {
+  from, to {
+    animation-timing-function: ease-in;
+    background-color: var(--white-d);
+    transform: translate3d(0,0,1px) rotateY(-0.3deg);
+  }
+  5%, 10% {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-0.3deg);
+  }
+  20%, 25% {
+    animation-timing-function: ease-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-179.9deg);
+  }
+  30%, 70% {
+    animation-timing-function: ease-in;
+    background-color: var(--white-d);
+    transform: translate3d(0,0,1px) rotateY(-179.9deg);
+  }
+  75%, 80% {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-179.9deg);
+  }
+  90%, 95% {
+    animation-timing-function: ease-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-0.3deg);
+  }
+}
+
+@keyframes pg3 {
+  from, 10%, 90%, to {
+    animation-timing-function: ease-in;
+    background-color: var(--white-d);
+    transform: translate3d(0,0,1px) rotateY(-0.2deg);
+  }
+  15%, 20% {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-0.2deg);
+  }
+  30%, 35% {
+    animation-timing-function: ease-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-179.8deg);
+  }
+  40%, 60% {
+    animation-timing-function: ease-in;
+    background-color: var(--white-d);
+    transform: translate3d(0,0,1px) rotateY(-179.8deg);
+  }
+  65%, 70% {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-179.8deg);
+  }
+  80%, 85% {
+    animation-timing-function: ease-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-0.2deg);
+  }
+}
+
+@keyframes pg4 {
+  from, 20%, 80%, to {
+    animation-timing-function: ease-in;
+    background-color: var(--white-d);
+    transform: translate3d(0,0,1px) rotateY(-0.1deg);
+  }
+  25%, 30% {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-0.1deg);
+  }
+  40%, 45% {
+    animation-timing-function: ease-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-179.7deg);
+  }
+  50% {
+    animation-timing-function: ease-in;
+    background-color: var(--white-d);
+    transform: translate3d(0,0,1px) rotateY(-179.7deg);
+  }
+  55%, 60% {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-179.7deg);
+  }
+  70%, 75% {
+    animation-timing-function: ease-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-0.1deg);
+  }
+}
+
+@keyframes pg5 {
+  from, 30%, 70%, to {
+    animation-timing-function: ease-in;
+    background-color: var(--white-d);
+    transform: translate3d(0,0,1px) rotateY(0);
+  }
+  35%, 40% {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(0deg);
+  }
+  50% {
+    animation-timing-function: ease-in-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(-179.6deg);
+  }
+  60%, 65% {
+    animation-timing-function: ease-out;
+    background-color: var(--white);
+    transform: translate3d(0,0,1px) rotateY(0);
+  }
+}
+
+.loader-text {
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+  letter-spacing: 0.05em;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loader-text::after {
+  content: '';
+  display: inline-block;
+  animation: dots 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@keyframes dots {
+  0% { content: ''; }
+  33% { content: '.'; }
+  66% { content: '..'; }
+  100% { content: '...'; }
+}
+
+.loader-bar {
+  width: 200px;
+  height: 4px;
+  background: rgba(124, 58, 237, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loader-bar::after {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #00bfff, #7c3aed);
+  border-radius: 2px;
+  animation: moveBar 2s ease-in-out infinite;
+  box-shadow: 0 0 10px #7c3aed;
+}
+
+@keyframes moveBar {
+  0% { left: -40%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
  html, body {
   margin: 0;
   padding: 0;
@@ -413,24 +753,6 @@ header h2 {
   -webkit-overflow-scrolling: touch; /* smooth scroll em iOS */
   -webkit-overflow-scrolling: touch; /* smooth scroll em iOS */
   overscroll-behavior: contain; /* evita que a rolagem se propague para a página pai */
-}
-
-/* Animações leves e otimizadas (GPU) */
-.hover-lift { 
-  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
-  will-change: transform, opacity;
-}
-.hover-lift:hover { 
-  transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.28);
-}
-.panel-row { 
-  transition: transform .18s ease, background-color .18s ease;
-  will-change: transform, opacity;
-}
-.panel-row:hover { 
-  transform: translateX(6px);
-  background: rgba(124, 58, 237, 0.15);
 }
 
 /* Barra de rolagem customizada - Firefox */
@@ -1026,6 +1348,22 @@ header h2 {
 </style>
 </head>
 <body>
+<!-- TELA DE CARREGAMENTO -->
+<div class="loader-container" id="loaderContainer">
+  <div class="loader-book-wrapper">
+    <div class="book">
+      <div class="book__pg-shadow"></div>
+      <div class="book__pg"></div>
+      <div class="book__pg book__pg--2"></div>
+      <div class="book__pg book__pg--3"></div>
+      <div class="book__pg book__pg--4"></div>
+      <div class="book__pg book__pg--5"></div>
+    </div>
+  </div>
+  <div class="loader-text">Carregando</div>
+  <div class="loader-bar"></div>
+</div>
+
 <!-- Ícone de busca fixo -->
 <div id="search-icon">
   <svg id="icon-svg" width="30" height="30" viewBox="0 0 64 64">
@@ -1089,18 +1427,18 @@ header h2 {
          <div class="carousel-item" data-book="influenciar-pessoas">
           <a href="livros/influenciar-pessoas.html"><img src="livros/img/influenciar-pessoas.png" alt="Como fazer amigos e influencair pessoas"></a>
         </div>
-        <div class="carousel-item" data-book="poder-manipulaçao">
-          <a href="livros/Poder-Manipulação.html"><img src="livros/img/poder-manipulaçao.png" alt="poder $ manipulação Jacob Petry"></a>
-        </div>
-        <div class="carousel-item" data-book="manipulaçao-oculta">
-          <a href="livros/Manipulacao-oculta.html"><img src="livros/img/manipulaçao-oculta.png" alt="manipulaçao oculta"></a>
-        </div>
         <div class="carousel-item" data-book="engenharia-social">
           <a href="livros/engenharia-social.html"><img src="livros/img/engenharia-social.png" alt="engenharia social"></a>
         </div>
-        <div class="carousel-item" data-book="seduçao-maquiavelica">
-          <a href="livros/seducao-maquiavelica.html"><img src="livros/img/seduçao-maquiavelica.png" alt="seduçao maquiavelica"></a>
+        <div class="carousel-item" data-book="poder-manipulacao">
+          <a href="livros/Poder-Manipulação.html"><img src="livros/img/poder-manipulaçao.png" alt="poder $ manipulação Jacob Petry"></a>
         </div>
+        <div class="carousel-item" data-book="manipulacao-oculta">
+          <a href="livros/Manipulacao-oculta.html"><img src="livros/img/manipulaçao-oculta.png" alt="manipulaçao oculta"></a>
+        </div>
+              <div class="carousel-item" data-book="seducao-maquiavelica">
+                <a href="livros/seducao-maquiavelica.html"><img src="livros/img/seduçao-maquiavelica.png" alt="seduçao maquiavelica"></a>
+              </div>
 	    <div class="carousel-item" data-book="o-que-todo-corpo-fala">
   		  <a href="livros/oque-todo-corpo-fala.html">
           <img src="livros/img/oque-todo-corpo-fala.png" alt="O Que Todo Corpo Fala">
@@ -1325,6 +1663,47 @@ header h2 {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+  // ===== CONTROLE DO LOADER =====
+  
+  let firebaseReady = false;
+  let imagesReady = false;
+  let timeoutReached = false;
+  
+  const loader = document.getElementById('loaderContainer');
+  
+  // Função para verificar se tudo está pronto e esconder o loader
+  function hideLoaderIfReady() {
+    if ((firebaseReady && imagesReady) || timeoutReached) {
+      if (loader && !loader.classList.contains('hidden')) {
+        setTimeout(() => {
+          loader.classList.add('hidden');
+        }, 300);
+      }
+    }
+  }
+  
+  // Timeout de segurança (máximo 10 segundos)
+  setTimeout(() => {
+    timeoutReached = true;
+    hideLoaderIfReady();
+  }, 10000);
+  
+  // Aguardar todas as imagens carregarem
+  window.addEventListener('load', () => {
+    imagesReady = true;
+    hideLoaderIfReady();
+  });
+  
+  // Flag para marcar quando Firebase está pronto
+  let firebaseInitialized = false;
+  
+  window.addEventListener('load', () => {
+    if (firebaseInitialized) {
+      firebaseReady = true;
+      hideLoaderIfReady();
+    }
+  });
+
   // CONFIG FIREBASE
   const firebaseConfig = {
     apiKey: "AIzaSyClvq1ZwxUr1ACwXP0esfBbHR95U_QejWI",
@@ -1339,6 +1718,11 @@ header h2 {
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
   const auth = firebase.auth();
+  
+  // Marca Firebase como pronto
+  firebaseInitialized = true;
+  firebaseReady = true;
+  hideLoaderIfReady();
 
   // ------------------------------
   // CONTADOR TOTAL
@@ -2438,25 +2822,8 @@ searchIcon.addEventListener("click", () => {
     gsap.to(handle, {duration:0.5, rotate:0, opacity:1, delay:0.5});
   }
 });
-	  // ===== FILTRAR LIVROS ENQUANTO DIGITA =====
-searchInput.addEventListener("input", () => {
-  const termo = searchInput.value.toLowerCase().trim();
-  if (termo === "") {
-    restaurarLayout(); // se não tiver nada digitado, volta ao layout normal
-    return;
-  }
-
-    // Filtra os livros cujo título ou descrição contém o termo
-  const livrosFiltrados = Array.from(livrosLista).filter(livro => {
-    const titulo = livro.querySelector("h2")?.innerText.toLowerCase() || "";
-    const descricao = livro.querySelector("p")?.innerText.toLowerCase() || "";
-    return titulo.includes(termo) || descricao.includes(termo);
-  });
-
-  mostrarGrid(livrosFiltrados);
-});
-
-	   searchInput.addEventListener("input", () => {
+    // ===== FILTRAR LIVROS ENQUANTO DIGITA =====
+           searchInput.addEventListener("input", () => {
   const termo = searchInput.value.toLowerCase().trim();
   if (termo === "") {
     restaurarLayout();
