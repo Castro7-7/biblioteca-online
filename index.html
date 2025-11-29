@@ -1,3 +1,4 @@
+﻿﻿﻿
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- SEO PRINCIPAL -->
-<title>NOVERA — Conhecimento que Evolui Você</title>
-<meta name="description" content="A NOVERA é uma biblioteca digital moderna com livros, eBooks, apps e softwares. Explore conhecimento em psicologia, negócios, tecnologia, finanças e desenvolvimento pessoal.">
-<meta name="keywords" content="NOVERA, livros, ebooks, pdf, biblioteca digital, conhecimento, psicologia, negócios, tecnologia, desenvolvimento pessoal, leitura online, aprendizado, acervo digital">
-<meta name="author" content="NOVERA">
+<title>MAREVO — evolução em cada escolha</title>
+<meta name="description" content="A MAREVO é uma biblioteca digital moderna com livros, eBooks, apps e softwares. Explore conhecimento em psicologia, negócios, tecnologia, finanças e desenvolvimento pessoal.">
+<meta name="keywords" content="MAREVO, livros, ebooks, pdf, biblioteca digital, conhecimento, psicologia, negócios, tecnologia, desenvolvimento pessoal, leitura online, aprendizado, acervo digital">
+<meta name="author" content="MAREVO">
 <meta name="robots" content="index, follow">
 
 <!-- SEO TÉCNICO -->
@@ -17,17 +18,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- OPEN GRAPH (Facebook, WhatsApp, Instagram) -->
-<meta property="og:title" content="NOVERA — Sua Biblioteca Digital de Alto Impacto">
+<meta property="og:title" content="MAREVO — Sua Biblioteca Digital de Alto Impacto">
 <meta property="og:description" content="Acesse um acervo digital poderoso com livros, eBooks e conteúdos para evolução mental, financeira e pessoal. Conhecimento para mentes ambiciosas.">
 <meta property="og:image" content="https://castro7-7.github.io/biblioteca-online/capa-biblioteca.png">
-<meta property="og:image:alt" content="Capa da NOVERA — Biblioteca digital de conhecimento, psicologia, negócios e desenvolvimento pessoal.">
+<meta property="og:image:alt" content="Capa da MAREVO — Biblioteca digital de conhecimento, psicologia, negócios e desenvolvimento pessoal.">
 <meta property="og:url" content="https://castro7-7.github.io/biblioteca-online/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
 
 <!-- TWITTER CARDS -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="NOVERA — Conhecimento que Eleva sua Mente">
+<meta name="twitter:title" content="MAREVO — Conhecimento que Eleva sua Mente">
 <meta name="twitter:description" content="Explore uma coleção digital de livros, eBooks e conteúdos sobre psicologia, negócios, tecnologia e evolução pessoal.">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/castro7-7/biblioteca-online/main/capa-biblioteca.png">
 
@@ -534,7 +535,14 @@ header h2 {
 }
 
 
-    .library-list { display:flex; flex-direction:column; gap:20px; }
+    #library-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
     .livro {
       display:flex;
 	    background: rgba(80, 0, 160, 0.22);
@@ -543,6 +551,8 @@ header h2 {
       width:100%;
       min-height:160px;
       align-items:flex-start;
+      padding: 20px;
+      box-sizing: border-box;
       gap:15px;
       box-shadow:0 2px 10px rgba(0,0,0,0.4);
       transition:transform 0.3s ease, border-color 0.3s ease;
@@ -1387,223 +1397,53 @@ header h2 {
 <div id="category-btn">☰ Categoria</div>
 <div id="category-menu">
   <h3>Categorias</h3>
-  <ul>
+  <ul id="category-list">
     <li data-category="todos">Todos</li>
-    <li data-category="motivação">Motivação</li>
-    <li data-category="autoajuda">Autoajuda</li>
-    <li data-category="psicologia">Psicologia</li>
-    <li data-category="manipulação">Manipulação</li>
-    <li data-category="poder">Poder</li>
-    <li data-category="estratégia">Estratégia</li>
-	<li data-category="Comportamento Humano">Comportamento Humano</li>
-	<li data-category="Finanças">finanças</li>
   </ul>
 </div>
 
+
   <header>
-    <h1><span>📚</span>  NOVERA </h1>
+    <h1><span>📚</span>  MAREVO </h1>
     <h2> Uma coleção de conteúdos digitais — livros, cursos, softwares, mentorias e ferramentas para acelerar sua evolução. </h2>
   </header>
 
-  <div class="container">
-    <!-- CARROSSEL -->
-    <div class="carousel-container" id="carousel-container">
-      <button class="carousel-btn" id="prev">&#10094;</button>
-      <div class="carousel-track" id="carousel-track">
-        <div class="carousel-item" data-book="invisivel">
-          <a href="livros/Liberte-se do inimigo invisível.html"><img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível"></a>
-        </div>
-        <div class="carousel-item" data-book="potencial">
-          <a href="livros/destravando.html"><img src="livros/img/potencial.png" alt="Destravando Seu Potencial"></a>
-        </div>
-        <div class="carousel-item" data-book="48leis">
-          <a href="livros/48-leis-do-poder.html"><img src="livros/img/48.png" alt="48 Leis do Poder"></a>
-        </div>
-        <!-- NOVO LIVRO -->
-        <div class="carousel-item" data-book="fbi">
-          <a href="livros/fbi.html"><img src="livros/img/fbi.png" alt="Manual de Persuasão da FBI"></a>
-        </div>  
-         <div class="carousel-item" data-book="influenciar-pessoas">
-          <a href="livros/influenciar-pessoas.html"><img src="livros/img/influenciar-pessoas.png" alt="Como fazer amigos e influencair pessoas"></a>
-        </div>
-        <div class="carousel-item" data-book="engenharia-social">
-          <a href="livros/engenharia-social.html"><img src="livros/img/engenharia-social.png" alt="engenharia social"></a>
-        </div>
-        <div class="carousel-item" data-book="poder-manipulacao">
-          <a href="livros/Poder-Manipulação.html"><img src="livros/img/poder-manipulaçao.png" alt="poder $ manipulação Jacob Petry"></a>
-        </div>
-        <div class="carousel-item" data-book="manipulacao-oculta">
-          <a href="livros/Manipulacao-oculta.html"><img src="livros/img/manipulaçao-oculta.png" alt="manipulaçao oculta"></a>
-        </div>
-              <div class="carousel-item" data-book="seducao-maquiavelica">
-                <a href="livros/seducao-maquiavelica.html"><img src="livros/img/seduçao-maquiavelica.png" alt="seduçao maquiavelica"></a>
-              </div>
-	    <div class="carousel-item" data-book="o-que-todo-corpo-fala">
-  		  <a href="livros/oque-todo-corpo-fala.html">
-          <img src="livros/img/oque-todo-corpo-fala.png" alt="O Que Todo Corpo Fala">
-          </a>
-        </div>
-	    <div class="carousel-item" data-book="como-convencer-alguem-em-90-segundos">
- 			 <a href="livros/como-convencer-90-seg.html">
-   			 <img src="livros/img/como-convencer-alguem-90-seg.png" alt="Como Convencer Alguém em 90 Segundos">
- 			 </a>
-   		</div>
-		  <div class="carousel-item" data-book="a-arte-de-ler-mentes">
-		  <a href="livros/arte-de-ler-mentes.html">
-	      <img src="livros/img/arte-de-ler-mentes.png" alt="A Arte de Ler Mentes">
- 		  </a>
-		</div>
-		<div class="carousel-item" data-book="o-homem-mais-rico-da-babilonia">
-		  <a href="livros/babilonia.html">
-   		 <img src="livros/img/babilonia.png" alt="O Homem Mais Rico da Babilônia – George S. Clason">
- 		 </a>
-		</div>
+ <div class="container">
+  <!-- CARROSSEL -->
+  <div class="carousel-container" id="carousel-container">
+      
+    <button class="carousel-btn" id="prev">&#10094;</button>
 
-      </div>
-      <button class="carousel-btn" id="next">&#10095;</button>
+    <div class="carousel-track" id="carousel-track">
+      <!-- Itens serão gerados dinamicamente pelo JavaScript -->
     </div>
 
-    <!-- LISTA DE LIVROS -->
-    <div class="library-list">
-      <div class="livro" data-book="invisivel">
-        <img src="livros/img/invisivel.png" alt="Liberte-se do inimigo invisível">
-        <div class="livro-info">
-          <h2>Liberte-se do inimigo invisível</h2>
-          <p>Baseado em “Mais Esperto que o Diabo”, este livro ajuda a identificar obstáculos invisíveis e liberar seu potencial.</p>
-          <a href="livros/Liberte-se do inimigo invisível.html" class="botao">Ver detalhes</a>
-        </div>
-        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
-      </div>
-      <div class="livro" data-book="potencial">
-        <img src="livros/img/potencial.png" alt="Destravando Seu Potencial">
-        <div class="livro-info">
-          <h2>Destravando Seu Potencial</h2>
-          <p>Um guia prático para desbloquear sua mente e alcançar seus objetivos.</p>
-          <a href="livros/destravando.html" class="botao">Ver detalhes</a>
-        </div>
-        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
-      </div>
-      <div class="livro" data-book="48leis">
-        <img src="livros/img/48.png" alt="48 Leis do Poder">
-        <div class="livro-info">
-          <h2>48 Leis do Poder</h2>
-          <p>Domine as regras do poder e influencie pessoas de forma estratégica.</p>
-          <a href="livros/48-leis-do-poder.html" class="botao">Ver detalhes</a>
-        </div>
-        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
-      </div>
-      <!-- NOVO LIVRO -->
-      <div class="livro" data-book="fbi">
-        <img src="livros/img/fbi.png" alt="Manual de Persuasão da FBI">
-        <div class="livro-info">
-          <h2>Manual de Persuasão da FBI</h2>
-          <p>Aprenda técnicas de persuasão utilizadas por agentes do FBI para influenciar decisões e conduzir entrevistas com sucesso.</p>
-          <a href="livros/fbi.html" class="botao">Ver detalhes</a>
-        </div>
-        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
-      </div>
-      <div class="livro" data-book="influenciar-pessoas">
-        <img src="livros/img/influenciar-pessoas.png" alt="Manual de Persuasão da FBI">
-        <div class="livro-info">
-         <h2>Como Fazer Amigos e Influenciar Pessoas</h2>
-         <p>Descubra estratégias comprovadas para conquistar amizades verdadeiras, fortalecer conexões e influenciar pessoas de forma positiva em qualquer ambiente.</p>
-         <a href="livros/influenciar-pessoas.html" class="botao">Ver detalhes</a>
-        </div>
-        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
-      </div>
- <!-- Poder & Manipulação – Jacob Petry -->
-      <div class="livro" data-book="poder-manipulacao">
-        <img src="livros/img/poder-manipulaçao.png" alt="Poder & Manipulação">
-        <div class="livro-info">
-        <h2>Poder & Manipulação – Jacob Petry</h2>
-        <p>Aprenda a dominar técnicas de persuasão, manipulação psicológica e influência estratégica de forma avançada.</p>
-        <a href="livros/Poder-Manipulação.html" class="botao">Ver detalhes</a>
-      </div>
-        <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
-      </div>
+    <button class="carousel-btn" id="next">&#10095;</button>
 
-<!-- Engenharia Social – A Arte de Influenciar e Não Ser Influenciado -->
-      <div class="livro" data-book="engenharia-social">
-        <img src="livros/img/engenharia-social.png" alt="Engenharia Social">
-        <div class="livro-info">
-        <h2>Engenharia Social – Jacob Petry</h2>
-        <p>Descubra como influenciar pessoas de forma ética e evitar ser manipulado através de técnicas de engenharia social.</p>
-        <a href="livros/engenharia-social.html" class="botao">Ver detalhes</a>
-      </div>
-      <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
-      </div>
-
-<!-- Manipulação Oculta -->
-    <div class="livro" data-book="manipulacao-oculta">
-      <img src="livros/img/manipulaçao-oculta.png" alt="Manipulação Oculta">
-      <div class="livro-info">
-      <h2>Manipulação Oculta</h2>
-      <p>Aprenda técnicas secretas de manipulação e persuasão, com foco em psicologia e percepção das pessoas.</p>
-      <a href="livros/manipulacao-oculta.html" class="botao">Ver detalhes</a>
-    </div>
-      <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
-    </div>
-
-<!-- Sedução Maquiavélica -->
-    <div class="livro" data-book="seducao-maquiavelica">
-      <img src="livros/img/seduçao-maquiavelica.png" alt="Sedução Maquiavélica">
-      <div class="livro-info">
-      <h2>Sedução Maquiavélica</h2>
-      <p>Domine a arte da sedução e hipnose psicológica com estratégias sofisticadas e dark.</p>
-      <a href="livros/seducao-maquiavelica.html" class="botao">Ver detalhes</a>
-    </div>
-      <div class="livro-views"><img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/><span>0</span></div>
-    </div>
-<!-- O Que Todo Corpo Fala – Joe Navarro -->
-	<div class="livro" data-book="o-que-todo-corpo-fala">
- 	 <img src="livros/img/oque-todo-corpo-fala.png" alt="O Que Todo Corpo Fala">
- 	 <div class="livro-info">
-     <h2>O Que Todo Corpo Fala – Joe Navarro</h2>
-     <p>Aprenda a decodificar a linguagem corporal, identificar emoções ocultas e dominar a comunicação não verbal para influenciar e compreender melhor as pessoas.</p>
-     <a href="livros/oque-todo-corpo-fala.html" class="botao">Ver detalhes</a>
-   </div>
-   <div class="livro-views">
-    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/> <span>0</span> </div>
-</div>
-		<!-- Como Convencer Alguém em 90 Segundos – Nicholas Boothman -->
-<div class="livro" data-book="como-convencer-alguem-em-90-segundos">
-  <img src="livros/img/como-convencer-alguem-90-seg.png" alt="Como Convencer Alguém em 90 Segundos">
-  <div class="livro-info">
-    <h2>Como Convencer Alguém em 90 Segundos – Nicholas Boothman</h2>
-    <p>Aprenda técnicas rápidas e eficazes para conquistar empatia, confiança e influência logo nos primeiros segundos de qualquer conversa.</p>
-    <a href="livros/como-convencer-90-seg.html" class="botao">Ver detalhes</a>
-  </div>
-  <div class="livro-views">
-    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
-    <span>0</span>
   </div>
 </div>
-		<!-- A Arte de Ler Mentes – Henrik Fexeus -->
-<div class="livro" data-book="a-arte-de-ler-mentes">
-  <img src="livros/img/arte-de-ler-mentes.png" alt="A Arte de Ler Mentes">
-  <div class="livro-info">
-    <h2>A Arte de Ler Mentes – Henrik Fexeus</h2>
-    <p>Aprenda a interpretar gestos, expressões e microreações para entender o que as pessoas realmente pensam, mesmo sem dizer uma palavra.</p>
-    <a href="livros/arte-de-ler-mentes.html" class="botao">Ver detalhes</a>
+
+<!-- LISTA DE LIVROS (DINÂMICA) -->
+<div class="library-list" id="library-list">
+
+  <!-- TEMPLATE (escondido) -->
+  <div class="livro livro-template" style="display:none;">
+    <img class="livro-img" src="" alt="">
+
+    <div class="livro-info">
+      <h2 class="livro-titulo"></h2>
+      <p class="livro-descricao"></p>
+      <a class="botao livro-link" href="#">Ver detalhes</a>
+    </div>
+
+    <div class="livro-views">
+      <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
+      <span class="livro-views-numero">0</span>
+    </div>
   </div>
-  <div class="livro-views">
-    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
-    <span>0</span>
-  </div>
+
 </div>
-		<!-- O Homem Mais Rico da Babilônia -->
-<div class="livro" data-book="o-homem-mais-rico-da-babilonia">
-  <img src="livros/img/babilonia.png" alt="O Homem Mais Rico da Babilônia – George S. Clason">
-  <div class="livro-info">
-    <h2>O Homem Mais Rico da Babilônia – George S. Clason</h2>
-    <p>Descubra princípios atemporais de riqueza e prosperidade através de lições simples e práticas para dominar suas finanças.</p>
-    <a href="livros/babilonia.html" class="botao">Ver detalhes</a>
-  </div>
-  <div class="livro-views">
-    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/visible.png"/>
-    <span>0</span>
-  </div>
-</div>
+
 
 
 <div id="painelAdmin" style="display:none;">
@@ -1639,7 +1479,7 @@ header h2 {
 
   <!-- RODAPÉ -->
   <footer>
-  <p>© 2025 NOVERA - Seu universo digital começa Aqui</p>
+  <p>© 2025 MAREVO - Seu universo digital começa Aqui</p>
   <p>
     <a href="política-e-privacidade.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a> | 
     <a href="termos-de-uso.html" target="_blank" rel="noopener noreferrer">Termos de Uso</a> | 
@@ -1662,6 +1502,7 @@ header h2 {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+  
   // ===== CONTROLE DO LOADER =====
   
   let firebaseReady = false;
@@ -1681,11 +1522,7 @@ header h2 {
     }
   }
   
-  // Timeout de segurança (máximo 10 segundos)
-  setTimeout(() => {
-    timeoutReached = true;
-    hideLoaderIfReady();
-  }, 10000);
+ 
   
   // Aguardar todas as imagens carregarem
   window.addEventListener('load', () => {
@@ -1727,7 +1564,10 @@ header h2 {
   // CONTADOR TOTAL
   const totalVisitsEl = document.getElementById('totalVisits');
   const totalRef = db.ref('totalVisits');
-  totalRef.once('value', snap => { if (!snap.val()) totalRef.set(0); });
+ totalRef.once('value', snap => {
+    if (snap.val() === null) totalRef.set(0);
+});
+
   totalRef.on('value', snap => { totalVisitsEl.innerText = snap.val() || 0; });
 
   if (!sessionStorage.getItem("visited")) {
@@ -1735,31 +1575,7 @@ header h2 {
     sessionStorage.setItem("visited", "true");
   }
 
-  // ------------------------------
-  // CONTADOR DE LIVROS
-  const livros = document.querySelectorAll('.livro');
-  livros.forEach(livro => {
-    const key = livro.dataset.book;
-    const ref = db.ref('books/' + key);
-    ref.once('value', snap => { if (!snap.val()) ref.set(0); });
-    const span = livro.querySelector('.livro-views span');
-    ref.on('value', snap => { span.innerText = snap.val() || 0; });
-
-    const link = livro.querySelector('.botao');
-    const href = link.getAttribute("href");
-
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      ref.transaction(current => (current || 0) + 1, () => {
-        livro.classList.add('flash');
-        setTimeout(() => livro.classList.remove('flash'), 3500);
-        totalRef.transaction(current => (current || 0) + 1);
-        window.location = href;
-      });
-    });
-  });
-// ------------------------------
-// ------------------------------
+  
 // REGISTRO DISCRETO DE ACESSOS (IP + User-Agent + Localização aproximada por IP + Dispositivo)
 if (!sessionStorage.getItem("ipLogged")) {
 
@@ -2637,165 +2453,28 @@ if (tab === 'acessos') {
   }
 }
 
-    // CARROSSEL
-    const track = document.getElementById('carousel-track');
-    const items = document.querySelectorAll('.carousel-item');
-    let currentIndex = 0;
-
-    function updateCarousel() {
-      items.forEach(item => item.classList.remove('active'));
-      items[currentIndex].classList.add('active');
-      const offset = (items[currentIndex].offsetLeft + items[currentIndex].offsetWidth/2) - track.offsetWidth/2;
-      track.style.transform = `translateX(${-offset}px)`;
-    }
-
-    document.getElementById('prev').addEventListener('click', () => {
-      currentIndex = (currentIndex-1+items.length)%items.length;
-      updateCarousel();
-    });
-
-    document.getElementById('next').addEventListener('click', () => {
-      currentIndex = (currentIndex+1)%items.length;
-      updateCarousel();
-    });
-
-    let startX=0;
-    track.addEventListener('touchstart', e => { startX=e.touches[0].clientX; });
-    track.addEventListener('touchend', e => {
-      let diff=e.changedTouches[0].clientX-startX;
-      if(diff>50){ currentIndex=(currentIndex-1+items.length)%items.length; }
-      else if(diff<-50){ currentIndex=(currentIndex+1)%items.length; }
-      updateCarousel();
-    });
-
-    setInterval(()=>{ currentIndex=(currentIndex+1)%items.length; updateCarousel(); },4000);
-    updateCarousel();
-
+ 
 
 // ===== ELEMENTOS =====
 const searchIcon = document.getElementById("search-icon");
 const searchBar = document.getElementById("search-bar");
 const searchInput = document.getElementById("search-input");
-const livrosLista = document.querySelectorAll(".livro");
 const searchResults = document.getElementById("search-results");
 const carrossel = document.getElementById("carousel-container");
 const categoryBtn = document.getElementById("category-btn");
 const categoryMenu = document.getElementById("category-menu");
 const header = document.querySelector("header"); // pegue o header uma vez
 
-const categorias = {
-  "invisivel": ["autoajuda"],
-  "potencial": ["motivação"],
-  "48leis": ["poder"],
-  "fbi": ["psicologia"],
-  "influenciar-pessoas": ["autoajuda"],
-  "poder-manipulacao": ["manipulação", "poder"],
-  "engenharia-social": ["manipulação"],
-  "manipulacao-oculta": ["manipulação"],
-  "seducao-maquiavelica": ["estratégia"],
-  "o-que-todo-corpo-fala": ["Comportamento Humano"],
-  "como-convencer-alguem-em-90-segundos": ["manipulação", "Comportamento Humano"],
-  "a-arte-de-ler-mentes": ["manipulação", "Comportamento Humano"],
-  "o-homem-mais-rico-da-babilonia": ["Finanças", "autoajuda", "estratégia"]
-};
 
-// ===== FUNÇÃO PARA CRIAR CARDS =====
-function criarGridLivros(lista) {
-  searchResults.innerHTML = "";
-  lista.forEach(livro => {
-    const titulo = livro.querySelector("h2")?.innerText || "Sem título";
-    const imagem = livro.querySelector("img")?.src || "";
-    const card = document.createElement("div");
-    card.classList.add("card-livro");
-    card.innerHTML = `
-      <img src="${imagem}" alt="${titulo}">
-      <h4>${titulo}</h4>
-    `;
-	   const botaoHref = livro.querySelector(".botao")?.href;
-    if (botaoHref) {
-      card.addEventListener("click", () => {
-        window.location.href = botaoHref;
-      });
-    }
 
-    searchResults.appendChild(card);
-  });
-}
 
-// ===== MOSTRAR GRID =====
-function mostrarGrid(livros) {
-  livrosLista.forEach(l => l.style.display = "none");
-  if (carrossel) carrossel.style.display = "none";
-  searchResults.style.display = "grid";
-  criarGridLivros(livros);
+// ===== PESQUISA  =====
 
-  // esconder header
-  if (header) header.style.display = "none";
-}
-
-function restaurarLayout() {
-  searchResults.style.display = "none";
-  searchResults.innerHTML = "";
-  livrosLista.forEach(l => l.style.display = "flex");
-  if (carrossel) carrossel.style.display = "block";
-
-  // mostrar header
-  if (header) header.style.display = "block";
-}
-// ===== MENU DE CATEGORIAS =====
-categoryBtn.addEventListener("click", () => {
-  categoryMenu.classList.toggle("active");
-
-  // Troca o texto do botão
-  if (categoryMenu.classList.contains("active")) {
-    categoryBtn.textContent = "<"; // quando aberto, mostrar "<"
-  } else {
-    categoryBtn.textContent = "☰ Categoria"; // quando fechado, voltar ao normal
-  }
-});
-
-document.querySelectorAll("#category-menu li").forEach(item => {
-  item.addEventListener("click", () => {
-    const categoria = item.dataset.category;
-    categoryMenu.classList.remove("active");
-
-    // Volta o botão ao estado normal quando fecha ao clicar em uma categoria
-    categoryBtn.textContent = "☰ Categoria";
-
-    if (categoria === "todos") {
-      mostrarGrid(Array.from(livrosLista)); // mostra todos os livros em grid
-      return;
-    }
-
-    const livrosFiltrados = Array.from(livrosLista).filter(livro => {
-      const key = livro.dataset.book;
-     return categorias[key].includes(categoria);
-
-    });
-
-    mostrarGrid(livrosFiltrados);
-  });
-});
-
-// ===== PESQUISA ANIMADA =====
-
-const animatedSVG = `
-<svg width="40" height="40" viewBox="0 0 100 100">
-  <!-- Lupa -->
-  <circle id="lens" cx="40" cy="40" r="20" stroke="white" stroke-width="5" fill="none"/>
-  <line id="handle" x1="55" y1="55" x2="75" y2="75" stroke="white" stroke-width="5"/>
-  <!-- Casinha -->
-  <polygon id="house" points="25,60 50,35 75,60 75,85 25,85" fill="white" scale="0" opacity="0"/>
-</svg>
-`;
-searchIcon.innerHTML = animatedSVG;
 
 let mostrandoPesquisa = false;
 
 searchIcon.addEventListener("click", () => { 
-  const lens = document.getElementById("lens");
-  const handle = document.getElementById("handle");
-  const house = document.getElementById("house");
+
 
   mostrandoPesquisa = !mostrandoPesquisa;
 
@@ -2804,47 +2483,15 @@ searchIcon.addEventListener("click", () => {
     mostrarGrid(Array.from(livrosLista));
     searchInput.focus();
 
-    // Animação da lupa virando casa
-    gsap.to(lens, {duration: 0.5, scale:0.5, transformOrigin:"50% 50%", opacity:0});
-    gsap.to(handle, {duration: 0.5, rotate: -45, transformOrigin:"50% 50%", opacity:0});
-    gsap.to(house, {duration: 0.5, scale:1, opacity:1, transformOrigin:"50% 50%", delay:0.5});
-    
+
   } else {
     searchBar.classList.remove("active");
     restaurarLayout();
     searchInput.value = "";
     window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // Animação da casa voltando para lupa
-    gsap.to(house, {duration:0.5, scale:0, opacity:0});
-    gsap.to(lens, {duration:0.5, scale:1, opacity:1, delay:0.5});
-    gsap.to(handle, {duration:0.5, rotate:0, opacity:1, delay:0.5});
   }
 });
-    // ===== FILTRAR LIVROS ENQUANTO DIGITA =====
-           searchInput.addEventListener("input", () => {
-  const termo = searchInput.value.toLowerCase().trim();
-  if (termo === "") {
-    restaurarLayout();
-    return;
-  }
-
-  // Filtra os livros cujo título contém o termo
-  const livrosFiltrados = Array.from(livrosLista).filter(livro => {
-    const titulo = livro.querySelector("h2")?.innerText.toLowerCase() || "";
-    return titulo.includes(termo);
-  });
-
-  if (livrosFiltrados.length === 0) {
-    searchResults.innerHTML = `<p style="color:#fff; padding: 170px 0; text-align:center; font-size:1.5rem; grid-column: 1/-1;">📖 Livro não encontrado!</p>`;
-    livrosLista.forEach(l => l.style.display = "none");
-    if (carrossel) carrossel.style.display = "none";
-    searchResults.style.display = "grid";
-  } else {
-    mostrarGrid(livrosFiltrados);
-  }
-});
-
+ 
 // ========== FUNÇÕES PARA PAINEL DE DETALHES DO IP ==========
 
 function abrirDetalhesIP(ipHash, dados, mapa) {
@@ -3049,17 +2696,376 @@ document.addEventListener('click', (e) => {
 });
 
 
+
+
+// -----------------------------
+// MAREVO - loader / JSON -> DOM
+// Colar ESTE BLOCO no FINAL do <script> do index.html
+// -----------------------------
+(function () {
+  if (window.__MAREVO_INIT_DONE) return;
+  window.__MAREVO_INIT_DONE = true;
+
+  // Elementos já presentes no index.html
+  const libraryList = document.getElementById("library-list");
+  const templateLivro = document.querySelector(".livro-template");
+  const categoryList = document.getElementById("category-list");
+  const carouselTrack = document.getElementById("carousel-track");
+  const searchInput = document.getElementById("search-input");
+  const searchResults = document.getElementById("search-results");
+  const categoryBtn = document.getElementById("category-btn");
+  const categoryMenu = document.getElementById("category-menu");
+  const carrosselEl = document.getElementById("carousel-container");
+  const headerEl = document.querySelector("header");
+
+  // global flags that your index.html already uses:
+  // - hideLoaderIfReady() exists earlier; imagesReady/firebaseReady/timeoutReached exist too.
+  // We'll update imagesReady when JSON images are loaded.
+  if (typeof window.hideLoaderIfReady !== 'function') {
+    // fallback: simple hide
+    window.hideLoaderIfReady = () => {
+      const l = document.getElementById('loaderContainer');
+      if (l) l.classList.add('hidden');
+    };
+  }
+
+  // Guard rails
+  if (!libraryList || !templateLivro || !categoryList || !carouselTrack) {
+    console.error("MAREVO INIT: elemento(s) base não encontrado(s). Verifique IDs e template.");
+    return;
+  }
+
+  // Estado
+  let conteudoJSON = null;
+  const categoriasUnicas = new Set();
+
+  // UTIL: capitalizar para rótulo
+  function readLabel(catId) {
+    if (!catId) return "";
+    // trocar hífens por espaços e capit.
+    return catId.replace(/-/g, " ").replace(/\b\w/g, ch => ch.toUpperCase());
+  }
+
+  // CARREGAR JSON
+  async function carregarConteudo() {
+    try {
+      const res = await fetch("conteudo.json", {cache: "no-store"});
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+
+      // compat: se JSON tem wrapper {livros: [...], categorias: [...]}
+      if (Array.isArray(data.livros)) {
+        conteudoJSON = data.livros.map(l => normalizeLivro(l));
+      } else if (Array.isArray(data)) {
+        conteudoJSON = data.map(l => normalizeLivro(l));
+      } else {
+        // caso seu JSON esteja em outro formato — tenta detectar
+        conteudoJSON = (data.items || []).map(l => normalizeLivro(l));
+      }
+
+      // gerar categorias a partir dos livros (se há seção categorias no JSON, também usa)
+      if (Array.isArray(data.categorias)) {
+        data.categorias.forEach(c => {
+          if (c.id) categoriasUnicas.add(c.id);
+        });
+      }
+      conteudoJSON.forEach(l => (l.categorias || []).forEach(c => categoriasUnicas.add(c)));
+
+      gerarCategoriasDOM();
+      renderizarLivros(conteudoJSON);
+      gerarCarrossel(conteudoJSON);
+
+      // quando imagens do conteúdo carregarem, marcar imagesReady e esconder loader
+      await waitImagesLoaded();
+      window.imagesReady = true;
+      if (typeof window.hideLoaderIfReady === 'function') window.hideLoaderIfReady();
+
+    } catch (err) {
+      console.error("Erro ao carregar conteudo.json:", err);
+    }
+  }
+
+  // Normaliza chaves do JSON para o formato esperado
+  function normalizeLivro(raw) {
+    // possíveis campos no seu JSON: id / titulo / descricao / imagem / arquivo / link
+    return {
+      id: raw.id || raw.key || (raw.titulo && raw.titulo.toLowerCase().replace(/\s+/g, "-")) || "",
+      titulo: raw.titulo || raw.title || "Sem título",
+      descricao: raw.descricao || raw.description || "",
+      imagem: raw.imagem || raw.imagemUrl || raw.image || (raw.img && raw.img.src) || "livros/img/placeholder.png",
+      link: raw.arquivo || raw.link || raw.url || "#",
+      categorias: Array.isArray(raw.categorias) ? raw.categorias : (raw.categories || [])
+    };
+  }
+
+  // GERA CATEGORIAS -> DOM
+  function gerarCategoriasDOM() {
+    // limpar exceto "todos"
+    categoryList.innerHTML = `<li data-category="todos">Todos</li>`;
+    Array.from(categoriasUnicas).sort().forEach(cat => {
+      const li = document.createElement("li");
+      li.dataset.category = cat;
+      li.textContent = readLabel(cat);
+      categoryList.appendChild(li);
+    });
+  }
+
+  // RENDERIZA LISTA DE LIVROS (usando template)
+  function renderizarLivros(lista) {
+    // remover existentes (exceto template)
+    libraryList.querySelectorAll(".livro:not(.livro-template)").forEach(n => n.remove());
+
+    lista.forEach(livro => {
+      const clone = templateLivro.cloneNode(true);
+      clone.classList.remove("livro-template");
+      clone.style.display = "flex";
+
+      clone.dataset.book = livro.id;
+      const imgEl = clone.querySelector(".livro-img");
+      if (imgEl) {
+        imgEl.src = livro.imagem;
+        imgEl.alt = livro.titulo;
+      }
+      const tituloEl = clone.querySelector(".livro-titulo");
+      if (tituloEl) tituloEl.textContent = livro.titulo;
+      const descEl = clone.querySelector(".livro-descricao");
+      if (descEl) descEl.textContent = livro.descricao;
+      const linkEl = clone.querySelector(".livro-link");
+      if (linkEl) linkEl.href = livro.link;
+
+      libraryList.appendChild(clone);
+    });
+
+    // Atualizar referencia global de itens (alguns trechos do seu JS usavam document.querySelectorAll('.livro') — OK)
+    aplicarSistemaViewsFirebase(); // conecta ao firebase e ativa incremento
+  }
+
+  // APLICAR SISTEMA DE VIEWS (usa db já definido)
+  function aplicarSistemaViewsFirebase() {
+    // Segurança: se db não definido, retorna
+    if (typeof db === "undefined" || !db || !db.ref) {
+      console.warn("Firebase 'db' não encontrado. Views não serão atualizadas.");
+      return;
+    }
+
+    const livrosDOM = document.querySelectorAll('.livro:not(.livro-template)');
+    livrosDOM.forEach(livroEl => {
+      const key = livroEl.dataset.book;
+      if (!key) return;
+
+      const ref = db.ref('books/' + key);
+      const span = livroEl.querySelector('.livro-views-numero');
+      const botao = livroEl.querySelector('.livro-link');
+
+     // Evita adicionar vários listeners no mesmo livro
+if (!botao.dataset.__viewsListener) {
+
+    // Garantir que o nodo existe
+    ref.once("value").then(snap => {
+        if (snap.val() === null) ref.set(0);
+    });
+
+    // Listener único para atualizar o número de views na UI
+    ref.on("value", snap => {
+        if (span) span.textContent = snap.val() || 0;
+    });
+
+    // Marca que este livro já recebeu listeners
+    botao.dataset.__viewsListener = "1";
+}
+
+
+      if (botao) {
+        botao.addEventListener("click", e => {
+          // incrementa com transaction e redireciona
+          e.preventDefault();
+          const href = botao.href || livroEl.querySelector('.livro-link')?.getAttribute('href') || "#";
+          ref.transaction(v => (v || 0) + 1);
+          // animação visual (se quiser adicionar classe flash)
+          livroEl.classList.add('flash');
+          setTimeout(() => livroEl.classList.remove('flash'), 1800);
+          setTimeout(() => { window.location = href; }, 150);
+        });
+      }
+    });
+  }
+
+  // GERAR CARROSSEL
+  function gerarCarrossel(lista) {
+    carouselTrack.innerHTML = "";
+    lista.forEach(livro => {
+      const item = document.createElement("div");
+      item.className = "carousel-item";
+      item.dataset.book = livro.id;
+      item.innerHTML = `
+        <a href="${livro.link}">
+          <img src="${livro.imagem}" alt="${livro.titulo}">
+        </a>
+      `;
+      carouselTrack.appendChild(item);
+    });
+    // (re)iniciar comportamento do carrossel
+    iniciarCarrosselSafe();
+  }
+
+  // INICIAR CARROSSEL (safe: remove interval anterior se existir)
+  function iniciarCarrosselSafe() {
+    // limpa qualquer interval antigo
+    if (window.__MAREVO_CAROUSEL_INTERVAL) {
+      clearInterval(window.__MAREVO_CAROUSEL_INTERVAL);
+      window.__MAREVO_CAROUSEL_INTERVAL = null;
+    }
+
+    const items = carouselTrack.querySelectorAll(".carousel-item");
+    if (!items.length) {
+      if (carrosselEl) carrosselEl.style.display = "none";
+      return;
+    } else {
+      if (carrosselEl) carrosselEl.style.display = "block";
+    }
+
+    let currentIndex = 0;
+    function update() {
+      const all = carouselTrack.querySelectorAll(".carousel-item");
+      if (!all.length) return;
+      all.forEach(i => i.classList.remove("active"));
+      const cur = all[currentIndex];
+      if (!cur) return;
+      cur.classList.add("active");
+      const offset = (cur.offsetLeft + cur.offsetWidth / 2) - carouselTrack.offsetWidth / 2;
+      carouselTrack.style.transform = `translateX(${-offset}px)`;
+    }
+
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    if (prev) {
+      prev.onclick = () => {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        update();
+      };
+    }
+    if (next) {
+      next.onclick = () => {
+        currentIndex = (currentIndex + 1) % items.length;
+        update();
+      };
+    }
+
+    // touch support (once)
+    let startX = null;
+    carouselTrack.ontouchstart = e => { startX = e.touches[0].clientX; };
+    carouselTrack.ontouchend = e => {
+      if (startX === null) return;
+      const diff = e.changedTouches[0].clientX - startX;
+      if (diff > 50) currentIndex = (currentIndex - 1 + items.length) % items.length;
+      else if (diff < -50) currentIndex = (currentIndex + 1) % items.length;
+      startX = null;
+      update();
+    };
+
+    // autoplay
+    window.__MAREVO_CAROUSEL_INTERVAL = setInterval(() => {
+      currentIndex = (currentIndex + 1) % items.length;
+      update();
+    }, 4000);
+
+    // primeira atualização
+    setTimeout(update, 120);
+  }
+
+  // PESQUISA (usa conteudoJSON)
+  function attachSearch() {
+    if (!searchInput) return;
+    searchInput.addEventListener("input", () => {
+      const termo = (searchInput.value || "").toLowerCase().trim();
+      if (!termo) {
+        searchResults.style.display = "none";
+        renderizarLivros(conteudoJSON);
+        if (headerEl) headerEl.style.display = "block";
+        return;
+      }
+
+      const filtrados = (conteudoJSON || []).filter(l => (l.titulo || "").toLowerCase().includes(termo));
+      // mostrar grid simples de cards no searchResults
+      searchResults.innerHTML = "";
+      searchResults.style.display = "grid";
+      if (carrosselEl) carrosselEl.style.display = "none";
+      (filtrados.length === 0) && (searchResults.innerHTML = `<p style="color:#fff; padding: 170px 0; text-align:center; font-size:1.2rem; grid-column: 1/-1;">📖 Livro não encontrado!</p>`);
+
+      filtrados.forEach(livro => {
+        const card = document.createElement("div");
+        card.className = "card-livro";
+        card.innerHTML = `<img src="${livro.imagem}" alt="${livro.titulo}"><h4>${livro.titulo}</h4>`;
+        card.onclick = () => window.location.href = livro.link;
+        searchResults.appendChild(card);
+      });
+    });
+  }
+
+  // CLICKS EM CATEGORIAS (delegado em #category-list)
+  function attachCategoryClick() {
+    categoryList.addEventListener("click", (e) => {
+      const li = e.target.closest("li");
+      if (!li) return;
+      const categoria = li.dataset.category;
+      // fechar menu
+      categoryMenu.classList.remove("active");
+      if (categoryBtn) categoryBtn.textContent = "☰ Categoria";
+
+      if (!categoria || categoria === "todos") {
+        renderizarLivros(conteudoJSON);
+        gerarCarrossel(conteudoJSON);
+        return;
+      }
+      const filtrados = (conteudoJSON || []).filter(l => (l.categorias || []).includes(categoria));
+      renderizarLivros(filtrados);
+      gerarCarrossel(filtrados);
+    });
+
+    // toggle do botão categoria (preserva comportamento atual)
+    if (categoryBtn && !categoryBtn.dataset.__toggleBound) {
+      categoryBtn.addEventListener("click", () => {
+        categoryMenu.classList.toggle("active");
+        categoryBtn.textContent = categoryMenu.classList.contains("active") ? "<" : "☰ Categoria";
+      });
+      categoryBtn.dataset.__toggleBound = "1";
+    }
+  }
+
+  // Espera todas as imagens da library + carrossel carregarem
+  function waitImagesLoaded() {
+    const imgs = Array.from(document.querySelectorAll("#library-list img, #carousel-track img"));
+    if (!imgs.length) return Promise.resolve();
+    const promises = imgs.map(img => {
+      return new Promise(res => {
+        if (img.complete && img.naturalWidth !== 0) return res();
+        img.addEventListener('load', res);
+        img.addEventListener('error', res); // ignora erro mas resolve
+      });
+    });
+    // timeout de segurança 6s
+    return Promise.race([
+      Promise.all(promises),
+      new Promise(r => setTimeout(r, 6000))
+    ]);
+  }
+
+  // INICIALIZAÇÃO
+  attachSearch();
+  attachCategoryClick();
+  carregarConteudo();
+
+  // Expõe algumas funções para depuração no console
+  window.__MAREVO = {
+    recarregar: carregarConteudo,
+    renderizarLivros,
+    gerarCarrossel
+  };
+
+})();
+
+
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
