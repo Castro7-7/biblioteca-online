@@ -1,0 +1,120 @@
+{
+  "categorias": [
+    {"id": "todos", "nome": "todos"},
+    {"id": "motivacao", "nome": "Motivação"},
+    {"id": "autoajuda", "nome": "Autoajuda"},
+    {"id": "psicologia", "nome": "Psicologia"},
+    {"id": "manipulacao", "nome": "Manipulação"},
+    {"id": "poder", "nome": "Poder"},
+    {"id": "estrategia", "nome": "Estratégia"},
+    {"id": "comportamento-humano", "nome": "Comportamento Humano"},
+    {"id": "financas", "nome": "Finanças"}
+  ],
+  
+  "livros": [
+    {
+      "id": "invisivel",
+      "titulo": "Liberte-se do inimigo invisível",
+      "descricao": "Baseado em “Mais Esperto que o Diabo”, este livro ajuda a identificar obstáculos invisíveis e liberar seu potencial.",
+      "imagem": "livros/img/invisivel.png",
+      "arquivo": "livros/Liberte-se do inimigo invisível.html",
+      "categorias": ["autoajuda"]
+    },
+    {
+      "id": "potencial",
+      "titulo": "Destravando Seu Potencial",
+      "descricao": "Um guia prático para desbloquear sua mente e alcançar seus objetivos.",
+      "imagem": "livros/img/potencial.png",
+      "arquivo": "livros/destravando.html",
+      "categorias": ["motivacao"]
+    },
+    {
+      "id": "48leis",
+      "titulo": "48 Leis do Poder",
+      "descricao": "Domine as regras do poder e influencie pessoas de forma estratégica.",
+      "imagem": "livros/img/48.png",
+      "arquivo": "livros/48-leis-do-poder.html",
+      "categorias": ["poder", "estrategia"]
+    },
+    {
+      "id": "fbi",
+      "titulo": "Manual de Persuasão da FBI",
+      "descricao": "Aprenda técnicas de persuasão utilizadas por agentes do FBI para influenciar decisões e conduzir entrevistas com sucesso.",
+      "imagem": "livros/img/fbi.png",
+      "arquivo": "livros/fbi.html",
+      "categorias": ["psicologia", "manipulacao"]
+    },
+    {
+      "id": "influenciar-pessoas",
+      "titulo": "Como Fazer Amigos e Influenciar Pessoas",
+      "descricao": "Descubra estratégias comprovadas para conquistar amizades verdadeiras, fortalecer conexões e influenciar pessoas de forma positiva em qualquer ambiente.",
+      "imagem": "livros/img/influenciar-pessoas.png",
+      "arquivo": "livros/influenciar-pessoas.html",
+      "categorias": ["autoajuda", "comportamento-humano"]
+    },
+    {
+      "id": "poder-manipulacao",
+      "titulo": "Poder & Manipulação – Jacob Petry",
+      "descricao": "Aprenda a dominar técnicas de persuasão, manipulação psicológica e influência estratégica de forma avançada.",
+      "imagem": "livros/img/poder-manipulaçao.png",
+      "arquivo": "livros/Poder-Manipulação.html",
+      "categorias": ["poder", "manipulacao"]
+    },
+    {
+      "id": "engenharia-social",
+      "titulo": "Engenharia Social – Jacob Petry",
+      "descricao": "Descubra como influenciar pessoas de forma ética e evitar ser manipulado através de técnicas de engenharia social.",
+      "imagem": "livros/img/engenharia-social.png",
+      "arquivo": "livros/engenharia-social.html",
+      "categorias": ["manipulacao", "psicologia"]
+    },
+    {
+      "id": "manipulacao-oculta",
+      "titulo": "Manipulação Oculta",
+      "descricao": "Aprenda técnicas secretas de manipulação e persuasão, com foco em psicologia e percepção das pessoas.",
+      "imagem": "livros/img/manipulaçao-oculta.png",
+      "arquivo": "livros/Manipulacao-oculta.html",
+      "categorias": ["manipulacao", "psicologia"]
+    },
+    {
+      "id": "seducao-maquiavelica",
+      "titulo": "Sedução Maquiavélica",
+      "descricao": "Domine a arte da sedução e hipnose psicológica com estratégias sofisticadas e dark.",
+      "imagem": "livros/img/seduçao-maquiavelica.png",
+      "arquivo": "livros/seducao-maquiavelica.html",
+      "categorias": ["estrategia", "manipulacao"]
+    },
+    {
+      "id": "o-que-todo-corpo-fala",
+      "titulo": "O Que Todo Corpo Fala – Joe Navarro",
+      "descricao": "Aprenda a decodificar a linguagem corporal, identificar emoções ocultas e dominar a comunicação não verbal para influenciar e compreender melhor as pessoas.",
+      "imagem": "livros/img/oque-todo-corpo-fala.png",
+      "arquivo": "livros/oque-todo-corpo-fala.html",
+      "categorias": ["comportamento-humano", "psicologia"]
+    },
+    {
+      "id": "como-convencer-alguem-em-90-segundos",
+      "titulo": "Como Convencer Alguém em 90 Segundos – Nicholas Boothman",
+      "descricao": "Aprenda técnicas rápidas e eficazes para conquistar empatia, confiança e influência logo nos primeiros segundos de qualquer conversa.",
+      "imagem": "livros/img/como-convencer-alguem-90-seg.png",
+      "arquivo": "livros/como-convencer-90-seg.html",
+      "categorias": ["manipulacao", "comportamento-humano"]
+    },
+    {
+      "id": "a-arte-de-ler-mentes",
+      "titulo": "A Arte de Ler Mentes – Henrik Fexeus",
+      "descricao": "Aprenda a interpretar gestos, expressões e microreações para entender o que as pessoas realmente pensam, mesmo sem dizer uma palavra.",
+      "imagem": "livros/img/arte-de-ler-mentes.png",
+      "arquivo": "livros/arte-de-ler-mentes.html",
+      "categorias": ["manipulacao", "comportamento-humano"]
+    },
+    {
+      "id": "o-homem-mais-rico-da-babilonia",
+      "titulo": "O Homem Mais Rico da Babilônia – George S. Clason",
+      "descricao": "Descubra princípios atemporais de riqueza e prosperidade através de lições simples e práticas para dominar suas finanças.",
+      "imagem": "livros/img/babilonia.png",
+      "arquivo": "livros/babilonia.html",
+      "categorias": ["financas", "autoajuda", "estrategia"]
+    }
+  ]
+}
