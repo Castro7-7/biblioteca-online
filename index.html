@@ -33,7 +33,7 @@
 <meta name="twitter:image" content="https://raw.githubusercontent.com/castro7-7/Marevo/main/capa-biblioteca.png">
 
 <!-- FAVICON -->
-<link rel="icon" type="image/png" href="favicon-32x32.png">
+<link rel="icon" type="image/png" href="favicon-32x32.png?v=2">
 
 <!-- ===================================================================== -->
 
@@ -2890,37 +2890,40 @@ if (!botao.dataset.__viewsListener) {
     });
   }
 
-  // GERAR CARROSSEL
-  function gerarCarrossel(lista) {
-    carouselTrack.innerHTML = "";
-    lista.forEach(livro => {
-      const item = document.createElement("div");
-      item.className = "carousel-item";
-      item.dataset.book = livro.id;
-      item.innerHTML = `
-		  <a href="${livro.link}" target="_blank" class="carousel-link" data-book="${livro.id}">
-		    <img src="${livro.imagem}" alt="${livro.titulo}">
-		  </a>
-		`;
-      carouselTrack.appendChild(item);
-    });
-    // (re)iniciar comportamento do carrossel
-    iniciarCarrosselSafe();
-  }
-	// Contagem de views no carrossel
-	const links = carouselTrack.querySelectorAll(".carousel-link");
-	links.forEach(a => {
-	  const book = a.dataset.book;
-	  if (!book) return;
-	
-	  const ref = db.ref("books/" + book);
-	
-	  a.addEventListener("click", () => {
-	    ref.transaction(v => (v || 0) + 1);
-	  });
-	});
-
-
+		  // GERAR CARROSSEL
+		function gerarCarrossel(lista) {
+		  carouselTrack.innerHTML = "";
+		
+		  lista.forEach(livro => {
+		    const item = document.createElement("div");
+		    item.className = "carousel-item";
+		    item.dataset.book = livro.id;
+		
+		    item.innerHTML = `
+		      <a href="${livro.link}" target="_blank" class="carousel-link" data-book="${livro.id}">
+		        <img src="${livro.imagem}" alt="${livro.titulo}">
+		      </a>
+		    `;
+		
+		    carouselTrack.appendChild(item);
+		  });
+		
+		  // 🔥 ADICIONAR EVENTO DE CONTAGEM AQUI — DEPOIS QUE OS ITENS EXISTEM
+		  const links = carouselTrack.querySelectorAll(".carousel-link");
+		
+		  links.forEach(a => {
+		    const book = a.dataset.book;
+		    if (!book) return;
+		
+		    const ref = db.ref("books/" + book);
+		
+		    a.addEventListener("click", () => {
+		      ref.transaction(v => (v || 0) + 1);
+		    });
+		  });
+		
+		  iniciarCarrosselSafe();
+		}
   // INICIAR CARROSSEL (safe: remove interval anterior se existir)
   function iniciarCarrosselSafe() {
     // limpa qualquer interval antigo
@@ -3082,6 +3085,7 @@ if (!botao.dataset.__viewsListener) {
 
 </body>
 </html>
+
 
 
 
