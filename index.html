@@ -1433,7 +1433,7 @@ header h2 {
     <div class="livro-info">
       <h2 class="livro-titulo"></h2>
       <p class="livro-descricao"></p>
-      <a class="botao livro-link" href="#" target="_blank" rel="noopener noreferrer"> Ver detalhes </a>
+      <a class="botao livro-link" href="#"> Ver detalhes </a>
     </div>
 
     <div class="livro-views">
@@ -2884,7 +2884,7 @@ if (!botao.dataset.__viewsListener) {
           // animação visual (se quiser adicionar classe flash)
           livroEl.classList.add('flash');
           setTimeout(() => livroEl.classList.remove('flash'), 1800);
-          setTimeout(() => { window.location = href; }, 150);
+          setTimeout(() => { window.open(href, "_blank"); }, 150);
         });
       }
     });
@@ -2898,15 +2898,28 @@ if (!botao.dataset.__viewsListener) {
       item.className = "carousel-item";
       item.dataset.book = livro.id;
       item.innerHTML = `
-        <a href="${livro.link}">
-          <img src="${livro.imagem}" alt="${livro.titulo}">
-        </a>
-      `;
+		  <a href="${livro.link}" target="_blank" class="carousel-link" data-book="${livro.id}">
+		    <img src="${livro.imagem}" alt="${livro.titulo}">
+		  </a>
+		`;
       carouselTrack.appendChild(item);
     });
     // (re)iniciar comportamento do carrossel
     iniciarCarrosselSafe();
   }
+	// Contagem de views no carrossel
+	const links = carouselTrack.querySelectorAll(".carousel-link");
+	links.forEach(a => {
+	  const book = a.dataset.book;
+	  if (!book) return;
+	
+	  const ref = db.ref("books/" + book);
+	
+	  a.addEventListener("click", () => {
+	    ref.transaction(v => (v || 0) + 1);
+	  });
+	});
+
 
   // INICIAR CARROSSEL (safe: remove interval anterior se existir)
   function iniciarCarrosselSafe() {
@@ -3069,6 +3082,7 @@ if (!botao.dataset.__viewsListener) {
 
 </body>
 </html>
+
 
 
 
