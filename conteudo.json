@@ -16,7 +16,7 @@
       "id": "segredo-mente-milionaria",
       "titulo": "O Segredo da Mente Milionária",
       "descricao": "T. Harv Eker explica como crenças financeiras moldam seu destino e como reprogramar sua mente para riqueza, disciplina, abundância e crescimento real. Um clássico da mentalidade financeira.",
-      "imagem": "https://ia802309.us.archive.org/BookReader/BookReaderImages.php?zip=/34/items/os-segredos-da-mente-milionaria-t.-harv-eker/Os%20Segredos%20da%20Mente%20Milionaria%20-%20T.%20Harv%20Eker_jp2.zip&file=Os%20Segredos%20da%20Mente%20Milionaria%20-%20T.%20Harv%20Eker_jp2/Os%20Segredos%20da%20Mente%20Milionaria%20-%20T.%20Harv%20Eker_0000.jp2&id=os-segredos-da-mente-milionaria-t.-harv-eker&scale=4&rotate=0",
+      "imagem": "livros/img/os-segredos-da-mente-milionaria.png",
       "arquivo": "https://pay.cakto.com.br/wut6cmg_672989",
       "categorias": ["financas", "autoajuda", "motivacao"]
     },
@@ -24,7 +24,7 @@
       "id": "mais-esperto-diabo",
       "titulo": "Mais Esperto que o Diabo",
       "descricao": "Napoleon Hill revela como o medo, a dúvida e a procrastinação controlam sua vida — e como escapar desse ciclo assumindo o comando da própria mente. Um livro direto, provocador e transformador.",
-      "imagem": "https://covers.openlibrary.org/b/id/14544381-M.jpg",
+      "imagem": "livros/img/mais-esperto-que-o-diabo.png",
       "arquivo": "https://pay.cakto.com.br/33dt2rg_672985",
       "categorias": ["autoajuda", "motivacao", "poder"]
     },
@@ -32,7 +32,7 @@
       "id": "poder-habito",
       "titulo": "O Poder do Hábito",
       "descricao": "Um guia profundo sobre como hábitos se formam e como transformá-los para mudar sua vida pessoal, profissional e mental. Baseado em pesquisas reais, revela como dominar o ciclo do hábito e reconstruir comportamentos.",
-      "imagem": "https://covers.openlibrary.org/b/id/14621911-M.jpg",
+      "imagem": "livros/img/o-poder-do-habito.png",
       "arquivo": "https://pay.cakto.com.br/j8zprei_672974",
       "categorias": ["autoajuda", "psicologia", "comportamento-humano"]
     },
@@ -40,7 +40,7 @@
       "id": "sutilligar",
       "titulo": "A Sutil Arte de Ligar o F*da-se",
       "descricao": "Uma estratégia inusitada para uma vida melhor, escrita por Mark Manson. Um guia direto para focar no que realmente importa.",
-      "imagem": "https://covers.openlibrary.org/b/id/15074622-M.jpg",
+      "imagem": "livros/img/a-sutil-arte-de-ligar-o-fodase.png",
       "arquivo": "https://pay.cakto.com.br/38v4kua_672156",
       "categorias": ["autoajuda"]
     },
