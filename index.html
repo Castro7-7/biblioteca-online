@@ -3,6 +3,10 @@
 <html lang="pt-BR">
 <head>
 
+  <link rel="shortcut icon" href="marevo-favicon-32x32.png" type="image/png">
+  <link rel="icon" href="marevo-favicon-32x32.png" type="image/png">
+
+
 <link rel="icon" type="image/png" href="marevo-favicon-32x32.png">
 
 	
@@ -2991,34 +2995,58 @@ if (!botao.dataset.__viewsListener) {
     setTimeout(update, 120);
   }
 
-  // PESQUISA (usa conteudoJSON)
-  function attachSearch() {
-    if (!searchInput) return;
-    searchInput.addEventListener("input", () => {
-      const termo = (searchInput.value || "").toLowerCase().trim();
-      if (!termo) {
-        searchResults.style.display = "none";
-        renderizarLivros(conteudoJSON);
-        if (headerEl) headerEl.style.display = "block";
-        return;
-      }
+ // PESQUISA (usa conteudoJSON)
+function attachSearch() {
+  if (!searchInput) return;
 
-      const filtrados = (conteudoJSON || []).filter(l => (l.titulo || "").toLowerCase().includes(termo));
-      // mostrar grid simples de cards no searchResults
-      searchResults.innerHTML = "";
-      searchResults.style.display = "grid";
-      if (carrosselEl) carrosselEl.style.display = "none";
-      (filtrados.length === 0) && (searchResults.innerHTML = `<p style="color:#fff; padding: 170px 0; text-align:center; font-size:1.2rem; grid-column: 1/-1;">📖 Livro não encontrado!</p>`);
+  searchInput.addEventListener("input", () => {
+    const termo = (searchInput.value || "").toLowerCase().trim();
 
-      filtrados.forEach(livro => {
-        const card = document.createElement("div");
-        card.className = "card-livro";
-        card.innerHTML = `<img src="${livro.imagem}" alt="${livro.titulo}"><h4>${livro.titulo}</h4>`;
-        card.onclick = () => window.location.href = livro.link;
-        searchResults.appendChild(card);
-      });
+    if (!termo) {
+      searchResults.style.display = "none";
+      renderizarLivros(conteudoJSON);
+      if (headerEl) headerEl.style.display = "block";
+      return;
+    }
+
+    const filtrados = (conteudoJSON || []).filter(l => {
+      const id = (l.id || "").toLowerCase();
+      const titulo = (l.titulo || "").toLowerCase();
+      const descricao = (l.descricao || "").toLowerCase();
+      const autor = (l.autor || "").toLowerCase();
+
+      return (
+        id.includes(termo) ||
+        titulo.includes(termo) ||
+        descricao.includes(termo) ||
+        autor.includes(termo)
+      );
     });
-  }
+
+    // mostrar grid simples de cards no searchResults
+    searchResults.innerHTML = "";
+    searchResults.style.display = "grid";
+    if (carrosselEl) carrosselEl.style.display = "none";
+
+    if (filtrados.length === 0) {
+      searchResults.innerHTML = `
+        <p style="color:#fff; padding: 170px 0; text-align:center; font-size:1.2rem; grid-column: 1/-1;">
+          📖 Livro não encontrado!
+        </p>`;
+    }
+
+    filtrados.forEach(livro => {
+      const card = document.createElement("div");
+      card.className = "card-livro";
+      card.innerHTML = `
+        <img src="${livro.imagem}" alt="${livro.titulo}">
+        <h4>${livro.titulo}</h4>
+      `;
+      card.onclick = () => window.location.href = livro.link;
+      searchResults.appendChild(card);
+    });
+  });
+}
 
   // CLICKS EM CATEGORIAS (delegado em #category-list)
   function attachCategoryClick() {

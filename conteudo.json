@@ -13,11 +13,11 @@
     {"id": "seguranca", "nome": "Segurança da Informação"}
   ],
 
-  
   "livros": [
-        {
+    {
       "id": "quem-pensa-enriquece",
       "titulo": "Quem Pensa Enriquece",
+      "autor": "Napoleon Hill",
       "descricao": "Napoleon Hill revela os princípios fundamentais que moldam a mentalidade milionária — disciplina, foco, propósito e ação. Um clássico obrigatório para quem busca evolução financeira e pessoal.",
       "imagem": "livros/img/quem-pensa-enriquece.png",
       "arquivo": "https://pay.cakto.com.br/eyurph7_682485",
@@ -26,6 +26,7 @@
     {
       "id": "as-armas-da-persuasao",
       "titulo": "As Armas da Persuasão",
+      "autor": "Robert B. Cialdini",
       "descricao": "O maior estudo sobre influência e comportamento humano. Cialdini explica os 6 gatilhos psicológicos usados em vendas, comunicação e persuasão no dia a dia.",
       "imagem": "livros/img/as-armas-da-persuasao.png",
       "arquivo": "https://pay.cakto.com.br/3dy4bpr_682491",
@@ -34,6 +35,7 @@
     {
       "id": "essencialismo",
       "titulo": "Essencialismo – A Disciplina da Busca por Menos",
+      "autor": "Greg McKeown",
       "descricao": "Um guia direto para eliminar o excesso, concentrar energia no que realmente importa e alcançar mais com menos esforço. Produtividade real e intencional.",
       "imagem": "livros/img/essencialismo-greg.png",
       "arquivo": "https://pay.cakto.com.br/q9ygz7n_682498",
@@ -42,6 +44,7 @@
     {
       "id": "rapido-e-devagar",
       "titulo": "Rápido e Devagar: Duas Formas de Pensar",
+      "autor": "Daniel Kahneman",
       "descricao": "Kahneman mostra como nosso cérebro toma decisões através de dois sistemas: um rápido e intuitivo, outro lento e analítico. Essencial para entender erros mentais, vieses e escolhas.",
       "imagem": "livros/img/rapido-e-devagar.png",
       "arquivo": "https://pay.cakto.com.br/nesdr8w_682502",
@@ -50,6 +53,7 @@
     {
       "id": "como-falar-em-publico",
       "titulo": "Como Falar em Público e Encantar as Pessoas",
+      "autor": "Dale Carnegie",
       "descricao": "Um manual prático para dominar comunicação, oratória e influência. Aprenda a falar com confiança, clareza e impacto em qualquer situação.",
       "imagem": "livros/img/como-falar-em-publico.png",
       "arquivo": "https://pay.cakto.com.br/3cucpd4_682508",
@@ -58,31 +62,35 @@
     {
       "id": "a-arte-de-enganar",
       "titulo": "A Arte de Enganar",
+      "autor": ["Kevin D. Mitnick", "William L. Simon"],
       "descricao": "Kevin Mitnick revela como hackers exploram o fator humano para invadir sistemas. Um alerta poderoso sobre engenharia social e proteção digital.",
       "imagem": "livros/img/a-arte-de-enganar.png",
       "arquivo": "https://pay.cakto.com.br/p4c7v4a_682517",
       "categorias": ["seguranca", "manipulacao", "estrategia"]
     },
-        {
+    {
       "id": "segredo-mente-milionaria",
       "titulo": "O Segredo da Mente Milionária",
-      "descricao": "T. Harv Eker explica como crenças financeiras moldam seu destino e como reprogramar sua mente para riqueza, disciplina, abundância e crescimento real. Um clássico da mentalidade financeira.",
+      "autor": "T. Harv Eker",
+      "descricao": "T. Harv Eker explica como crenças financeiras moldam seu destino e como reprogramar sua mente para riqueza, disciplina, abundância e crescimento real.",
       "imagem": "livros/img/os-segredos-da-mente-milionaria.png",
       "arquivo": "https://pay.cakto.com.br/wut6cmg_672989",
       "categorias": ["financas", "autoajuda", "motivacao"]
     },
-        {
+    {
       "id": "mais-esperto-diabo",
       "titulo": "Mais Esperto que o Diabo",
-      "descricao": "Napoleon Hill revela como o medo, a dúvida e a procrastinação controlam sua vida — e como escapar desse ciclo assumindo o comando da própria mente. Um livro direto, provocador e transformador.",
+      "autor": "Napoleon Hill",
+      "descricao": "Napoleon Hill revela como o medo, a dúvida e a procrastinação controlam sua vida — e como escapar desse ciclo assumindo o comando da própria mente.",
       "imagem": "livros/img/mais-esperto-que-o-diabo.png",
       "arquivo": "https://pay.cakto.com.br/33dt2rg_672985",
       "categorias": ["autoajuda", "motivacao", "poder"]
     },
-        {
+    {
       "id": "poder-habito",
       "titulo": "O Poder do Hábito",
-      "descricao": "Um guia profundo sobre como hábitos se formam e como transformá-los para mudar sua vida pessoal, profissional e mental. Baseado em pesquisas reais, revela como dominar o ciclo do hábito e reconstruir comportamentos.",
+      "autor": "Charles Duhigg",
+      "descricao": "Um guia profundo sobre como hábitos se formam e como transformá-los para mudar sua vida pessoal, profissional e mental.",
       "imagem": "livros/img/o-poder-do-habito.png",
       "arquivo": "https://pay.cakto.com.br/j8zprei_672974",
       "categorias": ["autoajuda", "psicologia", "comportamento-humano"]
@@ -90,6 +98,7 @@
     {
       "id": "sutilligar",
       "titulo": "A Sutil Arte de Ligar o F*da-se",
+      "autor": "Mark Manson",
       "descricao": "Uma estratégia inusitada para uma vida melhor, escrita por Mark Manson. Um guia direto para focar no que realmente importa.",
       "imagem": "livros/img/a-sutil-arte-de-ligar-o-fodase.png",
       "arquivo": "https://pay.cakto.com.br/38v4kua_672156",
@@ -98,6 +107,7 @@
     {
       "id": "invisivel",
       "titulo": "Liberte-se do inimigo invisível",
+      "autor": "Baseado em Napoleon Hill",
       "descricao": "Baseado em “Mais Esperto que o Diabo”, este livro ajuda a identificar obstáculos invisíveis e liberar seu potencial.",
       "imagem": "livros/img/invisivel.png",
       "arquivo": "livros/Liberte-se do inimigo invisível.html",
@@ -106,6 +116,7 @@
     {
       "id": "potencial",
       "titulo": "Destravando Seu Potencial",
+      "autor": "Autor Desconhecido",
       "descricao": "Um guia prático para desbloquear sua mente e alcançar seus objetivos.",
       "imagem": "livros/img/potencial.png",
       "arquivo": "livros/destravando.html",
@@ -114,6 +125,7 @@
     {
       "id": "48leis",
       "titulo": "48 Leis do Poder",
+      "autor": "Robert Greene",
       "descricao": "Domine as regras do poder e influencie pessoas de forma estratégica.",
       "imagem": "livros/img/48.png",
       "arquivo": "livros/48-leis-do-poder.html",
@@ -121,8 +133,9 @@
     },
     {
       "id": "fbi",
-      "titulo": "Manual de Persuasão da FBI",
-      "descricao": "Aprenda técnicas de persuasão utilizadas por agentes do FBI para influenciar decisões e conduzir entrevistas com sucesso.",
+      "titulo": "Manual de Persuasão do FBI",
+      "autor": "Autor Desconhecido",
+      "descricao": "Aprenda técnicas de persuasão utilizadas por agentes do FBI para influenciar decisões e conduzir entrevistas.",
       "imagem": "livros/img/fbi.png",
       "arquivo": "livros/fbi.html",
       "categorias": ["psicologia", "manipulacao"]
@@ -130,23 +143,26 @@
     {
       "id": "influenciar-pessoas",
       "titulo": "Como Fazer Amigos e Influenciar Pessoas",
-      "descricao": "Descubra estratégias comprovadas para conquistar amizades verdadeiras, fortalecer conexões e influenciar pessoas de forma positiva em qualquer ambiente.",
+      "autor": "Dale Carnegie",
+      "descricao": "Estratégias comprovadas para conquistar amizades verdadeiras, fortalecer conexões e influenciar pessoas de forma positiva.",
       "imagem": "livros/img/influenciar-pessoas.png",
       "arquivo": "livros/influenciar-pessoas.html",
       "categorias": ["autoajuda", "comportamento-humano"]
     },
     {
       "id": "poder-manipulacao",
-      "titulo": "Poder & Manipulação – Jacob Petry",
-      "descricao": "Aprenda a dominar técnicas de persuasão, manipulação psicológica e influência estratégica de forma avançada.",
+      "titulo": "Poder & Manipulação",
+      "autor": "Jacob Petry",
+      "descricao": "Técnicas avançadas de persuasão, manipulação psicológica e influência estratégica.",
       "imagem": "livros/img/poder-manipulaçao.png",
       "arquivo": "livros/Poder-Manipulação.html",
       "categorias": ["poder", "manipulacao"]
     },
     {
       "id": "engenharia-social",
-      "titulo": "Engenharia Social – Jacob Petry",
-      "descricao": "Descubra como influenciar pessoas de forma ética e evitar ser manipulado através de técnicas de engenharia social.",
+      "titulo": "Engenharia Social",
+      "autor": "Jacob Petry",
+      "descricao": "Como influenciar pessoas de forma ética e evitar ser manipulado através de técnicas de engenharia social.",
       "imagem": "livros/img/engenharia-social.png",
       "arquivo": "livros/engenharia-social.html",
       "categorias": ["manipulacao", "psicologia"]
@@ -154,7 +170,8 @@
     {
       "id": "manipulacao-oculta",
       "titulo": "Manipulação Oculta",
-      "descricao": "Aprenda técnicas secretas de manipulação e persuasão, com foco em psicologia e percepção das pessoas.",
+      "autor": "Autor Desconhecido",
+      "descricao": "Técnicas secretas de manipulação e persuasão, com foco em psicologia e percepção.",
       "imagem": "livros/img/manipulaçao-oculta.png",
       "arquivo": "livros/manipulacao-oculta.html",
       "categorias": ["manipulacao", "psicologia"]
@@ -162,39 +179,44 @@
     {
       "id": "seducao-maquiavelica",
       "titulo": "Sedução Maquiavélica",
-      "descricao": "Domine a arte da sedução e hipnose psicológica com estratégias sofisticadas e dark.",
+      "autor": "Autor Desconhecido",
+      "descricao": "A arte da sedução e hipnose psicológica com estratégias sofisticadas e dark.",
       "imagem": "livros/img/seduçao-maquiavelica.png",
       "arquivo": "livros/seducao-maquiavelica.html",
       "categorias": ["estrategia", "manipulacao"]
     },
     {
       "id": "o-que-todo-corpo-fala",
-      "titulo": "O Que Todo Corpo Fala – Joe Navarro",
-      "descricao": "Aprenda a decodificar a linguagem corporal, identificar emoções ocultas e dominar a comunicação não verbal para influenciar e compreender melhor as pessoas.",
+      "titulo": "O Que Todo Corpo Fala",
+      "autor": "Joe Navarro",
+      "descricao": "Aprenda a decodificar a linguagem corporal, identificar emoções ocultas e dominar a comunicação não verbal.",
       "imagem": "livros/img/oque-todo-corpo-fala.png",
       "arquivo": "livros/oque-todo-corpo-fala.html",
       "categorias": ["comportamento-humano", "psicologia"]
     },
     {
       "id": "como-convencer-alguem-em-90-segundos",
-      "titulo": "Como Convencer Alguém em 90 Segundos – Nicholas Boothman",
-      "descricao": "Aprenda técnicas rápidas e eficazes para conquistar empatia, confiança e influência logo nos primeiros segundos de qualquer conversa.",
+      "titulo": "Como Convencer Alguém em 90 Segundos",
+      "autor": "Nicholas Boothman",
+      "descricao": "Técnicas rápidas para conquistar empatia, confiança e influência logo nos primeiros segundos.",
       "imagem": "livros/img/como-convencer-alguem-90-seg.png",
       "arquivo": "livros/como-convencer-90-seg.html",
       "categorias": ["manipulacao", "comportamento-humano"]
     },
     {
       "id": "a-arte-de-ler-mentes",
-      "titulo": "A Arte de Ler Mentes – Henrik Fexeus",
-      "descricao": "Aprenda a interpretar gestos, expressões e microreações para entender o que as pessoas realmente pensam, mesmo sem dizer uma palavra.",
+      "titulo": "A Arte de Ler Mentes",
+      "autor": "Henrik Fexeus",
+      "descricao": "Interprete gestos, expressões e microreações para entender o que as pessoas realmente pensam.",
       "imagem": "livros/img/a-arte-de-ler-mentes.png",
       "arquivo": "livros/arte-de-ler-mentes.html",
       "categorias": ["manipulacao", "comportamento-humano"]
     },
     {
       "id": "o-homem-mais-rico-da-babilonia",
-      "titulo": "O Homem Mais Rico da Babilônia – George S. Clason",
-      "descricao": "Descubra princípios atemporais de riqueza e prosperidade através de lições simples e práticas para dominar suas finanças.",
+      "titulo": "O Homem Mais Rico da Babilônia",
+      "autor": "George S. Clason",
+      "descricao": "Princípios atemporais de riqueza e prosperidade através de lições práticas.",
       "imagem": "livros/img/babilonia.png",
       "arquivo": "livros/babilonia.html",
       "categorias": ["financas", "autoajuda", "estrategia"]
