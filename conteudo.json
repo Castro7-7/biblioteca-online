@@ -8,10 +8,61 @@
     {"id": "poder", "nome": "Poder"},
     {"id": "estrategia", "nome": "Estratégia"},
     {"id": "comportamento-humano", "nome": "Comportamento Humano"},
-    {"id": "financas", "nome": "Finanças"}
+    {"id": "financas", "nome": "Finanças"},
+    {"id": "produtividade", "nome": "Produtividade"},
+    {"id": "seguranca", "nome": "Segurança da Informação"}
   ],
+
   
   "livros": [
+        {
+      "id": "quem-pensa-enriquece",
+      "titulo": "Quem Pensa Enriquece",
+      "descricao": "Napoleon Hill revela os princípios fundamentais que moldam a mentalidade milionária — disciplina, foco, propósito e ação. Um clássico obrigatório para quem busca evolução financeira e pessoal.",
+      "imagem": "livros/img/quem-pensa-enriquece.png",
+      "arquivo": "https://pay.cakto.com.br/eyurph7_682485",
+      "categorias": ["financas", "motivacao", "autoajuda"]
+    },
+    {
+      "id": "as-armas-da-persuasao",
+      "titulo": "As Armas da Persuasão",
+      "descricao": "O maior estudo sobre influência e comportamento humano. Cialdini explica os 6 gatilhos psicológicos usados em vendas, comunicação e persuasão no dia a dia.",
+      "imagem": "livros/img/as-armas-da-persuasao.png",
+      "arquivo": "https://pay.cakto.com.br/3dy4bpr_682491",
+      "categorias": ["psicologia", "manipulacao", "comportamento-humano", "estrategia"]
+    },
+    {
+      "id": "essencialismo",
+      "titulo": "Essencialismo – A Disciplina da Busca por Menos",
+      "descricao": "Um guia direto para eliminar o excesso, concentrar energia no que realmente importa e alcançar mais com menos esforço. Produtividade real e intencional.",
+      "imagem": "livros/img/essencialismo-greg.png",
+      "arquivo": "https://pay.cakto.com.br/q9ygz7n_682498",
+      "categorias": ["produtividade", "autoajuda", "motivacao"]
+    },
+    {
+      "id": "rapido-e-devagar",
+      "titulo": "Rápido e Devagar: Duas Formas de Pensar",
+      "descricao": "Kahneman mostra como nosso cérebro toma decisões através de dois sistemas: um rápido e intuitivo, outro lento e analítico. Essencial para entender erros mentais, vieses e escolhas.",
+      "imagem": "livros/img/rapido-e-devagar.png",
+      "arquivo": "https://pay.cakto.com.br/nesdr8w_682502",
+      "categorias": ["psicologia", "comportamento-humano", "estrategia"]
+    },
+    {
+      "id": "como-falar-em-publico",
+      "titulo": "Como Falar em Público e Encantar as Pessoas",
+      "descricao": "Um manual prático para dominar comunicação, oratória e influência. Aprenda a falar com confiança, clareza e impacto em qualquer situação.",
+      "imagem": "livros/img/como-falar-em-publico.png",
+      "arquivo": "https://pay.cakto.com.br/3cucpd4_682508",
+      "categorias": ["motivacao", "autoajuda", "poder"]
+    },
+    {
+      "id": "a-arte-de-enganar",
+      "titulo": "A Arte de Enganar",
+      "descricao": "Kevin Mitnick revela como hackers exploram o fator humano para invadir sistemas. Um alerta poderoso sobre engenharia social e proteção digital.",
+      "imagem": "livros/img/a-arte-de-enganar.png",
+      "arquivo": "https://pay.cakto.com.br/p4c7v4a_682517",
+      "categorias": ["seguranca", "manipulacao", "estrategia"]
+    },
         {
       "id": "segredo-mente-milionaria",
       "titulo": "O Segredo da Mente Milionária",
