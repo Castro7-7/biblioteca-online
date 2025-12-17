@@ -10,10 +10,65 @@
     {"id": "comportamento-humano", "nome": "Comportamento Humano"},
     {"id": "financas", "nome": "Finanças"},
     {"id": "produtividade", "nome": "Produtividade"},
-    {"id": "seguranca", "nome": "Segurança da Informação"}
+    {"id": "seguranca", "nome": "Segurança da Informação"},
+    {"id": "habilidades-criativas", "nome": "Habilidades Criativas"}
   ],
 
   "livros": [
+    {
+      "id": "como-criar-um-novo-eu",
+      "titulo": "Como Criar Um Novo Eu",
+      "autor": "Joe Dispenza",
+      "descricao": "Joe Dispenza une neurociência e desenvolvimento pessoal para ensinar como quebrar padrões mentais limitantes e criar uma nova versão de si mesmo. Um guia prático para mudar pensamentos, emoções e resultados.",
+      "imagem": "livros/img/como-criar-um-novo-eu.png",
+      "arquivo": "https://pay.cakto.com.br/3avowj2_691522",
+      "categorias": ["autoajuda", "motivacao", "comportamento-humano"]
+    },
+    {
+      "id": "o-poder-do-agora",
+      "titulo": "O Poder do Agora",
+      "autor": "Eckhart Tolle",
+      "descricao": "Um clássico sobre consciência e presença. Eckhart Tolle mostra como viver no momento presente, reduzir ansiedade e alcançar clareza mental e equilíbrio emocional.",
+      "imagem": "livros/img/o-poder-do-agora.png",
+      "arquivo": "https://pay.cakto.com.br/3djowhw_691528",
+      "categorias": ["autoajuda", "motivacao", "psicologia"]
+    },
+    {
+      "id": "hackers-expostos-7",
+      "titulo": "Hackers Expostos 7",
+      "autor": "Stuart McClure, Joel Scambray, George Kurtz",
+      "descricao": "Referência mundial em segurança da informação, este livro revela técnicas reais usadas por hackers e apresenta soluções práticas para proteger redes, sistemas e dados.",
+      "imagem": "livros/img/hackers-expostos-7-segredos.png",
+      "arquivo": "https://pay.cakto.com.br/56rpnji_691533",
+      "categorias": ["seguranca"]
+    },
+    {
+      "id": "a-arte-da-guerra",
+      "titulo": "A Arte da Guerra",
+      "autor": "Nicolau Maquiavel",
+      "descricao": "Um clássico sobre estratégia, poder e tomada de decisões. Seus ensinamentos ultrapassam o campo militar e são amplamente aplicados em negócios, liderança e vida pessoal.",
+      "imagem": "livros/img/a-arte-da-guerra.png",
+      "arquivo": "https://pay.cakto.com.br/397erwz_691537",
+      "categorias": ["estrategia", "poder"]
+    },
+    {
+      "id": "o-poder-do-subconsciente",
+      "titulo": "O Poder do Subconsciente",
+      "autor": "Joseph Murphy",
+      "descricao": "Descubra como utilizar o subconsciente para mudar hábitos, crenças e alcançar sucesso pessoal e profissional. Um dos maiores clássicos do desenvolvimento pessoal.",
+      "imagem": "livros/img/o-poder-do-subconsciente.png",
+      "arquivo": "https://pay.cakto.com.br/jrybjjo_691541",
+      "categorias": ["autoajuda", "motivacao", "psicologia"]
+    },
+    {
+      "id": "curso-completo-de-desenho-vol-1",
+      "titulo": "Curso Completo de Desenho (Vol. 01 de 06)",
+      "autor": "Mozart Couto",
+      "descricao": "Curso prático e didático para aprender desenho do zero. Este volume aborda fundamentos essenciais como traço, formas básicas, proporção e construção do desenho.",
+      "imagem": "livros/img/Curso_completo_de_desenho_66.png",
+      "arquivo": "https://pay.cakto.com.br/3bcvhbj_691549",
+      "categorias": ["habilidades-criativas", "produtividade"]
+    },
     {
       "id": "a-coragem-de-ser-imperfeito",
       "titulo": "A Coragem de Ser Imperfeito",
