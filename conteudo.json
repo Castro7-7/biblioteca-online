@@ -15,6 +15,42 @@
 
   "livros": [
     {
+      "id": "a-coragem-de-ser-imperfeito",
+      "titulo": "A Coragem de Ser Imperfeito",
+      "autor": "Brené Brown",
+      "descricao": "Brené Brown mostra como aceitar a vulnerabilidade é essencial para viver com mais autenticidade, coragem e conexão. O livro ensina a abandonar a busca pela perfeição e a desenvolver autoestima, resiliência emocional e autoconfiança.",
+      "imagem": "livros/img/a-coragem-de-ser-imperfeito.png",
+      "arquivo": "https://pay.cakto.com.br/3cf2h9z_690491",
+      "categorias": ["autoajuda", "motivacao", "comportamento-humano"]
+    },
+    {
+      "id": "os-arquetipos-e-o-inconsciente-coletivo",
+      "titulo": "Os Arquétipos e o Inconsciente Coletivo",
+      "autor": "Carl Gustav Jung",
+      "descricao": "Obra fundamental da psicologia analítica, onde Jung explica os arquétipos universais e o inconsciente coletivo. Um livro profundo que revela como símbolos, mitos e padrões psicológicos influenciam o comportamento humano.",
+      "imagem": "livros/img/os-arqueotipos-e-o-inconciente-coletivo.png",
+      "arquivo": "https://pay.cakto.com.br/q35etgn_690494",
+      "categorias": ["psicologia", "comportamento-humano"]
+    },
+    {
+      "id": "mindset-a-nova-psicologia-do-sucesso",
+      "titulo": "Mindset: A Nova Psicologia do Sucesso",
+      "autor": "Carol S. Dweck, Ph.D.",
+      "descricao": "Carol Dweck apresenta o conceito de mindset fixo e mindset de crescimento, mostrando como a forma de pensar impacta diretamente o sucesso pessoal, acadêmico e profissional. Leitura prática e transformadora.",
+      "imagem": "livros/img/a-nova-piscologia-do-sucesso.png",
+      "arquivo": "https://pay.cakto.com.br/n897ryz_690497",
+      "categorias": ["autoajuda", "motivacao", "produtividade"]
+    },
+    {
+      "id": "trabalhe-4-horas-por-semana",
+      "titulo": "Trabalhe 4 Horas por Semana",
+      "autor": "Timothy Ferriss",
+      "descricao": "Timothy Ferriss ensina como automatizar renda, otimizar o tempo e fugir do modelo tradicional de trabalho. Um guia prático sobre produtividade, negócios digitais e liberdade financeira.",
+      "imagem": "livros/img/trabalhe-4-horas-por-semana.png",
+      "arquivo": "https://pay.cakto.com.br/336yj5v_690504",
+      "categorias": ["financas", "produtividade", "estrategia"]
+    },
+    {
       "id": "quem-pensa-enriquece",
       "titulo": "Quem Pensa Enriquece",
       "autor": "Napoleon Hill",
