@@ -11,10 +11,40 @@
     {"id": "financas", "nome": "Finanças"},
     {"id": "produtividade", "nome": "Produtividade"},
     {"id": "seguranca", "nome": "Segurança da Informação"},
-    {"id": "habilidades-criativas", "nome": "Habilidades Criativas"}
+    {"id": "habilidades-criativas", "nome": "Habilidades Criativas"},
+    {"id": "programacao", "nome": "Programação"}
   ],
 
   "livros": [
+    {
+      "id": "trabalho-focado",
+      "titulo": "Trabalho Focado – Como Ter Sucesso em um Mundo Distraído",
+      "autor": "Cal Newport",
+      "descricao": "Em um mundo dominado por distrações, Cal Newport mostra como desenvolver foco profundo para produzir mais, aprender melhor e se destacar profissionalmente. Um guia prático de alta performance para quem busca resultados reais.",
+      "imagem": "livros/img/trabalho-focado.png",
+      "arquivo": "https://pay.cakto.com.br/ag97e9w_719137",
+      "categorias": ["produtividade", "motivacao", "estrategia"]
+    },
+
+    {
+      "id": "java-como-programar-10-edicao",
+      "titulo": "Java: Como Programar – 10ª Edição",
+      "autor": "Paul Deitel, Harvey Deitel",
+      "descricao": "Uma das maiores referências mundiais em programação. Este livro ensina Java do básico ao avançado, abordando lógica, orientação a objetos, boas práticas e aplicações reais usadas no mercado profissional.",
+      "imagem": "livros/img/java-cm-programar.png",
+      "arquivo": "https://pay.cakto.com.br/36dkr8n_719141",
+      "categorias": ["programacao", "habilidades-criativas"]
+    },
+
+    {
+      "id": "estoicismo-arte-de-ser-inabalavel",
+      "titulo": "Estoicismo – A Arte de Ser Inabalável",
+      "autor": "Luiz Mário Moraes",
+      "descricao": "Aprenda a controlar emoções, lidar com pressão e manter a mente firme em qualquer situação. Um guia moderno sobre estoicismo aplicado à vida real, focado em disciplina, autocontrole e força mental.",
+      "imagem": "livros/img/Estoicismo-A-Arte-de-Ser-Inabalavel.png",
+      "arquivo": "https://pay.cakto.com.br/srac9ix_719145",
+      "categorias": ["autoajuda", "psicologia", "comportamento-humano"]
+    },
     {
       "id": "como-criar-um-novo-eu",
       "titulo": "Como Criar Um Novo Eu",
